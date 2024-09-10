@@ -1,0 +1,129 @@
+# - Home Server (hs) - Proxmox LXC with Ubuntu Server 22.04
+# - Synology (ds918) - Synology DS918+ 
+### - DNS / AdBlock Server (dns) - Raspberry Pi 4B with Raspberry Pi OS
+
+
+########################### NETWORKS
+networks:
+  default:
+    driver: bridge
+  socket_proxy:
+    name: socket_proxy
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.91.0/24
+  t3_proxy:
+    name: t3_proxy
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.90.0/24
+
+########################### SECRETS
+secrets:
+  basic_auth_credentials:
+    file: $DOCKERDIR/secrets/basic_auth_credentials #defined
+  cf_dns_api_token:
+    file: $DOCKERDIR/secrets/cf_dns_api_token #defined
+  oauth_secrets:
+    file: $DOCKERDIR/secrets/oauth_secrets #defined
+  traefik_forward_auth:
+    file: $DOCKERDIR/secrets/traefik_forward_auth #defined
+  plex_claim:
+    file: $DOCKERDIR/secrets/plex_claim
+  watchtower_notifications:
+    file: $SECRETSDIR/watchtower_notifications
+ ### this doesn't exist
+ #  mysql_root_password:
+ #    file: $DOCKERDIR/secrets/mysql_root_password
+ ### this doesn't exist
+ # guac_db_name:
+ #   file: $DOCKERDIR/secrets/guac_db_name
+ # guac_mysql_user:
+ #   file: $DOCKERDIR/secrets/guac_mysql_user
+ # guac_mysql_password:
+ #   file: $DOCKERDIR/secrets/guac_mysql_password
+
+include:
+  ########################### SERVICES
+  # PREFIX hs = Home Server
+  # HOSTNAME=hs - defined in .env
+
+  # CORE
+  - compose/$HOSTNAME/traefik.yml
+  - compose/$HOSTNAME/socket-proxy.yml
+  - compose/$HOSTNAME/oauth.yml
+  - compose/$HOSTNAME/portainer.yml
+  # SECURITY
+  # - compose/$HOSTNAME/crowdsec.yml
+  # - compose/$HOSTNAME/traefik-bouncer.yml
+  # FRONTEND
+  - compose/$HOSTNAME/autoindex.yml
+  - compose/$HOSTNAME/homepage.yml
+  # - compose/$HOSTNAME/phpmyadmin.yml
+  - compose/$HOSTNAME/sitespeed.yml
+  - compose/$HOSTNAME/whoami.yml
+  # BACKEND
+  - compose/$HOSTNAME/fileflows.yml
+  # DOWNLOADERS
+  # - compose/$HOSTNAME/jdownloader.yml
+  - compose/$HOSTNAME/qbittorrent.yml
+  - compose/$HOSTNAME/sabnzbd.yml
+  # - compose/$HOSTNAME/openaudible.yml
+  # PVRS
+  - compose/$HOSTNAME/sonarr.yml
+  - compose/$HOSTNAME/radarr.yml
+  - compose/$HOSTNAME/readarr.yml
+  - compose/$HOSTNAME/kapowarr.yml
+  # - compose/$HOSTNAME/lidarr.yml
+  - compose/$HOSTNAME/calibre-web.yml
+  - compose/$HOSTNAME/audiobookshelf.yml
+
+
+  # COMPLEMENTARY APPS
+  - compose/$HOSTNAME/prowlarr.yml
+  # - compose/$HOSTNAME/notifiarr.yml
+  - compose/$HOSTNAME/bazarr.yml
+  # - compose/$HOSTNAME/picard.yml
+  # MONITORING
+  # - compose/$HOSTNAME/grafana.yml
+  # - compose/$HOSTNAME/uptime-kuma.yml
+  - compose/$HOSTNAME/dozzle.yml
+  - compose/$HOSTNAME/scrutiny.yml
+  # - compose/$HOSTNAME/radarr-exporter.yml
+  # - compose/$HOSTNAME/sonarr-exporter.yml
+  # - compose/$HOSTNAME/lidarr-exporter.yml
+  # - compose/$HOSTNAME/prowlarr-exporter.yml
+  # - compose/$HOSTNAME/sabnzbd-exporter.yml
+  # - compose/$HOSTNAME/node-exporter.yml
+  - compose/$HOSTNAME/tautulli.yml
+  # MEDIA SERVERS
+  - compose/$HOSTNAME/plex.yml
+  # - compose/$HOSTNAME/jellyfin.yml
+  # DATABASES
+  - compose/$HOSTNAME/calibre.yml
+  # ADMIN
+  # - compose/$HOSTNAME/guacamole.yml
+  # - compose/$HOSTNAME/kasm.yml
+  # - compose/$HOSTNAME/it-tools.yml
+  # UTILITIES
+  - compose/$HOSTNAME/firefox.yml
+  # - compose/$HOSTNAME/firefly.yml
+  # - compose/$HOSTNAME/peanut.yml
+  # - compose/$HOSTNAME/dockge.yml
+
+
+  # FILE MANAGEMENT
+  - compose/$HOSTNAME/vscode.yml
+  # - compose/$HOSTNAME/makemkv.yml
+  # - compose/$HOSTNAME/mkvtoolnix.yml
+  # - compose/$HOSTNAME/tdarr.yml
+  # NETWORK
+  - compose/$HOSTNAME/gluetun.yml
+  # MAINTENANCE
+  # - compose/$HOSTNAME/docker-gc.yml
+  - compose/$HOSTNAME/deunhealth.yml
+  - compose/$HOSTNAME/watchtower.yml
+  - compose/$HOSTNAME/plex-image-cleanup.yml
+  # - compose/$HOSTNAME/plex-meta-manager.yml

@@ -1,0 +1,43 @@
+services:
+  peanut:
+    image: brandawg93/peanut:latest
+    container_name: PeaNUT
+    environment:
+      #- NUT_HOST=localhost
+      #- NUT_PORT=3493
+      #- WEB_PORT=8080
+      - TZ=$TZ
+      - PUID=$PUID
+      - PGID=$PGID
+    restart: unless-stopped
+    ports:
+      - $peanut_port:8080
+    networks:
+      - t3_proxy
+    security_opt:
+      - no-new-privileges:true
+    volumes:
+      - $DOCKERDIR/appdata:/temp
+      - $DOCKERDIR/appdata/logs/hs/peanut:/app/Logs
+    labels:
+      - "traefik.enable=true"
+      # HTTP Routers
+      - "traefik.http.routers.peanut-rtr.entrypoints=websecure"
+      - "traefik.http.routers.peanut-rtr.rule=Host(`peanut.$DOMAINNAME`)"
+      # Middlewares
+      #- "traefik.http.routers.peanut-rtr.middlewares=chain-oauth@file"
+      - "traefik.http.routers.authelia-rtr.middlewares=chain-no-auth@file"
+
+      # HTTP Services
+      - "traefik.http.routers.peanut-rtr.service=peanut-svc"
+      - "traefik.http.services.peanut-svc.loadbalancer.server.port=8080"
+      # UPDATE IMAGE
+      - "com.centurylinklabs.watchtower.enable=true"
+      # Homepage Setup
+      - homepage.group=Home Server
+      - homepage.name=PeaNUT
+      - homepage.icon=peanut.png
+      - homepage.href=http://peanut.$DOMAINNAME
+      # - homepage.description=Media server
+      - homepage.widget.type=peanut
+      - homepage.widget.url=http://peanut:8080

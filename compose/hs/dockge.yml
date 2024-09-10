@@ -1,0 +1,46 @@
+services:
+  # Dockge - Docker Compose Manager
+  dockge:
+    container_name: dockge
+    image: louislam/dockge
+    # profiles: ["media", "arrs", "all"] # FOR FUTURE DEVELOPMENT
+
+    networks:
+      - t3_proxy
+      - socket_proxy
+    ports:
+      - $dockge_port:5001
+
+    security_opt:
+      - no-new-privileges:true
+
+    restart: unless-stopped
+    
+    volumes:
+      - $DOCKERDIR/appdata/dockge:/app/data
+      - $DOCKERDIR:/opt/stacks
+    
+    environment:
+      - DOCKGE_STACKS_DIR=/opt/stacks
+      - DOCKER_HOST=tcp://socket-proxy:2375
+  
+    
+    labels:
+      - "traefik.enable=true"
+      # HTTP Routers
+      - "traefik.http.routers.dockge-rtr-bypass.entrypoints=websecure"
+      - "traefik.http.routers.dockge-rtr-bypass.rule=Host(`dockge.$DOMAINNAME`) && Header(`traefik-auth-bypass-key`, `$TRAEFIK_AUTH_BYPASS_KEY`)" # Bypass Auth for LunaSea on iOS
+      - "traefik.http.routers.dockge-rtr-bypass.priority=100"
+      # HTTP Routers Auth
+      - "traefik.http.routers.dockge-rtr.entrypoints=websecure"
+      - "traefik.http.routers.dockge-rtr.rule=Host(`dockge.$DOMAINNAME`)"
+      - "traefik.http.routers.dockge-rtr.priority=99"
+      # Middlewares
+      - "traefik.http.routers.dockge-rtr-bypass.middlewares=chain-no-auth@file"
+      - "traefik.http.routers.dockge-rtr.middlewares=chain-oauth@file"
+      # HTTP Services
+      - "traefik.http.routers.dockge-rtr.service=dockge-svc"
+      - "traefik.http.routers.dockge-rtr-bypass.service=dockge-svc"
+      - "traefik.http.services.dockge-svc.loadbalancer.server.port=5001" # this has to stay the name of the internal port used by the container, not the mapped port
+      # UPDATE IMAGE - if watchtower should update this image - disable for risky stuff like IP configs
+      - "com.centurylinklabs.watchtower.enable=true"

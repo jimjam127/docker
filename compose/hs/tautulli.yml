@@ -1,0 +1,46 @@
+services:
+  # Tautulli - Plex statistics and monitoring
+  # Set HTTP Root in Tautulli settings if using PathPrefix
+  tautulli:
+    image: lscr.io/linuxserver/tautulli:latest
+    container_name: tautulli
+    security_opt:
+      - no-new-privileges:true
+    restart: "no"
+    # profiles: ["media", "all"]
+    networks:
+      - t3_proxy
+    ports:
+      - "8181:8181"
+    volumes:
+      - $DOCKERDIR/appdata/tautulli/config:/config
+      - $DOCKERDIR/appdata/plex/Library/Application Support/Plex Media Server/Logs:/logs:ro # For tautulli Plex log viewer
+    environment:
+      TZ: $TZ
+      PUID: $PUID
+      PGID: $PGID
+    labels:
+      - "traefik.enable=true"
+      # HTTP Routers
+      - "traefik.http.routers.tautulli-rtr.entrypoints=websecure"
+      - "traefik.http.routers.tautulli-rtr.rule=Host(`tautulli.$DOMAINNAME_HS`)"
+      # Middlewares
+      - "traefik.http.routers.tautulli-rtr.middlewares=chain-oauth@file"
+      # HTTP Services
+      - "traefik.http.routers.tautulli-rtr.service=tautulli-svc"
+      - "traefik.http.services.tautulli-svc.loadbalancer.server.port=8181"
+      # UPDATE IMAGE
+      - "com.centurylinklabs.watchtower.enable=true"
+      # Homepage Setup
+      - homepage.group=Media
+      - homepage.name=Tautulli
+      - homepage.icon=tautulli.png
+      - homepage.href=http://tautulli.$DOMAINNAME
+      - homepage.weight=1
+      # Homepage Widget Config
+      - homepage.widget.type=tautulli
+      - homepage.widget.url=http://tautulli:8181
+      - homepage.widget.key=$TAUTULLI_API_KEY
+      - homepage.widget.enableUser=true # optional, defaults to false
+      - homepage.widget.showEpisodeNumber=true # optional, defaults to false
+      

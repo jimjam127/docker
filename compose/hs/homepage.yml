@@ -1,0 +1,40 @@
+services:
+  # Homepage - Application Dashboard
+  # https://gethomepage.dev/main/
+  homepage:
+    container_name: homepage
+    image: ghcr.io/gethomepage/homepage:latest
+    # profiles: ["apps", "all"]
+
+    networks:
+      - t3_proxy
+      - socket_proxy
+    ports:
+     - $homepage_port:3000
+
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
+    
+    volumes:
+      - $DOCKERDIR/appdata/homepage:/app/config
+      - $USERDIR/Pictures:/app/public/images
+
+    environment:
+      TZ: $TZ
+      PUID: $PUID
+      PGID: $PGID
+
+
+    labels:
+      - "traefik.enable=true"
+      # HTTP Routers
+      - "traefik.http.routers.homepage-rtr.entrypoints=websecure"
+      - "traefik.http.routers.homepage-rtr.rule=Host(`$DOMAINNAME`) || Host(`www.$DOMAINNAME`)"
+      # Middlewares
+      - "traefik.http.routers.homepage-rtr.middlewares=chain-oauth@file"
+      # HTTP Services
+      - "traefik.http.routers.homepage-rtr.service=homepage-svc"
+      - "traefik.http.services.homepage-svc.loadbalancer.server.port=3000"
+      # UPDATE IMAGE
+      - "com.centurylinklabs.watchtower.enable=true"

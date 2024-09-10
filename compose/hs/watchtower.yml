@@ -1,0 +1,22 @@
+services:
+  watchtower:
+    container_name: watchtower
+    image: containrrr/watchtower
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - TZ=$TZ
+      - WATCHTOWER_CLEANUP=true                                        
+      - WATCHTOWER_INCLUDE_RESTARTING=true
+      - WATCHTOWER_POLL_INTERVAL=36000                  
+      #- WATCHTOWER_SCHEDULE=0 0 9 * * *
+      #- WATCHTOWER_DEBUG=true             
+      - WATCHTOWER_LABEL_ENABLE=true
+      - WATCHTOWER_NOTIFICATIONS=shoutrrr
+      - WATCHTOWER_NOTIFICATION_URL=/run/secrets/watchtower_notifications
+      # - WATCHTOWER_NOTIFICATION_TEMPLATE="{{range .}}{{.Message}}{{println}}{{end}}" 
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+    secrets:
+      - watchtower_notifications

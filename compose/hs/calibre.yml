@@ -1,0 +1,47 @@
+services:
+  # eBook backend server
+  calibre:
+    container_name: calibre
+    image: lscr.io/linuxserver/calibre:latest
+    # profiles: ["media", "arrs", "all"] # FOR FUTURE DEVELOPMENT
+    networks:
+      - t3_proxy
+    ports:
+      - $calibre_port1:8080
+      - $calibre_port2:8181
+      - $calibre_port3:8081
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
+
+    environment:
+      - $TZ:TZ
+      - $PUID:PUID
+      - $PGID:PGID
+    
+    volumes:
+      - $DOCKERDIR/appdata/calibre/config:/config 
+      - $MEDIADIR/Books:/data
+
+    labels:
+      - "traefik.enable=true"
+      # HTTP Routers
+      - "traefik.http.routers.calibre-rtr-bypass.entrypoints=websecure"
+      - "traefik.http.routers.calibre-rtr-bypass.rule=Host(`calibre.$DOMAINNAME`) && Header(`traefik-auth-bypass-key`, `$TRAEFIK_AUTH_BYPASS_KEY`)" # Bypass Auth for LunaSea on iOS
+      - "traefik.http.routers.calibre-rtr-bypass.priority=100"
+      # HTTP Routers Auth
+      - "traefik.http.routers.calibre-rtr.entrypoints=websecure"
+      - "traefik.http.routers.calibre-rtr.rule=Host(`calibre.$DOMAINNAME`)"
+      - "traefik.http.routers.calibre-rtr.priority=99"
+      # Middlewares
+      - "traefik.http.routers.calibre-rtr-bypass.middlewares=chain-no-auth@file"
+      - "traefik.http.routers.calibre-rtr.middlewares=chain-oauth@file"
+      # HTTP Services
+      - "traefik.http.routers.calibre-rtr.service=calibre-svc"
+      - "traefik.http.routers.calibre-rtr-bypass.service=calibre-svc"
+      - "traefik.http.services.calibre-svc.loadbalancer.server.port=8080" # this has to stay the name of the internal port used by the container, not the mapped port
+      # UPDATE IMAGE - if watchtower should update this image - disable for risky stuff like IP configs
+      - "com.centurylinklabs.watchtower.enable=true"
+
+
+
