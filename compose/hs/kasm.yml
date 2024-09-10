@@ -1,63 +1,99 @@
 services:
   # Kasm - Remote Workspaces
-  # https://www.kasmweb.com/
   kasm:
     image: lscr.io/linuxserver/kasm:latest
     container_name: kasm
-    
-
-    # networks:
-    #   - t3_proxy
-    ports:
-      - 3000:3000
-      - 4443:443
-
-    # security_opt:
-    #   - no-new-privileges:true
-    #   - apparmor:unconfined
-    #   - seccomp:unconfined 
     privileged: true
-    # cap_add:
-    #   - NET_ADMIN
-    #   - SYS_ADMIN
-    
     restart: unless-stopped
     # profiles: ["apps", "all"]
-    
-
+    networks:
+      - t3_proxy
+    ports:
+      - 7000:3000
+      - 7443:443
     volumes:
       - $DOCKERDIR/appdata/kasm/data:/opt
-      # - $DOCKERDIR/appdata/kasm/profiles:/profiles #optional
-      # - /dev/input:/dev/input #optional
-      # - /run/udev/data:/run/udev/data #optional
-
+      - $DOCKERDIR/appdata/kasm/profiles:/profiles #optional
+      - /dev/input:/dev/input #optional
+      - /run/udev/data:/run/udev/data #optional
     environment:
-      $TZ: TZ
+      TZ: $TZ
       KASM_PORT: 443
-      # $PUID: PUID
-      # $PGID: PGID
       # DOCKER_HUB_USERNAME: USER #optional
       # DOCKER_HUB_PASSWORD: PASS #optional
       # DOCKER_MTU: 1500 #optional
+      UMASK: 022
+    labels:
+      - "traefik.enable=true"
+      # HTTP Routers
+      - "traefik.http.routers.kasm-rtr.entrypoints=websecure"
+      - "traefik.http.routers.kasm-rtr.rule=Host(`kasm.$DOMAINNAME_1`)"
+      # Middlewares
+      # - "traefik.http.routers.cname-rtr-bypass.middlewares=chain-no-auth@file"
+      - "traefik.http.routers.cname-rtr.middlewares=chain-oauth@file"
+      # HTTP Services
+      - "traefik.http.routers.kasm-rtr.service=kasm-svc"
+      - "traefik.http.services.kasm-svc.loadbalancer.server.port=3000"
+# services:
+#   # Kasm - Remote Workspaces
+#   # https://www.kasmweb.com/
+#   kasm:
+#     image: lscr.io/linuxserver/kasm:latest
+#     container_name: kasm
+    
+
+#     # networks:
+#     #   - t3_proxy
+#     ports:
+#       - 3000:3000
+#       - 4443:443
+
+#     # security_opt:
+#     #   - no-new-privileges:true
+#     #   - apparmor:unconfined
+#     #   - seccomp:unconfined 
+#     privileged: true
+#     # cap_add:
+#     #   - NET_ADMIN
+#     #   - SYS_ADMIN
+    
+#     restart: unless-stopped
+#     # profiles: ["apps", "all"]
+    
+
+#     volumes:
+#       - $DOCKERDIR/appdata/kasm/data:/opt
+#       # - $DOCKERDIR/appdata/kasm/profiles:/profiles #optional
+#       # - /dev/input:/dev/input #optional
+#       # - /run/udev/data:/run/udev/data #optional
+
+#     environment:
+#       $TZ: TZ
+#       KASM_PORT: 443
+#       # $PUID: PUID
+#       # $PGID: PGID
+#       # DOCKER_HUB_USERNAME: USER #optional
+#       # DOCKER_HUB_PASSWORD: PASS #optional
+#       # DOCKER_MTU: 1500 #optional
 
       
-    # labels:
-    #   - "traefik.enable=true"
-    #   # HTTP Routers
-    #   - "traefik.http.routers.cname-rtr-bypass.entrypoints=websecure"
-    #   - "traefik.http.routers.cname-rtr-bypass.rule=Host(`cname.$DOMAINNAME`) && Header(`traefik-auth-bypass-key`, `$TRAEFIK_AUTH_BYPASS_KEY`)" # Bypass Auth for LunaSea on iOS
-    #   - "traefik.http.routers.cname-rtr-bypass.priority=100"
-    #   # HTTP Routers Auth
-    #   - "traefik.http.routers.cname-rtr.entrypoints=websecure"
-    #   - "traefik.http.routers.cname-rtr.rule=Host(`cname.$DOMAINNAME`)"
-    #   - "traefik.http.routers.cname-rtr.priority=99"
-    #   # Middlewares
-    #   - "traefik.http.routers.cname-rtr-bypass.middlewares=chain-no-auth@file"
-    #   - "traefik.http.routers.cname-rtr.middlewares=chain-oauth@file"
-    #   # HTTP Services
-    #   - "traefik.http.routers.cname-rtr.service=cname-svc"
-    #   - "traefik.http.routers.cname-rtr-bypass.service=cname-svc"
-    #   - "traefik.http.services.cname-svc.loadbalancer.server.port=3000" # this has to stay the name of the internal port used by the container, not the mapped port
-    #   # UPDATE IMAGE - if watchtower should update this image - disable for risky stuff like IP configs
-    #   - "com.centurylinklabs.watchtower.enable=true"
+#     # labels:
+#     #   - "traefik.enable=true"
+#     #   # HTTP Routers
+#     #   - "traefik.http.routers.cname-rtr-bypass.entrypoints=websecure"
+#     #   - "traefik.http.routers.cname-rtr-bypass.rule=Host(`cname.$DOMAINNAME`) && Header(`traefik-auth-bypass-key`, `$TRAEFIK_AUTH_BYPASS_KEY`)" # Bypass Auth for LunaSea on iOS
+#     #   - "traefik.http.routers.cname-rtr-bypass.priority=100"
+#     #   # HTTP Routers Auth
+#     #   - "traefik.http.routers.cname-rtr.entrypoints=websecure"
+#     #   - "traefik.http.routers.cname-rtr.rule=Host(`cname.$DOMAINNAME`)"
+#     #   - "traefik.http.routers.cname-rtr.priority=99"
+#     #   # Middlewares
+#     #   - "traefik.http.routers.cname-rtr-bypass.middlewares=chain-no-auth@file"
+#     #   - "traefik.http.routers.cname-rtr.middlewares=chain-oauth@file"
+#     #   # HTTP Services
+#     #   - "traefik.http.routers.cname-rtr.service=cname-svc"
+#     #   - "traefik.http.routers.cname-rtr-bypass.service=cname-svc"
+#     #   - "traefik.http.services.cname-svc.loadbalancer.server.port=3000" # this has to stay the name of the internal port used by the container, not the mapped port
+#     #   # UPDATE IMAGE - if watchtower should update this image - disable for risky stuff like IP configs
+#     #   - "com.centurylinklabs.watchtower.enable=true"
 

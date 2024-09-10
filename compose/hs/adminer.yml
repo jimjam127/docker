@@ -1,0 +1,23 @@
+services:
+  # Adminer - Frontend for Various Databases (MariaDB, PostgreSQL, etc.)
+  adminer:
+    image: adminer:latest
+    container_name: adminer
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
+    # profiles: ["apps", "all"]
+    networks:
+      - t3_proxy
+      - default
+    labels:
+      - "traefik.enable=true"
+      # HTTP Routers
+      - "traefik.http.routers.adminer-rtr.entrypoints=websecure"
+      - "traefik.http.routers.adminer-rtr.rule=Host(`adminer.$DOMAINNAME`)"
+      # Middlewares
+      # - "traefik.http.routers.cname-rtr-bypass.middlewares=chain-no-auth@file"
+      - "traefik.http.routers.cname-rtr.middlewares=chain-oauth@file"
+      # HTTP Services
+      - "traefik.http.routers.adminer-rtr.service=adminer-svc"
+      - "traefik.http.services.adminer-svc.loadbalancer.server.port=8080"

@@ -73,6 +73,7 @@ include:
   # - compose/$HOSTNAME/openaudible.yml
   # PVRS
   - compose/$HOSTNAME/sonarr.yml
+  - compose/$HOSTNAME/overseer.yml
   - compose/$HOSTNAME/radarr.yml
   - compose/$HOSTNAME/readarr.yml
   - compose/$HOSTNAME/kapowarr.yml
@@ -90,7 +91,7 @@ include:
   # - compose/$HOSTNAME/grafana.yml
   # - compose/$HOSTNAME/uptime-kuma.yml
   - compose/$HOSTNAME/dozzle.yml
-  - compose/$HOSTNAME/scrutiny.yml
+  # - compose/$HOSTNAME/scrutiny.yml
   # - compose/$HOSTNAME/radarr-exporter.yml
   # - compose/$HOSTNAME/sonarr-exporter.yml
   # - compose/$HOSTNAME/lidarr-exporter.yml
@@ -108,12 +109,17 @@ include:
   # - compose/$HOSTNAME/kasm.yml
   # - compose/$HOSTNAME/it-tools.yml
   # UTILITIES
-  - compose/$HOSTNAME/firefox.yml
+  # - compose/$HOSTNAME/firefox.yml
   # - compose/$HOSTNAME/firefly.yml
   # - compose/$HOSTNAME/peanut.yml
   # - compose/$HOSTNAME/dockge.yml
   # OTHER
-  - compose/$HOSTNAME/baikal.yml
+  # - compose/$HOSTNAME/baikal.yml
+  # MONITORING
+  - compose/$HOSTNAME/glances.yml
+  - compose/$HOSTNAME/grocy.yml
+  - compose/$HOSTNAME/homebridge.yml
+  
 
   # FILE MANAGEMENT
   - compose/$HOSTNAME/vscode.yml
@@ -127,4 +133,4 @@ include:
   - compose/$HOSTNAME/deunhealth.yml
   - compose/$HOSTNAME/watchtower.yml
   - compose/$HOSTNAME/plex-image-cleanup.yml
-  # - compose/$HOSTNAME/plex-meta-manager.yml
+  - compose/$HOSTNAME/kometa.yml

@@ -34,16 +34,11 @@ services:
 
     labels:
       - "traefik.enable=true"
-      # HTTP Routers
-      - "traefik.http.routers.cname-rtr-bypass.entrypoints=websecure"
-      - "traefik.http.routers.cname-rtr-bypass.rule=Host(`cname.$DOMAINNAME`) && Header(`traefik-auth-bypass-key`, `$TRAEFIK_AUTH_BYPASS_KEY`)" # Bypass Auth for LunaSea on iOS
-      - "traefik.http.routers.cname-rtr-bypass.priority=100"
       # HTTP Routers Auth
       - "traefik.http.routers.cname-rtr.entrypoints=websecure"
       - "traefik.http.routers.cname-rtr.rule=Host(`cname.$DOMAINNAME`)"
-      - "traefik.http.routers.cname-rtr.priority=99"
       # Middlewares
-      - "traefik.http.routers.cname-rtr-bypass.middlewares=chain-no-auth@file"
+      # - "traefik.http.routers.cname-rtr-bypass.middlewares=chain-no-auth@file"
       - "traefik.http.routers.cname-rtr.middlewares=chain-oauth@file"
       # HTTP Services
       - "traefik.http.routers.cname-rtr.service=cname-svc"
@@ -61,3 +56,8 @@ services:
       - homepage.widget.type=cname
       - homepage.widget.url=http://cname:80 # again, internal port for the container
       # - homepage.widget.key=$cname_api_key   
+      # HTTP Routers
+      # - "traefik.http.routers.cname-rtr-bypass.entrypoints=websecure"
+      # - "traefik.http.routers.cname-rtr-bypass.rule=Host(`cname.$DOMAINNAME`) && Header(`traefik-auth-bypass-key`, `$TRAEFIK_AUTH_BYPASS_KEY`)" # Bypass Auth for LunaSea on iOS
+      # - "traefik.http.routers.cname-rtr-bypass.priority=100"
+      # - "traefik.http.routers.cname-rtr.priority=99"
