@@ -112,7 +112,8 @@ include:
   # - compose/$HOSTNAME/firefly.yml
   # - compose/$HOSTNAME/peanut.yml
   # - compose/$HOSTNAME/dockge.yml
-
+  # OTHER
+  - compose/$HOSTNAME/baikal.yml
 
   # FILE MANAGEMENT
   - compose/$HOSTNAME/vscode.yml

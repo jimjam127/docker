@@ -31,9 +31,6 @@ services:
       - $PUID:PUID
       - $PGID:PGID
     
-    secrets:
-      - ports
-      - api_keys
 
     labels:
       - "traefik.enable=true"

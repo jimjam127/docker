@@ -8,7 +8,7 @@ services:
         ipv4_address: $PLEX_SERVER_IP
     security_opt:
       - no-new-privileges:true
-    restart: "unless-stopped"
+    restart: unless-stopped
     #profiles: ["media", "all"]
     devices:
       - /dev/dri:/dev/dri # for harware transcoding
