@@ -23,7 +23,7 @@ services:
       - URL_PATH=/_oauth
       - LOG_LEVEL=warn # set to trace while testing bypass rules
       - LOG_FORMAT=text
-      - LIFETIME=86400 # 1 day
+      - LIFETIME=604800 # 7 days
       - DEFAULT_ACTION=auth
       - DEFAULT_PROVIDER=google
     secrets:

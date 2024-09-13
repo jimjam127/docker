@@ -6,6 +6,7 @@ services:
     container_name: qbittorrent
     security_opt:
       - no-new-privileges:true
+    # privileged: true
     restart: unless-stopped
     # profiles: ["apps", "downloads", "all"]
     network_mode: "service:gluetun"
@@ -20,7 +21,7 @@ services:
       PGID: $PGID
       UMASK_SET: 002
     healthcheck: # https://github.com/qdm12/gluetun/issues/641#issuecomment-933856220
-      test: "curl -sf https://example.com  || exit 1"
+      test: "curl -sf https://google.com  || exit 1"
       interval: 1m
       timeout: 10s
       retries: 1

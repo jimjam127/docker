@@ -50,4 +50,4 @@ services:
       - homepage.widget.type=readarr
       - homepage.widget.url=http://readarr:8787
       - homepage.widget.key=$READARR_API_KEY
-      - homepage.weight=2
+      - homepage.widget.fields=["books","authors","wanted"]
