@@ -15,7 +15,7 @@ services:
       - "$firefox_port:5800"
     volumes:
       - $DOCKERDIR/appdata/firefox:/config
-      - $DATADIR/downloads:/data/downloads
+      # - $DATADIR/downloads:/data/downloads
       - /dev/shm:/dev/shm
     environment:
       USER_ID: $PUID

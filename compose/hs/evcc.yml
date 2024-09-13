@@ -1,0 +1,68 @@
+services:
+  # what does the service do?
+  # link.to.container.com
+  evcc: # change this and update all
+    command:
+      - evcc
+    container_name: evcc
+    image: evcc/evcc:nightly
+    # profiles: ["media", "arrs", "all"] # FOR FUTURE DEVELOPMENT
+
+    networks:
+      - t3_proxy #: #if assigning static ip, turn network into string element
+        # ipv4_address = 192.168.90.x
+      # - socket_proxy
+      # - bridge
+    # ports:
+    #   - 7070:7070/tcp
+    #   - 8887:8887/tcp
+    #   - 7090:7090/udp
+    #   - 9522:9522/udp
+    # network_mode: host
+    security_opt:
+      - no-new-privileges:true
+
+    restart: unless-stopped # always, unless-stopped, false
+    
+    volumes:
+      - $DOCKERDIR/appdata/evcc/config:/etc
+      - $DOCKERDIR/appdata/evcc/.evcc:/root/.evcc
+      # - $USERDIR:/usr
+      # - $DATADIR:/data
+      # - $MEDIADIR:/media
+
+    environment:
+      - $TZ:TZ
+      - $PUID:PUID
+      - $PGID:PGID
+    
+
+    labels:
+      - "traefik.enable=true"
+      # HTTP Routers Auth
+      - "traefik.http.routers.evcc-rtr.entrypoints=websecure"
+      - "traefik.http.routers.evcc-rtr.rule=Host(`evcc.$DOMAINNAME`)"
+      # Middlewares
+      - "traefik.http.routers.evcc-rtr-bypass.middlewares=chain-no-auth@file"
+      # - "traefik.http.routers.evcc-rtr.middlewares=chain-oauth@file"
+      # HTTP Services
+      - "traefik.http.routers.evcc-rtr.service=evcc-svc"
+      - "traefik.http.routers.evcc-rtr-bypass.service=evcc-svc"
+      - "traefik.http.services.evcc-svc.loadbalancer.server.port=7070" # this has to stay the name of the internal port used by the container, not the mapped port
+      # UPDATE IMAGE - if watchtower should update this image - disable for risky stuff like IP configs
+      - "com.centurylinklabs.watchtower.enable=true"
+      # Homepage Setup - if this should be included on Homepage
+      - homepage.group=Home Info # set group name to whatever works
+      - homepage.name=evcc
+      - homepage.icon=evcm.png
+      - homepage.href=http://evcc.$DOMAINNAME
+      - homepage.weight=0
+      # Homepage Weidget Setup
+      - homepage.widget.type=evcc
+      - homepage.widget.url=http://evcc:7070 # again, internal port for the container
+      # - homepage.widget.key=$evcc_api_key   
+      # HTTP Routers
+      # - "traefik.http.routers.evcc-rtr-bypass.entrypoints=websecure"
+      # - "traefik.http.routers.evcc-rtr-bypass.rule=Host(`evcc.$DOMAINNAME`) && Header(`traefik-auth-bypass-key`, `$TRAEFIK_AUTH_BYPASS_KEY`)" # Bypass Auth for LunaSea on iOS
+      # - "traefik.http.routers.evcc-rtr-bypass.priority=100"
+      # - "traefik.http.routers.evcc-rtr.priority=99"

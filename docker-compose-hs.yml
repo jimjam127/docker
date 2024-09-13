@@ -59,11 +59,11 @@ include:
   # - compose/$HOSTNAME/crowdsec.yml
   # - compose/$HOSTNAME/traefik-bouncer.yml
   # FRONTEND
-  - compose/$HOSTNAME/autoindex.yml
+  # - compose/$HOSTNAME/autoindex.yml
   - compose/$HOSTNAME/homepage.yml
   # - compose/$HOSTNAME/phpmyadmin.yml
-  - compose/$HOSTNAME/sitespeed.yml
-  - compose/$HOSTNAME/whoami.yml
+  # - compose/$HOSTNAME/sitespeed.yml
+  # - compose/$HOSTNAME/whoami.yml
   # BACKEND
   # - compose/$HOSTNAME/fileflows.yml
   # DOWNLOADERS
@@ -73,7 +73,8 @@ include:
   # - compose/$HOSTNAME/openaudible.yml
   # PVRS
   - compose/$HOSTNAME/sonarr.yml
-  - compose/$HOSTNAME/overseer.yml
+  - compose/$HOSTNAME/overseerr.yml
+  # - compose/$HOSTNAME/ombi.yml
   - compose/$HOSTNAME/radarr.yml
   - compose/$HOSTNAME/readarr.yml
   - compose/$HOSTNAME/kapowarr.yml
@@ -109,7 +110,7 @@ include:
   # - compose/$HOSTNAME/kasm.yml
   # - compose/$HOSTNAME/it-tools.yml
   # UTILITIES
-  # - compose/$HOSTNAME/firefox.yml
+  - compose/$HOSTNAME/firefox.yml
   # - compose/$HOSTNAME/firefly.yml
   # - compose/$HOSTNAME/peanut.yml
   # - compose/$HOSTNAME/dockge.yml
@@ -134,3 +135,5 @@ include:
   - compose/$HOSTNAME/watchtower.yml
   - compose/$HOSTNAME/plex-image-cleanup.yml
   - compose/$HOSTNAME/kometa.yml
+  # HOME STUFF
+  # - compose/$HOSTNAME/evcc.yml
