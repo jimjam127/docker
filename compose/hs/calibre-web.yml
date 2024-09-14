@@ -40,7 +40,7 @@ services:
       - "traefik.http.routers.calibre-web-rtr.priority=99"
       # Middlewares
       - "traefik.http.routers.calibre-web-rtr-bypass.middlewares=chain-no-auth@file"
-      #- "traefik.http.routers.calibre-web-rtr.middlewares=chain-oauth@file"
+      - "traefik.http.routers.calibre-web-rtr.middlewares=chain-oauth@file"
       # HTTP Services
       - "traefik.http.routers.calibre-web-rtr.service=calibre-web-svc"
       - "traefik.http.routers.calibre-web-rtr-bypass.service=calibre-web-svc"

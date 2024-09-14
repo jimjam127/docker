@@ -110,7 +110,7 @@ include:
   # - compose/$HOSTNAME/kasm.yml
   # - compose/$HOSTNAME/it-tools.yml
   # UTILITIES
-  - compose/$HOSTNAME/firefox.yml
+  # - compose/$HOSTNAME/firefox.yml
   # - compose/$HOSTNAME/firefly.yml
   # - compose/$HOSTNAME/peanut.yml
   # - compose/$HOSTNAME/dockge.yml
@@ -119,7 +119,7 @@ include:
   # MONITORING
   - compose/$HOSTNAME/glances.yml
   - compose/$HOSTNAME/grocy.yml
-  - compose/$HOSTNAME/homebridge.yml
+  # - compose/$HOSTNAME/homebridge.yml
   
 
   # FILE MANAGEMENT
@@ -137,3 +137,4 @@ include:
   - compose/$HOSTNAME/kometa.yml
   # HOME STUFF
   # - compose/$HOSTNAME/evcc.yml
+  # - compose/$HOSTNAME/homeassistant.yml
