@@ -62,7 +62,7 @@ services:
       - homepage.widget.type=plex
       - homepage.widget.url=http://plex:32400
       - homepage.widget.key=$PLEX_SERVER_TOKEN
-      - homepage.widget.fields=["albums","movies","tv"]
+      - homepage.widget.fields=["movies","tv"]
 
     secrets:
       - plex_claim

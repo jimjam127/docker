@@ -35,7 +35,7 @@ services:
       - "traefik.http.routers.audiobookshelf-rtr.entrypoints=websecure"
       - "traefik.http.routers.audiobookshelf-rtr.rule=Host(`audiobooks.$DOMAINNAME`)"
       # Middlewares
-      - "traefik.http.routers.audiobookshelf-rtr.middlewares=chain-oauth@file" #with this enabled, the app didn't work
+      # - "traefik.http.routers.audiobookshelf-rtr.middlewares=chain-oauth@file" #with this enabled, the app didn't work
       - "traefik.http.routers.authelia-rtr.middlewares=chain-no-auth@file"
       # HTTP Services
       - "traefik.http.routers.audiobookshelf-rtr.service=audiobookshelf-svc"
@@ -51,6 +51,6 @@ services:
       - homepage.widget.type=audiobookshelf
       - homepage.widget.url=http://audiobookshelf:80
       - homepage.widget.key=$AUDIOBOOKSHELF_API_KEY
-      - homepage.weight=0
+      - homepage.widget.fields=["books"]
 
     
