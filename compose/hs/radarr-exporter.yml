@@ -5,7 +5,7 @@ services:
     container_name: radarr-exporter
     security_opt:
       - no-new-privileges:true
-    restart: "no"
+    restart: unless-stopped
     # profiles: ["all", "media", "arrs"]
     networks:
       - t3_proxy

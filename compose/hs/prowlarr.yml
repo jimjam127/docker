@@ -5,7 +5,7 @@ services:
     container_name: prowlarr
     security_opt:
       - no-new-privileges:true
-    restart: unless-stopped
+    restart: always
     # profiles: ["apps", "all"]
     networks:
       - t3_proxy

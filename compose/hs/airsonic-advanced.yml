@@ -7,7 +7,7 @@ services:
       - default
     security_opt:
       - no-new-privileges:true
-    restart: "no"
+    restart: unless-stopped
     profiles: ["media", "all"]
     volumes:
       - $DOCKERDIR/appdata/airsonic/podcasts:/data/podcasts

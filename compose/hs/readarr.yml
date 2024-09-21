@@ -6,7 +6,7 @@ services:
     container_name: readarr
     security_opt:
       - no-new-privileges:true
-    restart: "no"
+    restart: always
     # profiles: ["media","arrs", "all"]
     networks:
       - t3_proxy

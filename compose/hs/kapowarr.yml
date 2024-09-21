@@ -48,13 +48,13 @@ services:
       - "traefik.http.services.kapowarr-svc.loadbalancer.server.port=5656"
       # UPDATE IMAGE
       - "com.centurylinklabs.watchtower.enable=true"
-      # Homepage Setup
-      - homepage.group=Media Indexers
-      - homepage.name=Kapowarr
-      - homepage.icon=kapowarr.png
-      - homepage.href=http://kapowarr.$DOMAINNAME
-      # - homepage.description=Media server
-      - homepage.widget.type=kapowarr
-      - homepage.widget.url=http://kapowarr:5656
-      # - homepage.widget.key=$KAPOWARR_API_KEY
-      - homepage.weight=3
+      # # Homepage Setup
+      # - homepage.group=Media Indexers
+      # - homepage.name=Kapowarr
+      # - homepage.icon=kapowarr.png
+      # - homepage.href=http://kapowarr.$DOMAINNAME
+      # # - homepage.description=Media server
+      # - homepage.widget.type=kapowarr
+      # - homepage.widget.url=http://kapowarr:5656
+      # # - homepage.widget.key=$KAPOWARR_API_KEY
+      # - homepage.weight=3

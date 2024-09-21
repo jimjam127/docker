@@ -2,7 +2,7 @@
   autoscan:
     image: hotio/autoscan
     container_name: autoscan
-    restart: "no"
+    restart: unless-stopped
     # profiles:
     # - media
     # - testing

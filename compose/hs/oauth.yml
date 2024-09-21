@@ -7,7 +7,7 @@ services:
     # image: thomseddon/traefik-forward-auth:2.1-arm # Use this image with Raspberry Pi
     security_opt:
       - no-new-privileges:true
-    restart: unless-stopped
+    restart: always
     # profiles: ["core", "all"]
     networks:
       - t3_proxy

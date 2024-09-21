@@ -7,7 +7,7 @@ services:
     security_opt:
       - no-new-privileges:true
     # privileged: true
-    restart: unless-stopped
+    restart: always
     # profiles: ["apps", "downloads", "all"]
     network_mode: "service:gluetun"
     # ports:
