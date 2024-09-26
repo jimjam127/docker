@@ -107,6 +107,7 @@ include:
   # - compose/$HOSTNAME/jellyfin.yml
   # DATABASES
   - compose/$HOSTNAME/calibre.yml
+  - compose/$HOSTNAME/vaultwarden.yml
   # ADMIN
   # - compose/$HOSTNAME/guacamole.yml
   # - compose/$HOSTNAME/kasm.yml
@@ -135,7 +136,7 @@ include:
   # - compose/$HOSTNAME/docker-gc.yml
   - compose/$HOSTNAME/deunhealth.yml
   - compose/$HOSTNAME/watchtower.yml
-  - compose/$HOSTNAME/plex-image-cleanup.yml
+  # - compose/$HOSTNAME/plex-image-cleanup.yml
   - compose/$HOSTNAME/kometa.yml
   # HOME STUFF
   # - compose/$HOSTNAME/evcc.yml

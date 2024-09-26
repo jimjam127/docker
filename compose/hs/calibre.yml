@@ -34,7 +34,7 @@ services:
       - "traefik.http.routers.calibre-rtr.rule=Host(`calibre.$DOMAINNAME`)"
       - "traefik.http.routers.calibre-rtr.priority=99"
       # Middlewares
-      - "traefik.http.routers.calibre-rtr-bypass.middlewares=chain-no-auth@file"
+      # - "traefik.http.routers.calibre-rtr-bypass.middlewares=chain-no-auth@file"
       - "traefik.http.routers.calibre-rtr.middlewares=chain-oauth@file"
       # HTTP Services
       - "traefik.http.routers.calibre-rtr.service=calibre-svc"

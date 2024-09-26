@@ -53,7 +53,7 @@ services:
       - "traefik.http.routers.tdarr-rtr.rule=Host(`tdarr.$DOMAINNAME_HS`)"
       - "traefik.http.routers.tdarr-rtr.priority=99"
       # Middlewares
-      - "traefik.http.routers.tdarr-rtr-bypass.middlewares=chain-no-auth@file"
+      # - "traefik.http.routers.tdarr-rtr-bypass.middlewares=chain-no-auth@file"
       - "traefik.http.routers.tdarr-rtr.middlewares=chain-oauth@file"
       # HTTP Services
       - "traefik.http.routers.tdarr-rtr.service=tdarr-svc"

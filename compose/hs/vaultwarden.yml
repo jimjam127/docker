@@ -1,0 +1,64 @@
+services:
+  # what does the service do?
+  # link.to.container.com
+  vaultwarden: # change this and update all
+    container_name: vaultwarden
+    image: vaultwarden/server:latest
+    # profiles: ["media", "arrs", "all"] # FOR FUTURE DEVELOPMENT
+
+    networks:
+      - t3_proxy #: #if assigning static ip, turn network into string element
+        # ipv4_address = 192.168.90.x
+      # - socket_proxy
+      # - bridge
+    ports:
+      - $vaultwarden_port:443
+      # - $vaultwarden_port2:1234
+
+    security_opt:
+      - no-new-privileges:true
+
+    restart: unless-stopped # always, unless-stopped, false
+    
+    volumes:
+      # - $DOCKERDIR/appdata/vaultwarden:/config
+      # - $USERDIR:/usr
+      - $DATADIR:/data
+      # - $MEDIADIR:/media
+
+    environment:
+      # - $TZ:TZ
+      # - $PUID:PUID
+      # - $PGID:PGID
+      WEBSOCKET_ENABLED: "true"
+    
+
+    labels:
+      - "traefik.enable=true"
+      # HTTP Routers Auth
+      - "traefik.http.routers.vaultwarden-rtr.entrypoints=websecure"
+      - "traefik.http.routers.vaultwarden-rtr.rule=Host(`vaultwarden.$DOMAINNAME`)"
+      # Middlewares
+      - "traefik.http.routers.vaultwarden-rtr-bypass.middlewares=chain-no-auth@file"
+      - "traefik.http.routers.vaultwarden-rtr.middlewares=chain-oauth@file"
+      # HTTP Services
+      - "traefik.http.routers.vaultwarden-rtr.service=vaultwarden-svc"
+      - "traefik.http.routers.vaultwarden-rtr-bypass.service=vaultwarden-svc"
+      - "traefik.http.services.vaultwarden-svc.loadbalancer.server.port=80" # this has to stay the name of the internal port used by the container, not the mapped port
+      # UPDATE IMAGE - if watchtower should update this image - disable for risky stuff like IP configs
+      - "com.centurylinklabs.watchtower.enable=true"
+      # # Homepage Setup - if this should be included on Homepage
+      # - homepage.group=GROUP # set group name to whatever works
+      # - homepage.name=vaultwarden
+      # - homepage.icon=vaultwarden.png
+      # - homepage.href=http://vaultwarden.$DOMAINNAME
+      # - homepage.weight=0
+      # # Homepage Weidget Setup
+      # - homepage.widget.type=vaultwarden
+      # - homepage.widget.url=http://vaultwarden:80 # again, internal port for the container
+      # # - homepage.widget.key=$vaultwarden_api_key   
+      # HTTP Routers
+      # - "traefik.http.routers.vaultwarden-rtr-bypass.entrypoints=websecure"
+      # - "traefik.http.routers.vaultwarden-rtr-bypass.rule=Host(`vaultwarden.$DOMAINNAME`) && Header(`traefik-auth-bypass-key`, `$TRAEFIK_AUTH_BYPASS_KEY`)" # Bypass Auth for LunaSea on iOS
+      # - "traefik.http.routers.vaultwarden-rtr-bypass.priority=100"
+      # - "traefik.http.routers.vaultwarden-rtr.priority=99"

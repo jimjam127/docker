@@ -38,8 +38,8 @@ services:
       - "traefik.http.routers.kavita-rtr.entrypoints=websecure"
       - "traefik.http.routers.kavita-rtr.rule=Host(`kavita.$DOMAINNAME`)"
       # Middlewares
-      - "traefik.http.routers.kavita-rtr-bypass.middlewares=chain-no-auth@file"
-      # - "traefik.http.routers.kavita-rtr.middlewares=chain-oauth@file"
+      # - "traefik.http.routers.kavita-rtr-bypass.middlewares=chain-no-auth@file"
+      - "traefik.http.routers.kavita-rtr.middlewares=chain-oauth@file"
       # HTTP Services
       - "traefik.http.routers.kavita-rtr.service=kavita-svc"
       - "traefik.http.routers.kavita-rtr-bypass.service=kavita-svc"
