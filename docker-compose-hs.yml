@@ -34,6 +34,12 @@ secrets:
     file: $DOCKERDIR/secrets/plex_claim
   watchtower_notifications:
     file: $SECRETSDIR/watchtower_notifications
+  authelia_jwt_secret:
+    file: $DOCKERDIR/secrets/authelia_jwt_secret
+  authelia_session_secret:
+    file: $DOCKERDIR/secrets/authelia_session_secret
+  authelia_storage_encryption_key:
+    file: $DOCKERDIR/secrets/authelia_storage_encryption_key
  ### this doesn't exist
  #  mysql_root_password:
  #    file: $DOCKERDIR/secrets/mysql_root_password
@@ -54,6 +60,7 @@ include:
   - compose/$HOSTNAME/traefik.yml
   - compose/$HOSTNAME/socket-proxy.yml
   - compose/$HOSTNAME/oauth.yml
+  - compose/$HOSTNAME/authelia.yml
   - compose/$HOSTNAME/portainer.yml
   # SECURITY
   # - compose/$HOSTNAME/crowdsec.yml

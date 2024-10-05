@@ -40,7 +40,7 @@ services:
       - "traefik.http.routers.vaultwarden-rtr.rule=Host(`vaultwarden.$DOMAINNAME`)"
       # Middlewares
       - "traefik.http.routers.vaultwarden-rtr-bypass.middlewares=chain-no-auth@file"
-      - "traefik.http.routers.vaultwarden-rtr.middlewares=chain-oauth@file"
+      # - "traefik.http.routers.vaultwarden-rtr.middlewares=chain-oauth@file"
       # HTTP Services
       - "traefik.http.routers.vaultwarden-rtr.service=vaultwarden-svc"
       - "traefik.http.routers.vaultwarden-rtr-bypass.service=vaultwarden-svc"
