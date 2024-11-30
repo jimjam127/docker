@@ -47,15 +47,15 @@ services:
       - "traefik.http.services.calibre-web-svc.loadbalancer.server.port=8083"
       # UPDATE IMAGE
       - "com.centurylinklabs.watchtower.enable=true"
-      # Homepage Setup
-      - homepage.group=Media Indexers
-      - homepage.name=Calibre-Web
-      - homepage.icon=calibre-web.png
-      - homepage.href=http://calibre-web.shatteredcastle.com/
-      - homepage.weight = 10
-      # Homepage Widget Conf
-      - homepage.widget.type=calibreweb
-      - homepage.widget.url=http://calibre-web:8083
-      - homepage.widget.username=admin
-      - homepage.widget.password=admin123   
+      # # Homepage Setup
+      # - homepage.group=Media Indexers
+      # - homepage.name=Calibre-Web
+      # - homepage.icon=calibre-web.png
+      # - homepage.href=http://calibre-web.shatteredcastle.com/
+      # - homepage.weight = 15
+      # # Homepage Widget Conf
+      # - homepage.widget.type=calibreweb
+      # - homepage.widget.url=http://calibre-web:8083
+      # - homepage.widget.username=admin
+      # - homepage.widget.password=admin123   
 

@@ -35,7 +35,7 @@ services:
       - homepage.name=Overseerr
       - homepage.icon=overseerr.png
       - homepage.href=http://overseerr.$DOMAINNAME
-      - homepage.weight=1
+      - homepage.weight=0
       # - homepage.description=Media server
       - homepage.widget.type=overseerr
       - homepage.widget.url=http://overseerr:5055

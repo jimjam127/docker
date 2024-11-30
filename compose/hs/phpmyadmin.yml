@@ -7,13 +7,13 @@ services:
     security_opt:
       - no-new-privileges:true
     restart: unless-stopped
-    profiles: ["apps", "all"]
+    # profiles: ["apps", "all"]
     networks:
       - t3_proxy
     environment:
       - PMA_HOST=$MARIADB_HOST
       - PMA_PORT=$MARIADB_PORT
-      #- PMA_ARBITRARY=1
+      # - PMA_ARBITRARY=1
       - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/mysql_root_password
     secrets:
       - mysql_root_password

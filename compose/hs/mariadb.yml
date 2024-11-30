@@ -9,9 +9,9 @@ services:
     security_opt:
       - no-new-privileges:true
     restart: unless-stopped
-    profiles: ["dbs", "all"]
+    # profiles: ["dbs", "all"]
     ports:
-      - $mariadb_port:3306
+      - 3306:3306
     volumes:
       - $DOCKERDIR/appdata/mariadb/data:/config
     environment:

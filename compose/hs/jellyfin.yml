@@ -16,11 +16,36 @@ services:
       - "8096:8096"
       # - "8920:8920" # Emby also uses same port if running both
     environment:
+      PGID: $PGID
+      PUID: $PUID
       UMASK_SET: 022
       TZ: $TZ
     volumes:
       - $DOCKERDIR/appdata/jellyfin:/config
-      - $MEDIADIR/:/data/media1
+      - $MEDIADIR:/data/media
       #- $DATADIR/data2/media:/data/media2
       #- $EXTDIR/ssd/downloads:/data/downloads
       - /dev/shm:/data/transcode # Offload transcoding to RAM if you have enough RAM
+    labels:
+      - "traefik.enable=true"
+      # HTTP Routers
+      - "traefik.http.routers.jellyfin-rtr.entrypoints=websecure"
+      - "traefik.http.routers.jellyfin-rtr.rule=Host(`jellyfin.$DOMAINNAME`)"
+      # Middlewares
+      # - "traefik.http.routers.jellyfin-rtr.middlewares=chain-oauth@file"
+      - "traefik.http.routers.jellyfin-rtr.middlewares=chain-no-auth@file"
+      # HTTP Services
+      - "traefik.http.routers.jellyfin-rtr.service=jellyfin-svc"
+      - "traefik.http.services.jellyfin-svc.loadbalancer.server.port=8096"
+      # UPDATE IMAGE
+      - "com.centurylinklabs.watchtower.enable=true"
+      # # Homepage Setup
+      # - homepage.group=Media
+      # - homepage.name=Jellyfin
+      # - homepage.icon=jellyfin.png
+      # - homepage.href=http://jellyfin.$DOMAINNAME
+      # # - homepage.description=Media server
+      # - homepage.widget.type=jellyfin
+      # - homepage.widget.url=http://jellyfin:8096
+      # - homepage.widget.key=$jellyfin_SERVER_TOKEN
+      # - homepage.widget.fields=["movies","tv"]
