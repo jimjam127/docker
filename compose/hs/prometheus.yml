@@ -5,14 +5,15 @@ services:
     container_name: prometheus
     networks:
       - default
+      - t3_proxy
     security_opt:
       - no-new-privileges:true
     restart: unless-stopped
     # profiles: ["dbs", "all"]
     ports:
-      - "$prometheus_port:9090
+      - $prometheus_port:9090
     volumes:
-      - $DOCKERDIR/appdata/prometheus/config:/etc/prometheus
+      - $DOCKERDIR/appdata/prometheus/config/prometheus.yml:/etc/prometheus/prometheus.yml:ro
       - $DOCKERDIR/appdata/prometheus/data:/prometheus
     user: $PUID:$PGID
     command:

@@ -133,8 +133,10 @@ include:
   # - compose/$HOSTNAME/bazarr.yml
   # - compose/$HOSTNAME/picard.yml
   # MONITORING
-  # - compose/$HOSTNAME/grafana.yml
-  # - compose/$HOSTNAME/uptime-kuma.yml
+  - compose/$HOSTNAME/prometheus.yml
+
+  - compose/$HOSTNAME/grafana.yml
+  - compose/$HOSTNAME/uptime-kuma.yml
   - compose/$HOSTNAME/dozzle.yml
   # - compose/$HOSTNAME/scrutiny.yml
   # - compose/$HOSTNAME/radarr-exporter.yml
