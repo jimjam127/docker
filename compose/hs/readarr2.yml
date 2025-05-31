@@ -43,11 +43,11 @@ services:
       - "com.centurylinklabs.watchtower.enable=true"
       # Homepage Setup
       - homepage.group=Media Indexers
-      - homepage.name=Readarr2
+      - homepage.name=eBooks
       - homepage.icon=readarr.png
       - homepage.href=http://readarr2.$DOMAINNAME
       # - homepage.description=Media server
-      - homepage.widget.type=readarr2
+      - homepage.widget.type=readarr
       - homepage.widget.url=http://readarr2:8787
       - homepage.widget.key=$READARR2_API_KEY
       - homepage.widget.fields=["books","authors","wanted"]

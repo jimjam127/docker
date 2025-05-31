@@ -19,7 +19,39 @@ networks:
     ipam:
       config:
         - subnet: 192.168.90.0/24
-
+########################### EXTENSION FIELDS
+# Helps eliminate repetition of sections
+# More Info on how to use this: https://github.com/htpcBeginner/docker-traefik/pull/228
+ 
+# Common environment values
+x-environment: &default-tz-puid-pgid
+  TZ: $TZ
+  PUID: $PUID
+  PGID: $PGID
+ 
+# Keys common to some of the core services that we always to automatically restart on failure
+x-common-keys-core: &common-keys-core
+  networks:
+    - t3_proxy
+  security_opt:
+    - no-new-privileges:true
+  restart: always
+ 
+# Keys common to some of the dependent services/apps
+x-common-keys-apps: &common-keys-apps
+  networks:
+    - t3_proxy
+  security_opt:
+    - no-new-privileges:true
+  restart: unless-stopped
+ 
+# Keys common to some of the services in media-services.txt
+x-common-keys-media: &common-keys-media
+  networks:
+    - t3_proxy
+  security_opt:
+    - no-new-privileges:true
+  restart: "no"
 ########################### SECRETS
 secrets:
   basic_auth_credentials:
@@ -62,12 +94,13 @@ include:
   - compose/$HOSTNAME/authelia.yml
   - compose/$HOSTNAME/portainer.yml
   # SECURITY
-  # - compose/$HOSTNAME/crowdsec.yml
+  - compose/$HOSTNAME/crowdsec.yml
   # - compose/$HOSTNAME/traefik-bouncer.yml
   # FRONTEND
   # - compose/$HOSTNAME/autoindex.yml
   - compose/$HOSTNAME/homepage.yml
   - compose/$HOSTNAME/phpmyadmin.yml
+  # - compose/$HOSTNAME/ghost.yml
   # - compose/$HOSTNAME/sitespeed.yml
   # - compose/$HOSTNAME/whoami.yml
   # BACKEND
@@ -80,6 +113,7 @@ include:
   # PVRS
   - compose/$HOSTNAME/sonarr.yml
   - compose/$HOSTNAME/overseerr.yml
+  - compose/$HOSTNAME/jellyseerr.yml
   # - compose/$HOSTNAME/ombi.yml
   - compose/$HOSTNAME/radarr.yml
   - compose/$HOSTNAME/readarr.yml
@@ -87,7 +121,7 @@ include:
   
   # - compose/$HOSTNAME/kapowarr.yml
   # - compose/$HOSTNAME/lidarr.yml
-  - compose/$HOSTNAME/calibre-web.yml
+  # - compose/$HOSTNAME/calibre-web.yml
   - compose/$HOSTNAME/audiobookshelf.yml
   - compose/$HOSTNAME/kavita.yml
 
@@ -96,7 +130,7 @@ include:
   # COMPLEMENTARY APPS
   - compose/$HOSTNAME/prowlarr.yml
   # - compose/$HOSTNAME/notifiarr.yml
-  - compose/$HOSTNAME/bazarr.yml
+  # - compose/$HOSTNAME/bazarr.yml
   # - compose/$HOSTNAME/picard.yml
   # MONITORING
   # - compose/$HOSTNAME/grafana.yml
@@ -109,12 +143,12 @@ include:
   # - compose/$HOSTNAME/prowlarr-exporter.yml
   # - compose/$HOSTNAME/sabnzbd-exporter.yml
   # - compose/$HOSTNAME/node-exporter.yml
-  - compose/$HOSTNAME/tautulli.yml
+  # - compose/$HOSTNAME/tautulli.yml
   # MEDIA SERVERS
   - compose/$HOSTNAME/plex.yml
   - compose/$HOSTNAME/jellyfin.yml
   # DATABASES
-  - compose/$HOSTNAME/calibre.yml
+  # - compose/$HOSTNAME/calibre.yml
   - compose/$HOSTNAME/adminer.yml
   - compose/$HOSTNAME/vaultwarden.yml
   - compose/$HOSTNAME/mariadb.yml
@@ -123,15 +157,15 @@ include:
   # - compose/$HOSTNAME/kasm.yml
   # - compose/$HOSTNAME/it-tools.yml
   # UTILITIES
-  - compose/$HOSTNAME/firefox.yml
-  - compose/$HOSTNAME/firefly.yml
+  # - compose/$HOSTNAME/firefox.yml
+  # - compose/$HOSTNAME/firefly.yml
   # - compose/$HOSTNAME/peanut.yml
-  # - compose/$HOSTNAME/dockge.yml
+  # - compose/$HOSTNAME/ghostfolio.yml
   # OTHER
   # - compose/$HOSTNAME/baikal.yml
   # MONITORING
   - compose/$HOSTNAME/glances.yml
-  - compose/$HOSTNAME/grocy.yml
+  # - compose/$HOSTNAME/grocy.yml
   # - compose/$HOSTNAME/homebridge.yml
   
 
@@ -147,7 +181,7 @@ include:
   - compose/$HOSTNAME/deunhealth.yml
   - compose/$HOSTNAME/watchtower.yml
   # - compose/$HOSTNAME/plex-image-cleanup.yml
-  - compose/$HOSTNAME/kometa.yml
+  # - compose/$HOSTNAME/kometa.yml
   # HOME STUFF
   # - compose/$HOSTNAME/evcc.yml
   # - compose/$HOSTNAME/homeassistant.yml

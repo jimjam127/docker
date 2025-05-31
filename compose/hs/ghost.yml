@@ -1,0 +1,66 @@
+services:
+  # Ghost is a powerful app for professional publishers to create, share, and grow a business around their content. It comes with modern tools to build a website, publish content, send newsletters & offer paid subscriptions to members.
+  # https://hub.docker.com/_/ghost
+  ghost: # change this and update all
+    container_name: ghost
+    image: ghost:5-alpine
+    # profiles: ["media", "arrs", "all"] # FOR FUTURE DEVELOPMENT
+
+    networks:
+      - t3_proxy #: #if assigning static ip, turn network into string element
+        # ipv4_address = 192.168.90.x
+      # - socket_proxy
+      # - bridge
+      - default
+    ports:
+      - $ghost_port:2368
+      # - $ghost_port2:1234
+
+    security_opt:
+      - no-new-privileges:true
+
+    restart: unless-stopped # always, unless-stopped, false
+    
+    volumes:
+      - $DOCKERDIR/appdata/ghost:/var/lib/ghost/content
+
+    environment:
+      - database__client: mysql
+      - database__connection__host: mariadb
+      - database__connection__user: root
+      - database__connection__password: /run/secrets/mysql_root_password
+      - database__connection__database: ghost
+      - url: ghost.shatteredcastl.com
+    
+    secrets:
+      - mysql_root_password
+
+    labels:
+      - "traefik.enable=true"
+      # HTTP Routers Auth
+      - "traefik.http.routers.ghost-rtr.entrypoints=websecure"
+      - "traefik.http.routers.ghost-rtr.rule=Host(`ghost.$DOMAINNAME`)"
+      # Middlewares
+      # - "traefik.http.routers.ghost-rtr-bypass.middlewares=chain-no-auth@file"
+      - "traefik.http.routers.ghost-rtr.middlewares=chain-oauth@file"
+      # HTTP Services
+      - "traefik.http.routers.ghost-rtr.service=ghost-svc"
+      - "traefik.http.routers.ghost-rtr-bypass.service=ghost-svc"
+      - "traefik.http.services.ghost-svc.loadbalancer.server.port=2368" # this has to stay the name of the internal port used by the container, not the mapped port
+      # UPDATE IMAGE - if watchtower should update this image - disable for risky stuff like IP configs
+      - "com.centurylinklabs.watchtower.enable=true"
+      # Homepage Setup - if this should be included on Homepage
+      # - homepage.group=GROUP # set group name to whatever works
+      # - homepage.name=ghost
+      # - homepage.icon=ghost.png
+      # - homepage.href=http://ghost.$DOMAINNAME
+      # - homepage.weight=0
+      # # Homepage Weidget Setup
+      # - homepage.widget.type=ghost
+      # - homepage.widget.url=http://ghost:80 # again, internal port for the container
+      # - homepage.widget.key=$ghost_api_key   
+      # HTTP Routers
+      # - "traefik.http.routers.ghost-rtr-bypass.entrypoints=websecure"
+      # - "traefik.http.routers.ghost-rtr-bypass.rule=Host(`ghost.$DOMAINNAME`) && Header(`traefik-auth-bypass-key`, `$TRAEFIK_AUTH_BYPASS_KEY`)" # Bypass Auth for LunaSea on iOS
+      # - "traefik.http.routers.ghost-rtr-bypass.priority=100"
+      # - "traefik.http.routers.ghost-rtr.priority=99"

@@ -24,6 +24,7 @@ services:
       TZ: $TZ
       PUID: $PUID
       PGID: $PGID
+      HOMEPAGE_ALLOWED_HOSTS: $DOMAINNAME, $SERVER_IP:$homepage_port
 
 
     labels:

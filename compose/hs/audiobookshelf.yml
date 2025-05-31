@@ -23,6 +23,7 @@ services:
 
     volumes:
       - $MEDIADIR/Books/Audiobooks:/audiobooks
+      - $MEDIADIR/Books/eBooks:/eBooks
       - $DOCKERDIR/appdata/audiobookshelf/config:/config
       - $DOCKERDIR/appdata/audiobookshelf/metadata:/metadata
     
