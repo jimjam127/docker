@@ -112,7 +112,7 @@ include:
   # - compose/$HOSTNAME/openaudible.yml
   # PVRS
   - compose/$HOSTNAME/sonarr.yml
-  - compose/$HOSTNAME/overseerr.yml
+  # - compose/$HOSTNAME/overseerr.yml
   - compose/$HOSTNAME/jellyseerr.yml
   # - compose/$HOSTNAME/ombi.yml
   - compose/$HOSTNAME/radarr.yml
@@ -145,7 +145,7 @@ include:
   # - compose/$HOSTNAME/node-exporter.yml
   # - compose/$HOSTNAME/tautulli.yml
   # MEDIA SERVERS
-  - compose/$HOSTNAME/plex.yml
+  # - compose/$HOSTNAME/plex.yml
   - compose/$HOSTNAME/jellyfin.yml
   # DATABASES
   # - compose/$HOSTNAME/calibre.yml
@@ -177,7 +177,7 @@ include:
   # NETWORK
   - compose/$HOSTNAME/gluetun.yml
   # MAINTENANCE
-  # - compose/$HOSTNAME/docker-gc.yml
+  - compose/$HOSTNAME/docker-gc.yml
   - compose/$HOSTNAME/deunhealth.yml
   - compose/$HOSTNAME/watchtower.yml
   # - compose/$HOSTNAME/plex-image-cleanup.yml
