@@ -37,7 +37,7 @@ services:
       - homepage.icon=homebridge.png
       - homepage.href=http://homebridge.$DOMAINNAME
       - homepage.weight=0
-      # Homepage Weidget Setup
+      # Homepage Widget Setup
       - homepage.widget.type=homebridge
       - homepage.widget.url=http://homebridge:8581 # again, internal port for the container
       - homepage.widget.username=jeearle

@@ -57,7 +57,7 @@ services:
       - homepage.icon=evcm.png
       - homepage.href=http://evcc.$DOMAINNAME
       - homepage.weight=0
-      # Homepage Weidget Setup
+      # Homepage Widget Setup
       - homepage.widget.type=evcc
       - homepage.widget.url=http://evcc:7070 # again, internal port for the container
       # - homepage.widget.key=$evcc_api_key   
