@@ -29,5 +29,7 @@ services:
       # - $EXTDRIVE/zbox/var/log:/logs/zbox:ro
       - $DOCKERDIR/appdata/crowdsec/data:/var/lib/crowdsec/data
       - $DOCKERDIR/appdata/crowdsec/config:/etc/crowdsec
+      - $DOCKERDIR/appdata/crowdsec/geoip:/etc/crowdsec/geoip:ro
+      - $DOCKERDIR/appdata/crowdsec/config/enrichments:/etc/crowdsec/enrichments:ro
     command:
       - '--prometheus'

@@ -15,6 +15,18 @@ services:
     volumes:
       - $DOCKERDIR/appdata/prometheus/config/prometheus.yml:/etc/prometheus/prometheus.yml:ro
       - $DOCKERDIR/appdata/prometheus/data:/prometheus
+    labels:
+      - "traefik.enable=true"
+      # HTTP Routers
+      - "traefik.http.routers.prometheus-rtr.entrypoints=websecure"
+      - "traefik.http.routers.prometheus-rtr.rule=Host(`prometheus.$DOMAINNAME`)"
+      # Middlewares
+      - "traefik.http.routers.prometheus-rtr.middlewares=chain-oauth@file"
+      # HTTP Services
+      - "traefik.http.routers.prometheus-rtr.service=prometheus-svc"
+      - "traefik.http.services.prometheus-svc.loadbalancer.server.port=9090"
+      # UPDATE IMAGE
+      - "com.centurylinklabs.watchtower.enable=true"
     user: $PUID:$PGID
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'

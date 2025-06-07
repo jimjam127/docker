@@ -1,0 +1,38 @@
+services:
+  # VictoriaMetrics – Long-term metrics storage (Prometheus remote_write)
+  victoriametrics:
+    image: victoriametrics/victoria-metrics:v1.118.0
+    container_name: victoriametrics
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
+    networks:
+      - default
+      - t3_proxy
+    ports:
+      - $victoriametrics_port:8428
+    user: "$PUID:$PGID" 
+    volumes:
+      # Mount host data folder to /storage inside the container
+      - $DOCKERDIR/appdata/victoriametrics/data:/storage
+      # - $DOCKERDIR/appdata/victoriametrics/geoip:/geoip:ro
+      # - $DOCKERDIR/appdata/victoriametrics/geoip/GeoLite2-City.mmdb:/GeoLite2-City.mmdb:ro
+      # - $DOCKERDIR/appdata/victoriametrics/geoip/GeoLite2-ASN.mmdb:/GeoLite2-ASN.mmdb:ro
+    labels:
+      - "traefik.enable=true"
+      # HTTP Routers
+      - "traefik.http.routers.victoriametrics-rtr.entrypoints=websecure"
+      - "traefik.http.routers.victoriametrics-rtr.rule=Host(`victoriametrics.$DOMAINNAME`)"
+      # Middlewares
+      - "traefik.http.routers.victoriametrics-rtr.middlewares=chain-oauth@file"
+      # HTTP Services
+      - "traefik.http.routers.victoriametrics-rtr.service=victoriametrics-svc"
+      - "traefik.http.services.victoriametrics-svc.loadbalancer.server.port=8428"
+      # UPDATE IMAGE
+      - "com.centurylinklabs.watchtower.enable=true"
+    command:
+      # Instruct VM to store its data under /storage, not /victoria-metrics-data
+      - '-storageDataPath=/storage'
+      - '-retentionPeriod=1'  # keep 1-day retention as before
+      # - '-geoipDB=/geoip/GeoLite2-City.mmdb'
+      # - '-geoipASNDB=/geoip/GeoLite2-ASN.mmdb'

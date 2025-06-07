@@ -134,7 +134,8 @@ include:
   # - compose/$HOSTNAME/picard.yml
   # MONITORING
   - compose/$HOSTNAME/prometheus.yml
-
+  - compose/$HOSTNAME/victoriametrics.yml
+  - compose/$HOSTNAME/vmagent.yml
   - compose/$HOSTNAME/grafana.yml
   - compose/$HOSTNAME/uptime-kuma.yml
   - compose/$HOSTNAME/dozzle.yml

@@ -1,0 +1,29 @@
+services:
+  # vmagent: scrapes CrowdSec LAPI + enriches with GeoIP/ASN → remote_write to VM
+  vmagent:
+    image: victoriametrics/vmagent:latest
+    container_name: vmagent
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - default
+      - t3_proxy
+    # Mount the custom Prometheus scrape config for LAPI
+    volumes:
+      - $DOCKERDIR/appdata/vmagent/config/prometheus.yml:/etc/vmagent/prometheus.yml:ro
+      # Mount the GeoIP and ASN DBs we downloaded in Step 1:
+      # - $DOCKERDIR/appdata/victoriametrics/geoip:/geoip:ro
+
+    # Tell vmagent to:
+    #   • use /etc/vmagent/prometheus.yml as its scrape config
+    #   • remote_write into VictoriaMetrics at victoriametrics:8428
+    #   • enable GeoIP/ASN lookups using the mounted .mmdb files
+    command:
+      - '-promscrape.config=/etc/vmagent/prometheus.yml'
+      - '-remoteWrite.url=http://victoriametrics:8428/api/v1/write'
+      # - '-geoipDB=/geoip/GeoLite2-City.mmdb'
+      # - '-geoipASNDB=/geoip/GeoLite2-ASN.mmdb'
+      - '-enableTCP6'
+    depends_on:
+      - victoriametrics
