@@ -55,8 +55,6 @@ services:
       # Homepage Widget Setup
       - homepage.widget.type=kavita
       - homepage.widget.url=http://kavita:5000 # again, internal port for the container
-      - homepage.widget.username=jeearle
-      - homepage.widget.password=bigoted-poorly-starbuck
       # - homepage.widget.key=$kavita_api_key   
       # HTTP Routers
       # - "traefik.http.routers.kavita-rtr-bypass.entrypoints=websecure"

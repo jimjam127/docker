@@ -39,6 +39,4 @@ services:
       - homepage.weight=0
       # Homepage Widget Setup
       - homepage.widget.type=homebridge
-      - homepage.widget.url=http://homebridge:8581 # again, internal port for the container
-      - homepage.widget.username=jeearle
-      - homepage.widget.password=bigoted-poorly-starbuck
+      - homepage.widget.url=http://homebridge:8581 # again, internal port for the containerk
