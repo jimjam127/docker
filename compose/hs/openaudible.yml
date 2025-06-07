@@ -3,9 +3,9 @@ services:
     image: ghcr.io/lanjelin/openaudible-docker:latest
     container_name: openaudible
     environment:
-      - $TZ:TZ
-      - $PUID:PUID
-      - $PGID:PGID
+      - TZ=$TZ
+      - PUID=$PUID
+      - PGID=$PGID
       #- CUSTOM_USER=JohnDoe # optional, but recommended if exposing to -
       #- PASSWORD=a-safe-pw  # the internet without any other form of authentication
     networks:

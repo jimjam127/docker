@@ -2,7 +2,7 @@ services:
   # FRONT-END APP FOR AUDIOBOOKS - LINKED TO PHONE AND WEB APPS
   # https://www.audiobookshelf.org/
   audiobookshelf:
-    container_name: audioboookshelf
+    container_name: audiobookshelf
     image: ghcr.io/advplyr/audiobookshelf:latest
     # profiles: ["media", "arrs", "all"] # FOR FUTURE DEVELOPMENT
 
@@ -17,9 +17,9 @@ services:
     restart: unless-stopped
 
     environment:
-      - $TZ:TZ
-      - $PUID:PUID
-      - $PGID:PGID
+      - TZ=$TZ
+      - PUID=$PUID
+      - PGID=$PGID
 
     volumes:
       - $MEDIADIR/Books/Audiobooks:/audiobooks
