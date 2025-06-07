@@ -53,7 +53,7 @@ services:
       # - homepage.icon=vaultwarden.png
       # - homepage.href=http://vaultwarden.$DOMAINNAME
       # - homepage.weight=0
-      # # Homepage Weidget Setup
+      # # Homepage Widget Setup
       # - homepage.widget.type=vaultwarden
       # - homepage.widget.url=http://vaultwarden:80 # again, internal port for the container
       # # - homepage.widget.key=$vaultwarden_api_key   

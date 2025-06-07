@@ -52,7 +52,7 @@ services:
       - homepage.icon=cname.png
       - homepage.href=http://cname.$DOMAINNAME
       - homepage.weight=0
-      # Homepage Weidget Setup
+      # Homepage Widget Setup
       - homepage.widget.type=cname
       - homepage.widget.url=http://cname:80 # again, internal port for the container
       # - homepage.widget.key=$cname_api_key   

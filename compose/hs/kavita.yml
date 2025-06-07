@@ -52,7 +52,7 @@ services:
       - homepage.icon=kavita.png
       - homepage.href=http://kavita.$DOMAINNAME
       - homepage.weight=0
-      # Homepage Weidget Setup
+      # Homepage Widget Setup
       - homepage.widget.type=kavita
       - homepage.widget.url=http://kavita:5000 # again, internal port for the container
       - homepage.widget.username=jeearle

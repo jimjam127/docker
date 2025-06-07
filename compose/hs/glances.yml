@@ -52,7 +52,7 @@ services:
       # - homepage.icon=glances.png
       # - homepage.href=http://glances.$DOMAINNAME
       # - homepage.weight=0
-      # # Homepage Weidget Setup
+      # # Homepage Widget Setup
       # - homepage.widget.type=glances
       # - homepage.widget.url=http://glances:61208 # again, internal port for the container
       # - homepage.widget.version=4

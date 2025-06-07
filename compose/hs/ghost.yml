@@ -55,7 +55,7 @@ services:
       # - homepage.icon=ghost.png
       # - homepage.href=http://ghost.$DOMAINNAME
       # - homepage.weight=0
-      # # Homepage Weidget Setup
+      # # Homepage Widget Setup
       # - homepage.widget.type=ghost
       # - homepage.widget.url=http://ghost:80 # again, internal port for the container
       # - homepage.widget.key=$ghost_api_key   
