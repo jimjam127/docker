@@ -27,9 +27,9 @@ services:
       
 
     environment:
-      - $TZ:TZ
-      - $PUID:PUID
-      - $PGID:PGID
+      - TZ=$TZ
+      - PUID=$PUID
+      - PGID=$PGID
     
 
     labels:
