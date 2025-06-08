@@ -1,74 +1,34 @@
-# Description
+# Docker Compose Examples
 
-This is the updated docker-compose repo of all the media, home, and web server apps described on SmartHomeBeginner.com. 
+This repository contains Docker Compose snippets for several hosts. You'll find example stacks for `hs`, `ds918`, `mds`, `dns`, and `ws` alongside helper scripts and sample configuration files.
 
-## Docker Server Series:
+## Getting Started
 
-### Ubuntu/Debian:
+Clone the repository and copy any `.example` files to customize settings:
 
-<ol>
-<li><a href="https://www.smarthomebeginner.com/ultimate-docker-server-1-os-preparation/">Ultimate Docker Server: Getting Started with OS Preparation</a> <span style="color:#6b5b95">[<a href="https://youtu.be/-ZSQdJ62r-Q" target="_blank" rel="noopener">VIDEO</a>]</span> <span style="color:#50C878">[2024]</span></li>
-<li><a href="https://www.smarthomebeginner.com/docker-media-server-2024/">Docker Media Server Ubuntu/Debian with 60+ Awesome Apps</a> <span style="color:#50C878">[2024]</span></li>
-<li>ZeroTier VPN Ubuntu, Docker, Synology, Windows: Secure on-the-go access <span style="color:#ffa400">[coming soon]</span></li>
-<li>Nginx Proxy Manager Docker Compose Guide: Simplest Reverse Proxy <span style="color:#ffa400">[coming soon]</span></li>
-<li>Traefik Reverse Proxy
-<ul>
-<li>Traefik v3: <a href="https://www.smarthomebeginner.com/traefik-v3-docker-compose-guide-2024/">Ultimate Traefik v3 Docker Compose Guide [2024]: LE, SSL, Reverse Proxy</a> <span style="color:#50C878">[2024]</span></li>
-<li>Traefik v2: <a href="https://www.smarthomebeginner.com/traefik-docker-compose-guide-2024/">Ultimate Traefik Docker Compose Guide: LE, SSL, Reverse Proxy</a> <span style="color:#50C878">[2024]</span></li>
-</ul>
-</li>
-<li><a href="https://www.smarthomebeginner.com/authelia-docker-compose-guide-2024/">Authelia Docker Compose Guide: Secure 2-Factor Authentication</a> <span style="color:#50C878">[2024]</span></li>
-<li><a href="https://www.smarthomebeginner.com/google-oauth-traefik-forward-auth-2024/">Google OAuth Docker Compose Guide: Multi-Factor Authentication</a> <span style="color:#50C878">[2024]</span></li>
-<li><a href="https://www.smarthomebeginner.com/traefik-docker-security-best-practices/">Docker Security Practices for Homelab: Secrets, Firewall, and more</a></li>
-<li><a href="https://www.smarthomebeginner.com/cloudflare-settings-for-traefik-docker/">Cloudflare Settings for Docker Traefik Stacks</a></li>
-<li>Implementing a Backup System for Docker Traefik Stack <span style="color:#ffa400">[coming soon]</span></li>
-</ol>
+```bash
+git clone https://github.com/USERNAME/docker.git
+cd docker
+cp .env.example .env # if present
+```
 
-### Synology:
-- [Ultimate Synology NAS Docker Compose Media Server 2022](https://www.smarthomebeginner.com/synology-nas-docker-media-server-2022/)
+Bring up the home server stack:
 
-### Web Server:
-- [WordPress on Docker with Nginx, Traefik, LE SSL, Security, and Speed](https://www.smarthomebeginner.com/wordpress-on-docker-traefik/)
+```bash
+docker compose -f docker-compose-hs.yml up -d
+```
 
-### Automate the Process:
+Compose files under `compose/` can be mixed and matched for other hosts.
 
-- [Auto-Traefik: Dead Simple Traefik Reverse Proxy Automator for Docker](https://www.smarthomebeginner.com/auto-traefik/) [[VIDEO](https://www.youtube.com/watch?v=ePBLJTyRgdQ&list=PL1Hno7tIbSWViTyCXl9xNdXXU-1bVxIFD)]
+## Repository Layout
 
-# Support My Work
+- `docker-compose-hs.yml` – main stack used on the home server
+- `compose/` – per-host Docker Compose snippets
+- `scripts/` – helper scripts
+- `appdata/` – sample application configs
+- `shared/` – shared assets such as `bash_aliases`
 
-Documenting, writing guides, and keeping this repo update-to-date takes hundreds of hours of work. Please consider supporting my work to show your appreciation. 
-
-## Did this Repo help you?
-
-<div style="text-align:center;margin:20px"><a href="https://www.smarthomebeginner.com/membership-account/memberships-products-services/" target="_blank" rel="nofollow noopener noreferrer"><img src="https://www.smarthomebeginner.com/images/2024/01/become-a-member.png" alt="" width="258" height="76" /></a></div>
-
-## Join our Community
-
-<div style="text-align:center;margin:20px"><a href="https://www.smarthomebeginner.com/discord-github" target="_blank" rel="nofollow noopener noreferrer"><img src="https://www.smarthomebeginner.com/images/2022/05/join-discord-300x75.png" alt="" width="300" height="75" /></a></div>
-
-- Do you need support or just want to chat with like-minded people. Join our discord. 
-- The authors will try our best to help but support is not guaranteed. But you will find others who might have went through what you are going through and may be willing to pay it forward and help. 
-
-# Supporting Guides
-
-## Security:
-
-- [Traefik Docker Security Best Practices](https://www.smarthomebeginner.com/traefik-docker-security-best-practices/)
-- [Crowdsec Docker Compose Guide Part 1: Powerful IPS with Firewall Bouncer](https://www.smarthomebeginner.com/crowdsec-docker-compose-1-fw-bouncer/)
-- [CrowdSec Docker Part 2: Improved IPS with Cloudflare Bouncer](https://www.smarthomebeginner.com/crowdsec-cloudflare-bouncer/)
-- [CrowdSec Docker Part 3: Traefik Bouncer for Additional Security](https://www.smarthomebeginner.com/crowdsec-traefik-bouncer/)
-- [CrowdSec Multiserver Docker (Part 4): For Ultimate Protection](https://www.smarthomebeginner.com/crowdsec-multiserver-docker/)
-
-For security, I implemented CrowdSec multi-server setup in 2022. From the stats, it is blocking/mitigating well over 600 intrusion attempts per day on my servers. I will cover this in a separate guide later but you will find the docker-compose CrowdSec, Traefik Bouncer, and Cloudflare Bouncer Bouncers in my repo already.
-
-## Others:
-
-- [How to Install Docker and Docker Compose on Ubuntu 22.04 LTS](https://www.smarthomebeginner.com/install-docker-on-ubuntu-22-04/) [[VIDEO](https://youtu.be/nwFh4JBGD_0)]
-- [Cloudflare Settings for Traefik Docker: DDNS, CNAMEs, & Tweaks](https://www.smarthomebeginner.com/cloudflare-settings-for-traefik-docker/)
-- [Ultimate Docker to Podman Migration Guide: It's NOT difficult](https://www.smarthomebeginner.com/docker-to-podman-migration-guide/)
-- [Nextcloud Docker with Traefik Reverse Proxy for Beginners](https://www.smarthomebeginner.com/traefik-docker-nextcloud/)
-
-# Understanding This Repository
+## Understanding This Repository
 
 ## My Setup
 
@@ -236,4 +196,17 @@ Here are some example alias commands:
 - `dcstop` - Stop a specific service or the full stack
 - `dcrestart` - Restart a specific service or the full stack
 - `dclogs` - See real-time logs for the corresponding stack or service
-- `dcpull` - Pull new images for the corresponding stack or service# docker
+- `dcpull` - Pull new images for the corresponding stack or service
+
+
+## Further Reading
+
+- [Traefik Docker Security Best Practices](https://www.smarthomebeginner.com/traefik-docker-security-best-practices/)
+- [Crowdsec Docker Compose Guide Part 1](https://www.smarthomebeginner.com/crowdsec-docker-compose-1-fw-bouncer/)
+- [CrowdSec Docker Part 2: Cloudflare Bouncer](https://www.smarthomebeginner.com/crowdsec-cloudflare-bouncer/)
+- [CrowdSec Docker Part 3: Traefik Bouncer](https://www.smarthomebeginner.com/crowdsec-traefik-bouncer/)
+- [CrowdSec Multiserver Docker](https://www.smarthomebeginner.com/crowdsec-multiserver-docker/)
+- [How to Install Docker and Docker Compose](https://www.smarthomebeginner.com/install-docker-on-ubuntu-22-04/)
+- [Cloudflare Settings for Traefik Docker](https://www.smarthomebeginner.com/cloudflare-settings-for-traefik-docker/)
+- [Ultimate Docker to Podman Migration Guide](https://www.smarthomebeginner.com/docker-to-podman-migration-guide/)
+- [Nextcloud Docker with Traefik Reverse Proxy](https://www.smarthomebeginner.com/traefik-docker-nextcloud/)
