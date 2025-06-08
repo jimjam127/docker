@@ -169,7 +169,7 @@ include:
   # MONITORING
   - compose/$HOSTNAME/glances.yml
   # - compose/$HOSTNAME/grocy.yml
-  # - compose/$HOSTNAME/homebridge.yml
+  - compose/$HOSTNAME/homebridge.yml
   
 
   # FILE MANAGEMENT
