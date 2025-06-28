@@ -123,7 +123,7 @@ include:
   # - compose/$HOSTNAME/lidarr.yml
   # - compose/$HOSTNAME/calibre-web.yml
   - compose/$HOSTNAME/audiobookshelf.yml
-  - compose/$HOSTNAME/kavita.yml
+  # - compose/$HOSTNAME/kavita.yml
 
 
 
