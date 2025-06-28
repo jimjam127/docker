@@ -118,7 +118,7 @@ include:
   - compose/$HOSTNAME/radarr.yml
   - compose/$HOSTNAME/readarr.yml
   - compose/$HOSTNAME/readarr2.yml
-  - compose/$HOSTNAME/komga.yml
+  - compose/$HOSTNAME/mylar.yml
   
   - compose/$HOSTNAME/kapowarr.yml
   # - compose/$HOSTNAME/lidarr.yml
@@ -151,6 +151,7 @@ include:
   # MEDIA SERVERS
   # - compose/$HOSTNAME/plex.yml
   - compose/$HOSTNAME/jellyfin.yml
+  - compose/$HOSTNAME/komga.yml
   # DATABASES
   # - compose/$HOSTNAME/calibre.yml
   - compose/$HOSTNAME/adminer.yml

@@ -1,0 +1,49 @@
+services:
+  # Mylar - Comic book management
+  mylar:
+    image: lscr.io/linuxserver/mylar3:latest
+    container_name: mylar
+    security_opt:
+      - no-new-privileges:true
+    restart: always
+    networks:
+      - t3_proxy
+    ports:
+      - "8090:8090"  # Mylar default port
+    volumes:
+      - $DOCKERDIR/appdata/mylar:/config
+      - $MEDIADIR/Comics:/comics   # Comics library
+      - $DOWNLOADSDIR:/downloads   # Downloads folder
+      - "/etc/localtime:/etc/localtime:ro"
+    environment:
+      TZ: $TZ
+      PUID: $PUID
+      PGID: $PGID
+    labels:
+      - "traefik.enable=true"
+      # HTTP Routers Auth Bypass
+      - "traefik.http.routers.mylar-rtr-bypass.entrypoints=websecure"
+      - "traefik.http.routers.mylar-rtr-bypass.rule=Host(`mylar.$DOMAINNAME`) && Header(`traefik-auth-bypass-key`, `$TRAEFIK_AUTH_BYPASS_KEY`)"
+      - "traefik.http.routers.mylar-rtr-bypass.priority=100"
+      # HTTP Routers Auth
+      - "traefik.http.routers.mylar-rtr.entrypoints=websecure"
+      - "traefik.http.routers.mylar-rtr.rule=Host(`mylar.$DOMAINNAME`)"
+      - "traefik.http.routers.mylar-rtr.priority=99"
+      # Middlewares
+      # - "traefik.http.routers.mylar-rtr-bypass.middlewares=chain-no-auth@file"
+      - "traefik.http.routers.mylar-rtr.middlewares=chain-oauth@file"
+      # HTTP Services
+      - "traefik.http.routers.mylar-rtr.service=mylar-svc"
+      - "traefik.http.routers.mylar-rtr-bypass.service=mylar-svc"
+      - "traefik.http.services.mylar-svc.loadbalancer.server.port=8090"
+      # UPDATE IMAGE
+      - "com.centurylinklabs.watchtower.enable=true"
+      # Homepage Setup
+      - homepage.group=Media Indexers
+      - homepage.name=Mylar
+      - homepage.icon=mylar.png
+      - homepage.href=http://mylar.$DOMAINNAME
+      - homepage.widget.type=mylar
+      - homepage.widget.url=http://mylar:8090
+    # Optional: if you have profiles: uncomment and adjust
+    # profiles: ["media", "arrs", "all"]
