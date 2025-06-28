@@ -30,7 +30,7 @@ services:
       - database__connection__user: root
       - database__connection__password: /run/secrets/mysql_root_password
       - database__connection__database: ghost
-      - url: ghost.shatteredcastl.com
+      - url: https://ghost.$DOMAINNAME
     
     secrets:
       - mysql_root_password

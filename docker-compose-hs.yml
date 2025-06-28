@@ -100,7 +100,7 @@ include:
   # - compose/$HOSTNAME/autoindex.yml
   - compose/$HOSTNAME/homepage.yml
   - compose/$HOSTNAME/phpmyadmin.yml
-  # - compose/$HOSTNAME/ghost.yml
+  - compose/$HOSTNAME/ghost.yml
   # - compose/$HOSTNAME/sitespeed.yml
   # - compose/$HOSTNAME/whoami.yml
   # BACKEND
