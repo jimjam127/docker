@@ -118,8 +118,9 @@ include:
   - compose/$HOSTNAME/radarr.yml
   - compose/$HOSTNAME/readarr.yml
   - compose/$HOSTNAME/readarr2.yml
+  - compose/$HOSTNAME/komga.yml
   
-  # - compose/$HOSTNAME/kapowarr.yml
+  - compose/$HOSTNAME/kapowarr.yml
   # - compose/$HOSTNAME/lidarr.yml
   # - compose/$HOSTNAME/calibre-web.yml
   - compose/$HOSTNAME/audiobookshelf.yml

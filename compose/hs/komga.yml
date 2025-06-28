@@ -1,0 +1,55 @@
+services:
+  komga:
+    container_name: komga
+    image: gotson/komga
+    # profiles: ["media", "all"]
+
+    networks:
+      - t3_proxy
+    ports:
+      # - $komga_port:25600
+      - 25600:25600
+
+    security_opt:
+      - no-new-privileges:true
+
+    restart: unless-stopped
+
+    volumes:
+      - $DOCKERDIR/appdata/komga:/config
+      - $MEDIADIR/Comics:/books
+      - "/etc/localtime:/etc/localtime:ro"
+
+    environment:
+      TZ: $TZ
+      PUID: $PUID
+      PGID: $PGID
+
+    labels:
+      - "traefik.enable=true"
+      # HTTP Routers Auth Bypass
+      - "traefik.http.routers.komga-rtr-bypass.entrypoints=websecure"
+      # - "traefik.http.routers.komga-rtr-bypass.rule=Host(`komga.$DOMAINNAME_HS`) && (Header(`X-Api-Key`, `$KOMGA_API_KEY`) || Query(`apikey`, `$KOMGA_API_KEY`))"
+      - "traefik.http.routers.komga-rtr-bypass.rule=Host(`komga.$DOMAINNAME`) && Header(`traefik-auth-bypass-key`, `$TRAEFIK_AUTH_BYPASS_KEY`)" # Bypass Auth for external apps
+      - "traefik.http.routers.komga-rtr-bypass.priority=100"
+      # HTTP Routers Auth
+      - "traefik.http.routers.komga-rtr.entrypoints=websecure"
+      - "traefik.http.routers.komga-rtr.rule=Host(`komga.$DOMAINNAME`)"
+      - "traefik.http.routers.komga-rtr.priority=99"
+      # Middlewares
+      - "traefik.http.routers.komga-rtr-bypass.middlewares=chain-no-auth@file"
+      # - "traefik.http.routers.komga-rtr.middlewares=chain-oauth@file"
+      # HTTP Services
+      - "traefik.http.routers.komga-rtr.service=komga-svc"
+      - "traefik.http.routers.komga-rtr-bypass.service=komga-svc"
+      - "traefik.http.services.komga-svc.loadbalancer.server.port=25600"
+      # UPDATE IMAGE
+      - "com.centurylinklabs.watchtower.enable=true"
+      # Homepage Setup (uncomment and customize as needed)
+      - homepage.group=Media Servers
+      - homepage.name=Komga
+      - homepage.icon=komga.png
+      - homepage.href=http://komga.$DOMAINNAME
+      - homepage.widget.type=komga
+      - homepage.widget.url=http://komga:25600
+      - homepage.weight=4
