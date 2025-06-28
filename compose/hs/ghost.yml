@@ -25,21 +25,21 @@ services:
       - $DOCKERDIR/appdata/ghost:/var/lib/ghost/content
 
     environment:
-      - database__client: mysql
-      - database__connection__host: mariadb
-      - database__connection__user: root
-      - database__connection__password: /run/secrets/mysql_root_password
-      - database__connection__database: ghost
-      - url: https://ghost.$DOMAINNAME
+      database__client: mysql
+      database__connection__host: mariadb
+      database__connection__user: ghost2
+      database__connection__password: testpassword
+      database__connection__database: ghost
+      url: https://$DOMAINNAME_EXT
     
-    secrets:
-      - mysql_root_password
+    # secrets:
+    #   - ghost_db_password
 
     labels:
       - "traefik.enable=true"
       # HTTP Routers Auth
       - "traefik.http.routers.ghost-rtr.entrypoints=websecure"
-      - "traefik.http.routers.ghost-rtr.rule=Host(`ghost.$DOMAINNAME`)"
+      - "traefik.http.routers.ghost-rtr.rule=Host(`$DOMAINNAME_EXT`)"
       # Middlewares
       # - "traefik.http.routers.ghost-rtr-bypass.middlewares=chain-no-auth@file"
       - "traefik.http.routers.ghost-rtr.middlewares=chain-oauth@file"

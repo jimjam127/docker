@@ -1,0 +1,9 @@
+services:
+  cloudflare-ddns:
+    image: ghcr.io/adrienbrisset/cloudflare-ddns:latest
+    container_name: cloudflare-ddns
+    volumes:
+      - $HOST:/config.yaml:ro
+    environment:
+      - INTERVAL=300  # Check every 5 minutes (300 seconds); adjust as desired
+    restart: unless-stopped
