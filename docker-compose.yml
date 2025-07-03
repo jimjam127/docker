@@ -1,7 +1,3 @@
-# - Home Server (hs) - Proxmox LXC with Ubuntu Server 22.04
-# - Synology (ds918) - Synology DS918+ 
-### - DNS / AdBlock Server (dns) - Raspberry Pi 4B with Raspberry Pi OS
-
 
 ########################### NETWORKS
 networks:
