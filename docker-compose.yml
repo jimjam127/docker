@@ -1,0 +1,166 @@
+# - Home Server (hs) - Proxmox LXC with Ubuntu Server 22.04
+# - Synology (ds918) - Synology DS918+ 
+### - DNS / AdBlock Server (dns) - Raspberry Pi 4B with Raspberry Pi OS
+
+
+########################### NETWORKS
+networks:
+  default:
+    driver: bridge
+  socket_proxy:
+    name: socket_proxy
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.91.0/24
+  t3_proxy:
+    name: t3_proxy
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.90.0/24
+########################### EXTENSION FIELDS
+# Helps eliminate repetition of sections
+# More Info on how to use this: https://github.com/htpcBeginner/docker-traefik/pull/228
+ 
+# Common environment values
+x-environment: &default-tz-puid-pgid
+  TZ: $TZ
+  PUID: $PUID
+  PGID: $PGID
+ 
+# Keys common to some of the core services that we always to automatically restart on failure
+x-common-keys-core: &common-keys-core
+  networks:
+    - t3_proxy
+  security_opt:
+    - no-new-privileges:true
+  restart: always
+ 
+# Keys common to some of the dependent services/apps
+x-common-keys-apps: &common-keys-apps
+  networks:
+    - t3_proxy
+  security_opt:
+    - no-new-privileges:true
+  restart: unless-stopped
+ 
+# Keys common to some of the services in media-services.txt
+x-common-keys-media: &common-keys-media
+  networks:
+    - t3_proxy
+  security_opt:
+    - no-new-privileges:true
+  restart: "no"
+########################### SECRETS
+secrets:
+  basic_auth_credentials:
+    file: $DOCKERDIR/secrets/basic_auth_credentials #defined
+  cf_dns_api_token:
+    file: $DOCKERDIR/secrets/cf_dns_api_token #defined
+  oauth_secrets:
+    file: $DOCKERDIR/secrets/oauth_secrets #defined
+  traefik_forward_auth:
+    file: $DOCKERDIR/secrets/traefik_forward_auth #defined
+  plex_claim:
+    file: $DOCKERDIR/secrets/plex_claim
+  watchtower_notifications:
+    file: $SECRETSDIR/watchtower_notifications
+  authelia_jwt_secret:
+    file: $DOCKERDIR/secrets/authelia_jwt_secret
+  authelia_session_secret:
+    file: $DOCKERDIR/secrets/authelia_session_secret
+  authelia_storage_encryption_key:
+    file: $DOCKERDIR/secrets/authelia_storage_encryption_key
+  mysql_root_password:
+    file: $DOCKERDIR/secrets/mysql_root_password
+  ghost_db_password:
+    file: /home/james/docker/secrets/ghost_db_password 
+### this doesn't exist
+ # guac_db_name:
+ #   file: $DOCKERDIR/secrets/guac_db_name
+ # guac_mysql_user:
+ #   file: $DOCKERDIR/secrets/guac_mysql_user
+ # guac_mysql_password:
+ #   file: $DOCKERDIR/secrets/guac_mysql_password
+
+include:
+  ########################### SERVICES
+  # PREFIX hs = Home Server
+  # HOSTNAME=hs - defined in .env
+
+  # CORE
+  - compose/$HOSTNAME/traefik.yml
+  - compose/$HOSTNAME/socket-proxy.yml
+  - compose/$HOSTNAME/oauth.yml
+  - compose/$HOSTNAME/authelia.yml
+  - compose/$HOSTNAME/portainer.yml
+  # SECURITY
+  - compose/$HOSTNAME/crowdsec.yml
+  # - compose/$HOSTNAME/traefik-bouncer.yml
+  # FRONTEND
+  - compose/$HOSTNAME/homepage.yml
+  - compose/$HOSTNAME/phpmyadmin.yml
+  - compose/$HOSTNAME/ghost.yml
+  # - compose/$HOSTNAME/whoami.yml
+  # BACKEND
+  # - compose/$HOSTNAME/fileflows.yml
+  # DOWNLOADERS
+  - compose/$HOSTNAME/qbittorrent.yml
+  - compose/$HOSTNAME/sabnzbd.yml
+  # PVRS
+  - compose/$HOSTNAME/sonarr.yml
+  - compose/$HOSTNAME/jellyseerr.yml
+  - compose/$HOSTNAME/radarr.yml
+  - compose/$HOSTNAME/readarr.yml
+  - compose/$HOSTNAME/readarr2.yml
+  - compose/$HOSTNAME/audiobookshelf.yml
+
+
+
+  # COMPLEMENTARY APPS
+  - compose/$HOSTNAME/prowlarr.yml
+  # - compose/$HOSTNAME/notifiarr.yml
+  # - compose/$HOSTNAME/bazarr.yml
+  # MONITORING
+  - compose/$HOSTNAME/prometheus.yml
+  - compose/$HOSTNAME/victoriametrics.yml
+  - compose/$HOSTNAME/vmagent.yml
+  - compose/$HOSTNAME/grafana.yml
+  # - compose/$HOSTNAME/uptime-kuma.yml
+  - compose/$HOSTNAME/dozzle.yml
+  # - compose/$HOSTNAME/scrutiny.yml
+  # - compose/$HOSTNAME/radarr-exporter.yml
+  # - compose/$HOSTNAME/sonarr-exporter.yml
+  # - compose/$HOSTNAME/prowlarr-exporter.yml
+  # - compose/$HOSTNAME/sabnzbd-exporter.yml
+  # - compose/$HOSTNAME/node-exporter.yml
+  # MEDIA SERVERS
+  - compose/$HOSTNAME/jellyfin.yml
+  - compose/$HOSTNAME/komga.yml
+  # DATABASES
+  - compose/$HOSTNAME/adminer.yml
+  - compose/$HOSTNAME/vaultwarden.yml
+  - compose/$HOSTNAME/mariadb.yml
+  # ADMIN
+  # - compose/$HOSTNAME/kasm.yml
+  # UTILITIES
+  - compose/$HOSTNAME/firefly.yml
+  - compose/$HOSTNAME/peanut.yml
+  # OTHER
+  # - compose/$HOSTNAME/baikal.yml
+  # MONITORING
+  - compose/$HOSTNAME/glances.yml
+  - compose/$HOSTNAME/homebridge.yml
+  
+
+  # FILE MANAGEMENT
+  - compose/$HOSTNAME/vscode.yml
+  # NETWORK
+  - compose/$HOSTNAME/gluetun.yml
+  # MAINTENANCE
+  - compose/$HOSTNAME/docker-gc.yml
+  - compose/$HOSTNAME/deunhealth.yml
+  - compose/$HOSTNAME/watchtower.yml
+  # HOME STUFF
+  # - compose/$HOSTNAME/homeassistant.yml

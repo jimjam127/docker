@@ -11,7 +11,7 @@
 !docker-compose-hs.yml
 !docker-compose-mds.yml
 !docker-compose-ds918.yml
-!docker-compose-ws.yml
+!docker-compose.yml
 !docker-compose-dns.yml
 
 !.github
