@@ -46,10 +46,11 @@ services:
       # UPDATE IMAGE
       - "com.centurylinklabs.watchtower.enable=true"
       # Homepage Setup (uncomment and customize as needed)
-      - homepage.group=Media Servers
+      - homepage.group=Media
       - homepage.name=Komga
       - homepage.icon=komga.png
       - homepage.href=http://komga.$DOMAINNAME
       - homepage.widget.type=komga
       - homepage.widget.url=http://komga:25600
+      - homepage.widget.key=$KOMGA_API_KEY
       - homepage.weight=4

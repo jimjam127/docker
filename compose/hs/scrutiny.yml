@@ -25,3 +25,17 @@ services:
       - "traefik.http.services.scrutiny-svc.loadbalancer.server.port=8080"
       # UPDATE IMAGE
       - "com.centurylinklabs.watchtower.enable=true"
+  scrutiny-collector:
+    image: ghcr.io/analogj/scrutiny:master-collector
+    container_name: scrutiny-collector
+    environment:
+      - SCRUTINY_API_ENDPOINT=http://scrutiny:8080
+    volumes:
+      - /run/udev:/run/udev:ro
+      - /dev:/dev
+    restart: unless-stopped
+    network_mode: "service:scrutiny"
+    depends_on:
+      - scrutiny
+    security_opt:
+      - no-new-privileges:true

@@ -35,9 +35,9 @@ services:
       mail__options__host: smtp.gmail.com
       mail__options__port: 587
       mail_options_secure: false
-      mail__options__auth__user: james@shatteredcastles.com
-      mail__options__auth__pass: qsqe giia atyt lkdz 
-      mail__from: ShatteredCastles <ghost@shatteredcastles.com>
+      mail__options__auth__user: $GHOST_SMTP_EMAIL
+      mail__options__auth__pass: $GHOST_SMTP_PASS
+      mail__from: $GHOST_SMTP_FROM
     
     # secrets:
     #   - ghost_db_password
@@ -48,8 +48,8 @@ services:
       - "traefik.http.routers.ghost-rtr.entrypoints=websecure"
       - "traefik.http.routers.ghost-rtr.rule=Host(`$DOMAINNAME_EXT`)"
       # Middlewares
-      # - "traefik.http.routers.ghost-rtr-bypass.middlewares=chain-no-auth@file"
-      - "traefik.http.routers.ghost-rtr.middlewares=chain-authelia@file"
+      - "traefik.http.routers.ghost-rtr-bypass.middlewares=chain-no-auth@file"
+      # - "traefik.http.routers.ghost-rtr.middlewares=chain-authelia@file"
       # HTTP Services
       - "traefik.http.routers.ghost-rtr.service=ghost-svc"
       - "traefik.http.routers.ghost-rtr-bypass.service=ghost-svc"
