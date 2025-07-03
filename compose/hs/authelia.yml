@@ -33,7 +33,7 @@ services:
       - "traefik.enable=true"
       # HTTP Routers
       - "traefik.http.routers.authelia-rtr.entrypoints=websecure"
-      - "traefik.http.routers.authelia-rtr.rule=Host(`authelia.$DOMAINNAME`)"
+      - "traefik.http.routers.authelia-rtr.rule=Host(`authelia.$DOMAINNAME_EXT`)"
       # Middlewares
       # - "traefik.http.routers.authelia-rtr.middlewares=chain-oauth@file" #with this enabled, the app didn't work
       - "traefik.http.routers.authelia-rtr.middlewares=chain-no-auth@file"
