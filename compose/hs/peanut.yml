@@ -7,10 +7,10 @@ services:
     devices:
       - /dev/bus/usb:/dev/bus/usb
     volumes:
-      # - $DOCKERDIR/appdata/peanut:/etc/nut:ro
-      - $DOCKERDIR/appdata/peanut/ups.conf:/etc/nut/ups.conf
-      - $DOCKERDIR/appdata/peanut/upsmon.conf:/etc/nut/upsmon.conf
-      - $DOCKERDIR/appdata/peanut/upsd.users:/etc/nut/upsd.users
+      - $DOCKERDIR/appdata/peanut:/etc/nut
+      # - $DOCKERDIR/appdata/peanut/ups.conf:/etc/nut/ups.conf:ro
+      # - $DOCKERDIR/appdata/peanut/upsmon.conf:/etc/nut/upsmon.conf:ro
+      # - $DOCKERDIR/appdata/peanut/upsd.users:/etc/nut/upsd.users:ro
     environment:
       - NUT_UPSD_LISTEN=0.0.0.0
       - SKIP_AUTO_CONFIG=true

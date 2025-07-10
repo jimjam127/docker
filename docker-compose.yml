@@ -100,6 +100,9 @@ include:
   # - compose/$HOSTNAME/whoami.yml
   # BACKEND
   # - compose/$HOSTNAME/fileflows.yml
+  # DATABASES
+  - compose/$HOSTNAME/prometheus.yml
+  - compose/$HOSTNAME/influxdb.yml
   # DOWNLOADERS
   - compose/$HOSTNAME/qbittorrent.yml
   - compose/$HOSTNAME/sabnzbd.yml
@@ -111,15 +114,13 @@ include:
   - compose/$HOSTNAME/readarr.yml
   - compose/$HOSTNAME/readarr2.yml
   - compose/$HOSTNAME/audiobookshelf.yml
-
-
-
   # COMPLEMENTARY APPS
   - compose/$HOSTNAME/prowlarr.yml
   # - compose/$HOSTNAME/notifiarr.yml
   # - compose/$HOSTNAME/bazarr.yml
+
   # MONITORING
-  - compose/$HOSTNAME/prometheus.yml
+  
   - compose/$HOSTNAME/victoriametrics.yml
   - compose/$HOSTNAME/vmagent.yml
   - compose/$HOSTNAME/grafana.yml
