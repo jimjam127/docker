@@ -103,6 +103,7 @@ include:
   # DOWNLOADERS
   - compose/$HOSTNAME/qbittorrent.yml
   - compose/$HOSTNAME/sabnzbd.yml
+  - compose/$HOSTNAME/airdcpp.yml
   # PVRS
   - compose/$HOSTNAME/sonarr.yml
   - compose/$HOSTNAME/jellyseerr.yml
@@ -158,4 +159,4 @@ include:
   - compose/$HOSTNAME/deunhealth.yml
   - compose/$HOSTNAME/watchtower.yml
   # HOME STUFF
-  # - compose/$HOSTNAME/homeassistant.yml
+  - compose/$HOSTNAME/homeassistant.yml

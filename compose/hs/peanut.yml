@@ -2,19 +2,24 @@ services:
   nut-server:
     image: instantlinux/nut-upsd
     container_name: nut-server
-    devices:
-      - /dev/bus/usb:/dev/bus/usb      # Pass through USB for UPS detection
-    environment:
-      - UPS_NAME=ups
-      - UPS_DESC="My UPS"
-      - UPS_DRIVER=usbhid-ups          # Works for most USB-connected UPSes (APC, CyberPower, Eaton, Tripp Lite, etc.)
-      - UPS_MONITOR_USER=upsmon
-      - UPS_MONITOR_PASSWORD=secret
-      - UPSD_LISTEN=0.0.0.0            # So PeaNUT can connect
     restart: unless-stopped
+    privileged: true
+    devices:
+      - /dev/bus/usb:/dev/bus/usb
+    volumes:
+      # - $DOCKERDIR/appdata/peanut:/etc/nut:ro
+      - $DOCKERDIR/appdata/peanut/ups.conf:/etc/nut/ups.conf
+      - $DOCKERDIR/appdata/peanut/upsmon.conf:/etc/nut/upsmon.conf
+      - $DOCKERDIR/appdata/peanut/upsd.users:/etc/nut/upsd.users
+    environment:
+      - NUT_UPSD_LISTEN=0.0.0.0
+      - SKIP_AUTO_CONFIG=true
     networks:
       - t3_proxy
+    command: sh -c "upsdrvctl start && upsd && upsmon -D"
   peanut:
+    depends_on: 
+      - nut-server
     image: brandawg93/peanut:latest
     container_name: PeaNUT
     environment:
@@ -29,6 +34,7 @@ services:
       - $peanut_port:8080
     networks:
       - t3_proxy
+      - default
     security_opt:
       - no-new-privileges:true
     volumes:

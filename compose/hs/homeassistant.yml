@@ -14,7 +14,7 @@ services:
     #   - /dev/ttyACM0:/dev/ttyACM0
     privileged: true
     volumes:
-      - $USERDIR/docker/homeassistant:/config
+      - $DOCKERDIR/appdata/homeassistant:/config
       - /etc/localtime:/etc/localtime:ro
       #- /media/ssd/motioneye:/media/motioneye
     environment:
@@ -23,7 +23,21 @@ services:
       - TZ=$TZ
     labels:
       ## Exclude From Watchtower
-      - "com.centurylinklabs.watchtower.enable=true"
+      - "com.centurylinklabs.watchtower.enable=false"
+      - "traefik.enable=true"
+
+      # HTTP Router
+      - "traefik.http.routers.homeassistant-rtr.entrypoints=websecure"
+      - "traefik.http.routers.homeassistant-rtr.rule=Host(`ha.$DOMAINNAME`)"
+
+      # Optional Middleware Chain
+      - "traefik.http.routers.homeassistant-rtr.middlewares=chain-no-auth@file"
+      # or
+      #- "traefik.http.routers.homeassistant-rtr.middlewares=chain-oauth@file"
+
+      # Targeting the host directly
+      - "traefik.http.routers.homeassistant-rtr.service=homeassistant-svc"
+      - "traefik.http.services.homeassistant-svc.loadbalancer.server.url=http://$SERVER_IP:8123"
 
   # # Home Assistant Core - Home Automation
   # # If you want Home Assistant, use the one above. This is was old setup. I am still migrating things from this one to Home Assistant Core Above.
