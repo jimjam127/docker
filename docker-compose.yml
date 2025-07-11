@@ -161,3 +161,5 @@ include:
   - compose/$HOSTNAME/watchtower.yml
   # HOME STUFF
   - compose/$HOSTNAME/homeassistant.yml
+  - compose/$HOSTNAME/mosquitto.yml
+  - compose/$HOSTNAME/frigate.yml

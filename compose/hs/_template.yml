@@ -12,7 +12,7 @@ services:
       # - socket_proxy
       # - bridge
     ports:
-      - $cname_port:80
+      - $cname_port:XXXX
       # - $cname_port2:1234
 
     security_opt:
@@ -22,6 +22,7 @@ services:
     
     volumes:
       - $DOCKERDIR/appdata/cname:/config
+      - $DOCKERDIR/logs/cname:/log
       - $USERDIR:/usr
       - $DATADIR:/data
       - $MEDIADIR:/media

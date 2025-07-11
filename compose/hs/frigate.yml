@@ -1,0 +1,45 @@
+services:
+  frigate:
+    container_name: frigate
+    image: ghcr.io/blakeblackshear/frigate:stable
+    privileged: true
+    restart: unless-stopped
+    shm_size: "512mb"
+    networks:
+      - t3_proxy
+      - default
+    devices:
+      - /dev/bus/usb:/dev/bus/usb  # Optional: Coral USB
+    ports:
+      - "5000:5000"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - $DOCKERDIR/appdata/frigate/config:/config
+      - $LOCALDATADIR/video/frigate:/media/frigate
+      - type: tmpfs
+        target: /tmp/cache
+        tmpfs:
+          size: 100000000
+      - $DOCKERDIR/logs/frigate:/log
+    environment:
+      # - FRIGATE_MQTT_USER=$FRIGATE_MQTT_USER
+      # - FRIGATE_MQTT_PASS=$FRIGATE_MQTT_PASS
+      - FRIGATE_RTSP_PASSWORD=$REOLINK_PASS
+      # - REOLINK_USER=${REOLINK_USER}
+      - REOLINK_PASS=$REOLINK_PASS
+      - FRIGATE_MQTT_USER=$FRIGATE_MQTT_USER
+      - FRIGATE_MQTT_PASS=$FRIGATE_MQTT_PASS
+      - TZ=America/Denver
+    labels:
+      - "traefik.enable=true"
+      # HTTP Routers
+      - "traefik.http.routers.frigate-rtr.entrypoints=websecure"
+      - "traefik.http.routers.frigate-rtr.rule=Host(`frigate.$DOMAINNAME`)"
+      # Middlewares
+      # - "traefik.http.routers.frigate-rtr.middlewares=chain-no-auth@file"
+      - "traefik.http.routers.frigate-rtr.middlewares=chain-oauth@file" # For Google OAuth
+      # HTTP Services
+      - "traefik.http.routers.frigate-rtr.service=frigate-svc"
+      - "traefik.http.services.frigate-svc.loadbalancer.server.port=5000"
+      # UPDATE IMAGE
+      - "com.centurylinklabs.watchtower.enable=true"
