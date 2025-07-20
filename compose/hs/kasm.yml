@@ -22,12 +22,12 @@ services:
       # DOCKER_HUB_USERNAME: USER #optional
       # DOCKER_HUB_PASSWORD: PASS #optional
       # DOCKER_MTU: 1500 #optional
-      UMASK: 022
+      UMASK: "022"
     labels:
       - "traefik.enable=true"
       # HTTP Routers
       - "traefik.http.routers.kasm-rtr.entrypoints=websecure"
-      - "traefik.http.routers.kasm-rtr.rule=Host(`kasm.$DOMAINNAME_1`)"
+      - "traefik.http.routers.kasm-rtr.rule=Host(`kasm.$DOMAINNAME`)"
       # Middlewares
       # - "traefik.http.routers.cname-rtr-bypass.middlewares=chain-no-auth@file"
       - "traefik.http.routers.cname-rtr.middlewares=chain-oauth@file"

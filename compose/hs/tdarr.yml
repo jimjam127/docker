@@ -25,7 +25,7 @@ services:
       - $DOCKERDIR/appdata/tdarr/configs:/app/configs
       - $DOCKERDIR/appdata/tdarr/logs:/app/logs
       - $DOCKERDIR/appdata/tdarr/temp:/data/temp
-      - $DOWNLOADSDIR/transcode:/data/temp
+      # - $DOWNLOADSDIR/transcode:/data/temp
       - $MEDIADIR:/media
       #- $ZDATADIR/Photos/zVideos:/data/zVideos-source:ro
       #- $DATADIR1/media/zvideos:/data/zVideos-destination
@@ -42,15 +42,15 @@ services:
       ffmpegVersion: 6
       nodeName: tdarr-node-hs
     labels:
-
+      - "traefik.enable=true"
       # HTTP Routers Auth Bypass
       - "traefik.http.routers.tdarr-rtr-bypass.entrypoints=websecure"
       #- "traefik.http.routers.tdarr-rtr-bypass.rule=Host(`tdarr.$DOMAINNAME_HS`) && (Header(`X-Api-Key`, `$SONARR_API_KEY`) || Query(`apikey`, `$SONARR_API_KEY`))"
-      - "traefik.http.routers.tdarr-rtr-bypass.rule=Host(`tdarr.$DOMAINNAME_HS`) && Header(`traefik-auth-bypass-key`, `$TRAEFIK_AUTH_BYPASS_KEY`)" # Bypass Auth for LunaSea on iOS
+      - "traefik.http.routers.tdarr-rtr-bypass.rule=Host(`tdarr.$DOMAINNAME`) && Header(`traefik-auth-bypass-key`, `$TRAEFIK_AUTH_BYPASS_KEY`)" # Bypass Auth for LunaSea on iOS
       - "traefik.http.routers.tdarr-rtr-bypass.priority=100"
       # HTTP Routers Auth
       - "traefik.http.routers.tdarr-rtr.entrypoints=websecure"
-      - "traefik.http.routers.tdarr-rtr.rule=Host(`tdarr.$DOMAINNAME_HS`)"
+      - "traefik.http.routers.tdarr-rtr.rule=Host(`tdarr.$DOMAINNAME`)"
       - "traefik.http.routers.tdarr-rtr.priority=99"
       # Middlewares
       # - "traefik.http.routers.tdarr-rtr-bypass.middlewares=chain-no-auth@file"

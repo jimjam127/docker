@@ -14,6 +14,9 @@ networks:
     ipam:
       config:
         - subnet: 192.168.90.0/24
+  pangolin_proxy:
+    name: pangolin_proxy
+    driver: bridge
 ########################### EXTENSION FIELDS
 # Helps eliminate repetition of sections
 # More Info on how to use this: https://github.com/htpcBeginner/docker-traefik/pull/228
@@ -86,6 +89,7 @@ include:
 
   # CORE
   - compose/$HOSTNAME/traefik.yml
+  # - compose/$HOSTNAME/pangolin.yml
   - compose/$HOSTNAME/socket-proxy.yml
   - compose/$HOSTNAME/oauth.yml
   - compose/$HOSTNAME/authelia.yml
@@ -116,6 +120,7 @@ include:
   - compose/$HOSTNAME/audiobookshelf.yml
   # COMPLEMENTARY APPS
   - compose/$HOSTNAME/prowlarr.yml
+  - compose/$HOSTNAME/ntfy.yml
   # - compose/$HOSTNAME/notifiarr.yml
   # - compose/$HOSTNAME/bazarr.yml
 
@@ -124,7 +129,7 @@ include:
   - compose/$HOSTNAME/victoriametrics.yml
   - compose/$HOSTNAME/vmagent.yml
   - compose/$HOSTNAME/grafana.yml
-  # - compose/$HOSTNAME/uptime-kuma.yml
+  - compose/$HOSTNAME/uptime-kuma.yml
   - compose/$HOSTNAME/dozzle.yml
   # - compose/$HOSTNAME/scrutiny.yml
   # - compose/$HOSTNAME/radarr-exporter.yml
@@ -140,7 +145,7 @@ include:
   - compose/$HOSTNAME/vaultwarden.yml
   - compose/$HOSTNAME/mariadb.yml
   # ADMIN
-  # - compose/$HOSTNAME/kasm.yml
+  - compose/$HOSTNAME/kasm.yml
   # UTILITIES
   - compose/$HOSTNAME/firefly.yml
   - compose/$HOSTNAME/peanut.yml
@@ -153,6 +158,7 @@ include:
 
   # FILE MANAGEMENT
   - compose/$HOSTNAME/vscode.yml
+  - compose/$HOSTNAME/tdarr.yml
   # NETWORK
   - compose/$HOSTNAME/gluetun.yml
   # MAINTENANCE
@@ -163,3 +169,4 @@ include:
   - compose/$HOSTNAME/homeassistant.yml
   - compose/$HOSTNAME/mosquitto.yml
   - compose/$HOSTNAME/frigate.yml
+  # - compose/$HOSTNAME/matter-server.yml

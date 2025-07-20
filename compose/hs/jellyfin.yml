@@ -24,13 +24,7 @@ services:
     volumes:
       - $DOCKERDIR/appdata/jellyfin:/config
       - $MEDIADIR:/data/media
-      #- $DATADIR/data2/media:/data/media2
-      #- $EXTDIR/ssd/downloads:/data/downloads
       - /dev/shm:/data/transcode # Offload transcoding to RAM if you have enough RAM
-      # - type: bind
-      #   source: $MEDIADIR
-      #   target: /media
-        # read_only: true
     labels:
       - "traefik.enable=true"
       # HTTP Routers

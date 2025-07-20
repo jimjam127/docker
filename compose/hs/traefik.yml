@@ -115,9 +115,9 @@ services:
       # Services - API
       - "traefik.http.routers.traefik-rtr.service=api@internal"
       # Healthcheck/ping
-      #- "traefik.http.routers.ping.rule=Host(`traefik.$DOMAINNAME`) && Path(`/ping`)"
-      #- "traefik.http.routers.ping.tls=true"
-      #- "traefik.http.routers.ping.service=ping@internal"
+      - "traefik.http.routers.ping.rule=Host(`traefik.$DOMAINNAME`) && Path(`/ping`)"
+      - "traefik.http.routers.ping.tls=true"
+      - "traefik.http.routers.ping.service=ping@internal"
       # Middlewares
       # - "traefik.http.routers.traefik-rtr.middlewares=chain-no-auth@file" # For No Authentication
       #- "traefik.http.routers.traefik-rtr.middlewares=chain-basic-auth@file"
@@ -126,3 +126,4 @@ services:
       - "traefik.http.routers.traefik-rtr.middlewares=chain-oauth@file" # For Google OAuth
       #- "traefik.http.routers.traefik-rtr.middlewares=chain-authelia@file" # For Authelia Authentication
       #- "traefik.http.routers.traefik-rtr.middlewares=middlewares-rate-limit@file,middlewares-secure-headers@file,middlewares-basic-auth@file"
+      
