@@ -15,3 +15,17 @@ services:
     volumes:
       - $DOCKERDIR/appdata/influxdb2/config:/etc/influxdb2
       - $DOCKERDIR/appdata/influxdb2/db:/var/lib/influxdb2
+    labels:
+      - "traefik.enable=true"
+      # HTTP Routers
+      - "traefik.http.routers.influx-rtr.entrypoints=websecure"
+      - "traefik.http.routers.influx-rtr.rule=Host(`influx.$DOMAINNAME`)"
+      - "traefik.http.routers.influx-rtr-bypass.rule=Host(`influx.$DOMAINNAME`) && Header(`traefik-auth-bypass-key`, `$TRAEFIK_AUTH_BYPASS_KEY`)"
+      # Middlewares
+      # - "traefik.http.routers.influx-rtr.middlewares=chain-oauth@file"
+      - "traefik.http.routers.influx-rtr.middlewares=chain-no-auth@file"
+      # HTTP Services
+      - "traefik.http.routers.influx-rtr.service=influx-svc"
+      - "traefik.http.services.influx-svc.loadbalancer.server.port=8086"
+      # UPDATE IMAGE
+      - "com.centurylinklabs.watchtower.enable=true"

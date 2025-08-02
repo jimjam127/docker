@@ -1,0 +1,19 @@
+services:
+  telegraf:
+    image: telegraf:latest
+    container_name: telegraf
+    restart: unless-stopped
+    user: telegraf:$DGID
+    networks:
+      - t3_proxy
+      - socket_proxy
+    volumes:
+      - $DOCKERDIR/appdata/telegraf/config:/etc/telegraf
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    depends_on:
+      - influxdb
+    healthcheck:
+      test: ["CMD", "telegraf", "--test", "--config", "/etc/telegraf/telegraf.conf"]
+      interval: 1m
+      timeout: 10s
+      retries: 3

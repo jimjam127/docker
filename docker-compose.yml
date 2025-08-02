@@ -101,12 +101,11 @@ include:
   - compose/$HOSTNAME/homepage.yml
   - compose/$HOSTNAME/phpmyadmin.yml
   - compose/$HOSTNAME/ghost.yml
-  # - compose/$HOSTNAME/whoami.yml
+  - compose/$HOSTNAME/whoami.yml
   # BACKEND
   # - compose/$HOSTNAME/fileflows.yml
   # DATABASES
-  - compose/$HOSTNAME/prometheus.yml
-  - compose/$HOSTNAME/influxdb.yml
+  
   # DOWNLOADERS
   - compose/$HOSTNAME/qbittorrent.yml
   - compose/$HOSTNAME/sabnzbd.yml
@@ -121,7 +120,6 @@ include:
   # COMPLEMENTARY APPS
   - compose/$HOSTNAME/prowlarr.yml
   - compose/$HOSTNAME/ntfy.yml
-  # - compose/$HOSTNAME/notifiarr.yml
   # - compose/$HOSTNAME/bazarr.yml
 
   # MONITORING
@@ -144,11 +142,14 @@ include:
   - compose/$HOSTNAME/adminer.yml
   - compose/$HOSTNAME/vaultwarden.yml
   - compose/$HOSTNAME/mariadb.yml
+  # - compose/$HOSTNAME/prometheus.yml
+  - compose/$HOSTNAME/influxdb.yml
   # ADMIN
   - compose/$HOSTNAME/kasm.yml
   # UTILITIES
   - compose/$HOSTNAME/firefly.yml
   - compose/$HOSTNAME/peanut.yml
+  - compose/$HOSTNAME/telegraf.yml
   # OTHER
   # - compose/$HOSTNAME/baikal.yml
   # MONITORING
@@ -158,7 +159,9 @@ include:
 
   # FILE MANAGEMENT
   - compose/$HOSTNAME/vscode.yml
-  - compose/$HOSTNAME/tdarr.yml
+  # - compose/$HOSTNAME/tdarr.yml
+  # - compose/$HOSTNAME/handbrake.yml
+
   # NETWORK
   - compose/$HOSTNAME/gluetun.yml
   # MAINTENANCE

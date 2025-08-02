@@ -28,9 +28,10 @@ services:
       # HTTP Routers
       - "traefik.http.routers.ntfy-rtr.entrypoints=websecure"
       - "traefik.http.routers.ntfy-rtr.rule=Host(`ntfy.$DOMAINNAME`)"
+      - "traefik.http.routers.ntfy-rtr-bypass.rule=Host(`ntfy.$DOMAINNAME`) && Header(`traefik-auth-bypass-key`, `$TRAEFIK_AUTH_BYPASS_KEY`)"
       # Middlewares
-      - "traefik.http.routers.ntfy-rtr.middlewares=chain-oauth@file"
-      # - "traefik.http.routers.ntfy-rtr.middlewares=chain-no-auth@file"
+      # - "traefik.http.routers.ntfy-rtr.middlewares=chain-oauth@file"
+      - "traefik.http.routers.ntfy-rtr.middlewares=chain-no-auth@file"
       # HTTP Services
       - "traefik.http.routers.ntfy-rtr.service=ntfy-svc"
       - "traefik.http.services.ntfy-svc.loadbalancer.server.port=80"

@@ -6,16 +6,19 @@ services:
     restart: unless-stopped
     image: ghcr.io/home-assistant/home-assistant:stable
     network_mode: host
-    #    networks:
-    #      - t3_proxy
-    # devices:
+    # networks:
+    #   - t3_proxy
+    #   - host
+    #   devices:
     #   - /dev/ttyUSB0:/dev/ttyUSB0
     #   - /dev/ttyUSB1:/dev/ttyUSB1
     #   - /dev/ttyACM0:/dev/ttyACM0
     privileged: true
     volumes:
       - $DOCKERDIR/appdata/homeassistant:/config
+      - $DOCKERDIR/appdata/homeassistant/media:/media
       - /etc/localtime:/etc/localtime:ro
+      - /run/dbus:/run/dbus:ro
       #- /media/ssd/motioneye:/media/motioneye
     environment:
       - PUID=$PUID
@@ -24,18 +27,14 @@ services:
     labels:
       ## Exclude From Watchtower
       - "com.centurylinklabs.watchtower.enable=false"
-      
+      ## Traefik
       - "traefik.enable=true"
-
-      # HTTP Router
-      - "traefik.http.routers.homeassistant-rtr.entrypoints=websecure"
-      - "traefik.http.routers.homeassistant-rtr.rule=Host(`ha.$DOMAINNAME`)"
-
-      # Optional Middleware Chain
-      - "traefik.http.routers.homeassistant-rtr.middlewares=chain-no-auth@file"
-      # or
-      #- "traefik.http.routers.homeassistant-rtr.middlewares=chain-oauth@file"
-
-      # Targeting the host directly
-      - "traefik.http.routers.homeassistant-rtr.service=homeassistant-svc"
-      - "traefik.http.services.homeassistant-svc.loadbalancer.server.url=http://$SERVER_IP:8123"
+      # HTTP Routers
+      - "traefik.http.routers.ha-rtr.entrypoints=websecure"
+      - "traefik.http.routers.ha-rtr.rule=Host(`ha.$DOMAINNAME`)"
+      - "traefik.http.routers.ha-rtr.tls=true"
+      # HTTP Services
+      - "traefik.http.routers.ha-rtr.service=ha-svc"
+      - "traefik.http.services.ha-svc.loadbalancer.server.url=$SERVER_IP:8123"
+      # Middlewares
+      - "traefik.http.routers.ha-rtr.middlewares=chain-no-auth@file"
