@@ -159,8 +159,6 @@ include:
 
   # FILE MANAGEMENT
   - compose/$HOSTNAME/vscode.yml
-  # - compose/$HOSTNAME/tdarr.yml
-  # - compose/$HOSTNAME/handbrake.yml
 
   # NETWORK
   - compose/$HOSTNAME/gluetun.yml

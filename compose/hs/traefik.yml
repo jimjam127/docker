@@ -12,8 +12,8 @@ services:
         ipv4_address: 192.168.90.254 # You can specify a static IP
       socket_proxy:
     extra_hosts:
-      - "host.docker.internal:$SERVER_IP"
-      - "ha-host:host-gateway"
+      - "host.docker.internal:host-gateway"
+      # - "ha-host:host-gateway"
     command: # CLI arguments
       - --global.checkNewVersion=true
       - --global.sendAnonymousUsage=true

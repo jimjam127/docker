@@ -11,12 +11,23 @@ services:
       - t3_proxy
       - default
     ports:
-      - $grafana_port:3000
+      - 3000:3000
     user: "$PUID:$PGID"
     volumes:
       - $DOCKERDIR/appdata/grafana:/var/lib/grafana
     environment:
       GF_INSTALL_PLUGINS: "grafana-clock-panel,grafana-simple-json-datasource,grafana-worldmap-panel,grafana-piechart-panel"
+      # 1. Enable anonymous access
+      GF_AUTH_ANONYMOUS_ENABLED: true               # :contentReference[oaicite:0]{index=0}
+      GF_AUTH_ANONYMOUS_ORG_NAME: "Main Org."       
+      GF_AUTH_ANONYMOUS_ORG_ROLE: Admin
+
+      # 2. Hide the login form entirely
+      GF_AUTH_DISABLE_LOGIN_FORM: true               # :contentReference[oaicite:1]{index=1}
+
+      # 3. (Optional) Turn off basic username/password auth
+      GF_AUTH_BASIC_ENABLED: false  
+      GF_SECURITY_ALLOW_EMBEDDING: true 
     labels:
       - "traefik.enable=true"
       # HTTP Routers
@@ -29,3 +40,7 @@ services:
       - "traefik.http.services.grafana-svc.loadbalancer.server.port=3000"
       # UPDATE IMAGE
       - "com.centurylinklabs.watchtower.enable=true"
+      # Iframe Bypass Router (NO auth, only if header is present)
+      - "traefik.http.routers.grafana-embed-rtr.entrypoints=websecure"
+      - "traefik.http.routers.grafana-embed-rtr.rule=Host(`grafana.$DOMAINNAME`) && ClientIP(`161.97.207.226`)"
+      - "traefik.http.routers.grafana-embed-rtr.service=grafana-svc"

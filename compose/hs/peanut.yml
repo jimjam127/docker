@@ -47,7 +47,7 @@ services:
       - "traefik.http.routers.peanut-rtr.rule=Host(`peanut.$DOMAINNAME`)"
       # Middlewares
       #- "traefik.http.routers.peanut-rtr.middlewares=chain-oauth@file"
-      - "traefik.http.routers.authelia-rtr.middlewares=chain-no-auth@file"
+      - "traefik.http.routers.peanut-rtr.middlewares=chain-no-auth@file"
 
       # HTTP Services
       - "traefik.http.routers.peanut-rtr.service=peanut-svc"

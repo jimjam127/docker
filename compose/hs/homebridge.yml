@@ -18,25 +18,25 @@ services:
 
 
     labels:
-      - "traefik.enable=true"
-      # HTTP Routers Auth
-      - "traefik.http.routers.homebridge-rtr.entrypoints=websecure"
-      - "traefik.http.routers.homebridge-rtr.rule=Host(`homebridge.$DOMAINNAME`)"
-      # Middlewares
-      # - "traefik.http.routers.homebridge-rtr-bypass.middlewares=chain-no-auth@file"
-      - "traefik.http.routers.homebridge-rtr.middlewares=chain-oauth@file"
-      # HTTP Services
-      - "traefik.http.routers.homebridge-rtr.service=homebridge-svc"
-      - "traefik.http.routers.homebridge-rtr-bypass.service=homebridge-svc"
-      - "traefik.http.services.homebridge-svc.loadbalancer.server.port=8581" # this has to stay the name of the internal port used by the container, not the mapped port
+      - "traefik.enable=false"
+      # # HTTP Routers Auth
+      # - "traefik.http.routers.homebridge-rtr.entrypoints=websecure"
+      # - "traefik.http.routers.homebridge-rtr.rule=Host(`homebridge.$DOMAINNAME`)"
+      # # Middlewares
+      # # - "traefik.http.routers.homebridge-rtr-bypass.middlewares=chain-no-auth@file"
+      # - "traefik.http.routers.homebridge-rtr.middlewares=chain-oauth@file"
+      # # HTTP Services
+      # - "traefik.http.routers.homebridge-rtr.service=homebridge-svc"
+      # - "traefik.http.routers.homebridge-rtr-bypass.service=homebridge-svc"
+      # - "traefik.http.services.homebridge-svc.loadbalancer.server.port=8581" # this has to stay the name of the internal port used by the container, not the mapped port
       # UPDATE IMAGE - if watchtower should update this image - disable for risky stuff like IP configs
       - "com.centurylinklabs.watchtower.enable=true"
-      # Homepage Setup - if this should be included on Homepage
-      - homepage.group=Home Info # set group name to whatever works
-      - homepage.name=homebridge
-      - homepage.icon=homebridge.png
-      - homepage.href=http://homebridge.$DOMAINNAME
-      - homepage.weight=0
-      # Homepage Widget Setup
-      - homepage.widget.type=homebridge
-      - homepage.widget.url=http://homebridge:8581 # again, internal port for the containerk
+      # # Homepage Setup - if this should be included on Homepage
+      # - homepage.group=Home Info # set group name to whatever works
+      # - homepage.name=homebridge
+      # - homepage.icon=homebridge.png
+      # - homepage.href=http://homebridge.$DOMAINNAME
+      # - homepage.weight=0
+      # # Homepage Widget Setup
+      # - homepage.widget.type=homebridge
+      # - homepage.widget.url=http://homebridge:8581 # again, internal port for the containerk
