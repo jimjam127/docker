@@ -1,9 +1,11 @@
 services:
   cloudflare-ddns:
-    image: ghcr.io/adrienbrisset/cloudflare-ddns:latest
-    container_name: cloudflare-ddns
-    volumes:
-      - $HOST:/config.yaml:ro
-    environment:
-      - INTERVAL=300  # Check every 5 minutes (300 seconds); adjust as desired
+    image: favonia/cloudflare-ddns
     restart: unless-stopped
+    environment:
+      - CLOUDFLARE_API_TOKEN=$CLOUDFLARE_API_TOKEN
+      - DOMAINS=$DOMAINNAME, $DOMAINNAME_EXT
+      - PROXIED=false
+      - IP6_PROVIDER=none
+    cap_add:
+      - NET_ADMIN

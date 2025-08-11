@@ -1,0 +1,26 @@
+services:
+  ha-fusion:
+    container_name: ha-fusion
+    image: ghcr.io/matt8707/ha-fusion:latest
+    volumes:
+      - $DOCKERDIR/appdata/ha-fusion:/app/data
+    networks:
+      - t3_proxy
+    environment:
+      TZ: $TZ
+      HASS_URL: https://haos.shatteredcastle.com
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      # HTTP Routers Auth
+      - "traefik.http.routers.ha-rtr.entrypoints=websecure"
+      - "traefik.http.routers.ha-rtr.rule=Host(`ha.$DOMAINNAME`)"
+      # Middlewares
+      # - "traefik.http.routers.ha-rtr-bypass.middlewares=chain-no-auth@file"
+      - "traefik.http.routers.ha-rtr.middlewares=chain-oauth@file"
+      # HTTP Services
+      - "traefik.http.routers.ha-rtr.service=ha-svc"
+      - "traefik.http.routers.ha-rtr-bypass.service=ha-svc"
+      - "traefik.http.services.ha-svc.loadbalancer.server.port=5050" # this has to stay the name of the internal port used by the container, not the mapped port
+      # UPDATE IMAGE - if watchtower should update this image - disable for risky stuff like IP configs
+      - "com.centurylinklabs.watchtower.enable=true"

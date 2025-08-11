@@ -42,5 +42,5 @@ services:
       - "com.centurylinklabs.watchtower.enable=true"
       # Iframe Bypass Router (NO auth, only if header is present)
       - "traefik.http.routers.grafana-embed-rtr.entrypoints=websecure"
-      - "traefik.http.routers.grafana-embed-rtr.rule=Host(`grafana.$DOMAINNAME`) && ClientIP(`161.97.207.226`)"
+      - "traefik.http.routers.grafana-embed-rtr.rule=Host(`grafana.$DOMAINNAME`) && ClientIP(`$PUBLIC_IP`)" 
       - "traefik.http.routers.grafana-embed-rtr.service=grafana-svc"

@@ -89,6 +89,7 @@ include:
 
   # CORE
   - compose/$HOSTNAME/traefik.yml
+  - compose/$HOSTNAME/cloudflaredns.yml
   # - compose/$HOSTNAME/pangolin.yml
   - compose/$HOSTNAME/socket-proxy.yml
   - compose/$HOSTNAME/oauth.yml
@@ -168,6 +169,7 @@ include:
   - compose/$HOSTNAME/watchtower.yml
   # HOME STUFF
   - compose/$HOSTNAME/homeassistant.yml
+  - compose/$HOSTNAME/ha-fusion.yml
   - compose/$HOSTNAME/mosquitto.yml
   - compose/$HOSTNAME/frigate.yml
   # - compose/$HOSTNAME/matter-server.yml
