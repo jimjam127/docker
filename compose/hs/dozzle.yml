@@ -10,8 +10,8 @@ services:
     networks:
       - t3_proxy
       - socket_proxy
-    ports:
-      - $dozzle_port:8080
+    # ports:
+    #   - $dozzle_port:8080
     environment:
       DOZZLE_LEVEL: info
       DOZZLE_TAILSIZE: 300
@@ -30,3 +30,5 @@ services:
       # HTTP Services
       - "traefik.http.routers.dozzle-rtr.service=dozzle-svc"
       - "traefik.http.services.dozzle-svc.loadbalancer.server.port=8080"
+      # UPDATE IMAGE
+      - "com.centurylinklabs.watchtower.enable=true"

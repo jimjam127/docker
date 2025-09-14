@@ -9,8 +9,8 @@ services:
     # profiles: ["all", "downloads"]
     networks:
       - t3_proxy
-    ports:
-      - "9712:9712"
+    # ports:
+    #   - "9712:9712"
     environment:
       PORT: 9712
       URL: "http://sabnzbd:8080"

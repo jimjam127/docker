@@ -10,8 +10,8 @@ services:
     #profiles: ["media", "arrs", "all"]
     networks:
       - t3_proxy
-    ports:
-      - "8989:8989"
+    # ports:
+    #   - "8989:8989"
     volumes:
       - $DOCKERDIR/appdata/sonarr:/config
       - $MEDIADIR/TV Shows:/tv

@@ -37,3 +37,5 @@ services:
       # HTTP Services
       - "traefik.http.routers.firefox-rtr.service=firefox-svc"
       - "traefik.http.services.firefox-svc.loadbalancer.server.port=5800"
+      # UPDATE IMAGE
+      - "com.centurylinklabs.watchtower.enable=true"

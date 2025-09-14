@@ -10,8 +10,8 @@ services:
     # profiles: ["media", "arrs", "all"]
     networks:
       - t3_proxy
-    ports:
-      - "7878:7878"
+    # ports:
+    #   - "7878:7878"
     volumes:
       - $DOCKERDIR/appdata/radarr:/config
       - $MEDIADIR/Movies:/movies

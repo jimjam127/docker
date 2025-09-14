@@ -6,8 +6,8 @@ services:
     image: revenz/fileflows
     
     restart: unless-stopped
-    ports:
-      - $fileflows_port:5000
+    # ports:
+    #   - $fileflows_port:5000
     networks:
       - t3_proxy
       - default

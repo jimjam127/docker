@@ -9,8 +9,8 @@ services:
     # profiles: ["all", "media", "arrs"]
     networks:
       - t3_proxy
-    ports:
-      - "9708:9708"
+    # ports:
+    #   - "9708:9708"
     environment:
       PORT: 9708
       URL: "http://sonarr:8989"

@@ -11,8 +11,8 @@ services:
     # profiles: ["apps", "downloads", "all"]
     networks:
       - t3_proxy
-    ports:
-      - "8084:8080"
+    # ports:
+    #   - "8084:8080"
     volumes:
       - $DOCKERDIR/appdata/sabnzbd:/config
       # - $DOWNLOADSDIR/Incomplete:/incomplete-downloads

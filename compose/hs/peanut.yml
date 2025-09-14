@@ -21,7 +21,7 @@ services:
     depends_on: 
       - nut-server
     image: brandawg93/peanut:latest
-    container_name: PeaNUT
+    container_name: peanut
     environment:
       - NUT_HOST=nut-server
       - NUT_PORT=3493

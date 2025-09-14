@@ -6,9 +6,9 @@ services:
 
     networks:
       - t3_proxy
-    ports:
-      # - $komga_port:25600
-      - 25600:25600
+    # ports:
+    #   # - $komga_port:25600
+    #   - 25600:25600
 
     security_opt:
       - no-new-privileges:true

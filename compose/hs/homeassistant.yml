@@ -25,8 +25,8 @@ services:
       - PGID=$PGID
       - TZ=$TZ
     labels:
-      ## Exclude From Watchtower
-      - "com.centurylinklabs.watchtower.enable=false"
+      ## Update Image
+      - "com.centurylinklabs.watchtower.enable=true"
       ## Traefik
       - "traefik.enable=false"
       # # HTTP Routers

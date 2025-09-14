@@ -12,9 +12,9 @@ services:
       # - socket_proxy
       # - bridge
       - default
-    ports:
-      - $ghost_port:2368
-      # - $ghost_port2:1234
+    # ports:
+    #   - $ghost_port:2368
+    #   - $ghost_port2:1234
 
     security_opt:
       - no-new-privileges:true

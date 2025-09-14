@@ -22,3 +22,6 @@ services:
       CLEAN_UP_VOLUMES: 1
       TZ: $TZ
       DOCKER_HOST: tcp://socket-proxy:2375
+    labels:
+      # UPDATE IMAGE
+      - "com.centurylinklabs.watchtower.enable=true"

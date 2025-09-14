@@ -33,3 +33,6 @@ services:
       - $DOCKERDIR/appdata/crowdsec/config/enrichments:/etc/crowdsec/enrichments:ro
     command:
       - '--prometheus'
+    labels:
+      # UPDATE IMAGE
+      - "com.centurylinklabs.watchtower.enable=true"

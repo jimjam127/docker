@@ -95,6 +95,7 @@ include:
   - compose/$HOSTNAME/oauth.yml
   - compose/$HOSTNAME/authelia.yml
   - compose/$HOSTNAME/portainer.yml
+  - compose/$HOSTNAME/yacht.yml
   # SECURITY
   - compose/$HOSTNAME/crowdsec.yml
   # - compose/$HOSTNAME/traefik-bouncer.yml
@@ -115,8 +116,6 @@ include:
   - compose/$HOSTNAME/sonarr.yml
   - compose/$HOSTNAME/jellyseerr.yml
   - compose/$HOSTNAME/radarr.yml
-  - compose/$HOSTNAME/readarr.yml
-  - compose/$HOSTNAME/readarr2.yml
   - compose/$HOSTNAME/audiobookshelf.yml
   # COMPLEMENTARY APPS
   - compose/$HOSTNAME/prowlarr.yml

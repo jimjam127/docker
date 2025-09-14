@@ -2,7 +2,7 @@ services:
   # Readarr - Book Managment
   # Set url_base in lidarr settings if using PathPrefix
   readarr2:
-    image: lscr.io/linuxserver/readarr:develop
+    image: lscr.io/linuxserver/readarr:amd64-develop
     container_name: readarr2
     security_opt:
       - no-new-privileges:true
@@ -10,8 +10,8 @@ services:
     # profiles: ["media","arrs", "all"]
     networks:
       - t3_proxy
-    ports:
-      - $readarr2_port:8787
+    # ports:
+    #   - $readarr2_port:8787
     volumes:
       - $DOCKERDIR/appdata/readarr2:/config
       - $MEDIADIR/Books:/data

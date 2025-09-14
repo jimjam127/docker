@@ -8,8 +8,8 @@ services:
     depends_on:
       - ghostfolio-db
       - ghostfolio-redis
-    ports:
-      - 3333:3333
+    # ports:
+    #   - 3333:3333
     networks:
       - t3_proxy
       - ghostfolio_internal
@@ -20,6 +20,8 @@ services:
       - "traefik.http.routers.ghostfolio-rtr.tls=true"
       - "traefik.http.routers.ghostfolio-rtr.middlewares=chain-oauth@file"
       - "traefik.http.services.ghostfolio-svc.loadbalancer.server.port=3333"
+      # UPDATE IMAGE
+      - "com.centurylinklabs.watchtower.enable=true"
 
   ghostfolio-db:
     image: postgres:16-alpine

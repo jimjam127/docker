@@ -2,6 +2,7 @@ services:
   cloudflare-ddns:
     image: favonia/cloudflare-ddns
     restart: unless-stopped
+    container_name: cloudflare-ddns
     environment:
       - CLOUDFLARE_API_TOKEN=$CLOUDFLARE_API_TOKEN
       - DOMAINS=$DOMAINNAME, $DOMAINNAME_EXT
@@ -9,3 +10,6 @@ services:
       - IP6_PROVIDER=none
     cap_add:
       - NET_ADMIN
+    labels:
+      # UPDATE IMAGE
+      - "com.centurylinklabs.watchtower.enable=true"

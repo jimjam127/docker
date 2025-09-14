@@ -9,8 +9,8 @@ services:
     # profiles: ["all", "media", "arrs"]
     networks:
       - t3_proxy
-    ports:
-      - "9707:9707"
+    # ports:
+    #   - "9707:9707"
     environment:
       PORT: 9707
       URL: "http://radarr:7878"

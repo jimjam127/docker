@@ -8,8 +8,8 @@ services:
       - t3_proxy
     security_opt:
       - no-new-privileges:true
-    ports:
-      - 5006:5006
+    # ports:
+    #   - 5006:5006
     environment:
       TZ: ${TZ}
       ACTUAL_SERVER_URL: "https://actual.${DOMAINNAME}"
@@ -22,3 +22,5 @@ services:
       - "traefik.http.routers.actual-rtr.tls=true"
       - "traefik.http.routers.actual-rtr.middlewares=chain-oauth@file"
       - "traefik.http.services.actual-svc.loadbalancer.server.port=5006"
+      # UPDATE IMAGE
+      - "com.centurylinklabs.watchtower.enable=true"

@@ -10,8 +10,8 @@ services:
     networks:
       - t3_proxy
       - default
-    ports:
-      - 3000:3000
+    # ports:
+    #   - 3000:3000
     user: "$PUID:$PGID"
     volumes:
       - $DOCKERDIR/appdata/grafana:/var/lib/grafana
