@@ -110,7 +110,7 @@ include:
   # DOWNLOADERS
   - compose/$HOSTNAME/qbittorrent.yml
   - compose/$HOSTNAME/sabnzbd.yml
-  - compose/$HOSTNAME/airdcpp.yml
+  # - compose/$HOSTNAME/airdcpp.yml
   # PVRS
   - compose/$HOSTNAME/sonarr.yml
   - compose/$HOSTNAME/jellyseerr.yml
@@ -148,7 +148,8 @@ include:
   # ADMIN
   - compose/$HOSTNAME/kasm.yml
   # UTILITIES
-  - compose/$HOSTNAME/firefly.yml
+  - compose/$HOSTNAME/actual.yml
+  - compose/$HOSTNAME/ghostfolio.yml
   - compose/$HOSTNAME/peanut.yml
   - compose/$HOSTNAME/telegraf.yml
   # OTHER
@@ -159,7 +160,7 @@ include:
   
 
   # FILE MANAGEMENT
-  - compose/$HOSTNAME/vscode.yml
+  # - compose/$HOSTNAME/vscode.yml
 
   # NETWORK
   - compose/$HOSTNAME/gluetun.yml

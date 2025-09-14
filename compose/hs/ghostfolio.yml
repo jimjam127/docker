@@ -1,0 +1,49 @@
+services:
+  ghostfolio:
+    image: docker.io/ghostfolio/ghostfolio:latest
+    container_name: ghostfolio
+    restart: unless-stopped
+    env_file:
+      - $DOCKERDIR/appdata/ghostfolio/ghostfolio.env
+    depends_on:
+      - ghostfolio-db
+      - ghostfolio-redis
+    ports:
+      - 3333:3333
+    networks:
+      - t3_proxy
+      - ghostfolio_internal
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.ghostfolio-rtr.entrypoints=websecure"
+      - "traefik.http.routers.ghostfolio-rtr.rule=Host(`ghostfolio.$DOMAINNAME`)"
+      - "traefik.http.routers.ghostfolio-rtr.tls=true"
+      - "traefik.http.routers.ghostfolio-rtr.middlewares=chain-oauth@file"
+      - "traefik.http.services.ghostfolio-svc.loadbalancer.server.port=3333"
+
+  ghostfolio-db:
+    image: postgres:16-alpine
+    container_name: ghostfolio-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${GF_POSTGRES_DB}
+      POSTGRES_USER: ${GF_POSTGRES_USER}
+      POSTGRES_PASSWORD: ${GF_POSTGRES_PASSWORD}
+    volumes:
+      - $DOCKERDIR/appdata/ghostfolio/postgres:/var/lib/postgresql/data
+    networks:
+      - ghostfolio_internal
+
+  ghostfolio-redis:
+    image: redis:7-alpine
+    container_name: ghostfolio-redis
+    command: ["redis-server", "--save", "", "--appendonly", "yes"]
+    restart: unless-stopped
+    volumes:
+      - $DOCKERDIR/appdata/ghostfolio/redis:/data
+    networks:
+      - ghostfolio_internal
+
+networks:
+  ghostfolio_internal:
+    driver: bridge

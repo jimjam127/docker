@@ -1,0 +1,24 @@
+services:
+  actual:
+    image: ghcr.io/actualbudget/actual:latest
+    container_name: actual
+    hostname: actual
+    restart: unless-stopped
+    networks:
+      - t3_proxy
+    security_opt:
+      - no-new-privileges:true
+    ports:
+      - 5006:5006
+    environment:
+      TZ: ${TZ}
+      ACTUAL_SERVER_URL: "https://actual.${DOMAINNAME}"
+    volumes:
+      - $DOCKERDIR/appdata/actual:/data
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.actual-rtr.entrypoints=websecure"
+      - "traefik.http.routers.actual-rtr.rule=Host(`actual.$DOMAINNAME`)"
+      - "traefik.http.routers.actual-rtr.tls=true"
+      - "traefik.http.routers.actual-rtr.middlewares=chain-oauth@file"
+      - "traefik.http.services.actual-svc.loadbalancer.server.port=5006"

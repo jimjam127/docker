@@ -9,6 +9,7 @@ services:
     # profiles: ["apps", "all"]
     networks:
       - t3_proxy
+      - default
     ports:
       - $firefly_port:8080
     volumes:
@@ -20,7 +21,7 @@ services:
       - "traefik.http.routers.firefly-rtr.entrypoints=websecure"
       - "traefik.http.routers.firefly-rtr.rule=Host(`firefly.$DOMAINNAME_HS`)"
       # Middlewares
-      - "traefik.http.routers.firefly-rtr.middlewares=chain-oauth@file"
+      - "traefik.http.routers.firefly-rtr.middlewares=chain-no-auth@file"
       # HTTP Services
       - "traefik.http.routers.firefly-rtr.service=firefly-svc"
       - "traefik.http.services.firefly-svc.loadbalancer.server.port=8080"
