@@ -1,0 +1,58 @@
+services:
+  paperless-broker:
+    image: redis:7
+    container_name: paperless_broker
+    restart: unless-stopped
+    volumes:
+      - ${DOCKERDIR}/appdata/paperless/redis:/data
+    networks:
+      - default
+
+  paperless-db:
+    image: postgres:15
+    container_name: paperless_db
+    restart: unless-stopped
+    volumes:
+      - ${DOCKERDIR}/appdata/paperless/db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: ${PAPERLESS_DB_NAME}
+      POSTGRES_USER: ${PAPERLESS_DB_USER}
+      POSTGRES_PASSWORD: ${PAPERLESS_DB_PASSWORD}
+    networks:
+      - default
+
+  paperless-web:
+    image: ghcr.io/paperless-ngx/paperless-ngx:latest
+    container_name: paperless_web
+    restart: unless-stopped
+    depends_on:
+      - paperless-db
+      - paperless-broker
+    ports:
+      - "${paperless_port}:8000"
+    volumes:
+      - ${DOCKERDIR}/appdata/paperless/data:/usr/src/paperless/data
+      - ${DOCKERDIR}/appdata/paperless/media:/usr/src/paperless/media
+      - ${DOCKERDIR}/appdata/paperless/export:/usr/src/paperless/export
+      - ${DOCKERDIR}/appdata/paperless/consume:/usr/src/paperless/consume
+    environment:
+      PAPERLESS_REDIS: redis://paperless-broker:6379
+      PAPERLESS_DBHOST: paperless-db
+      PAPERLESS_DBUSER: ${PAPERLESS_DB_USER}
+      PAPERLESS_DBPASS: ${PAPERLESS_DB_PASSWORD}
+      PAPERLESS_URL: https://paperless.${DOMAINNAME}
+      USERMAP_UID: ${PUID}
+      USERMAP_GID: ${PGID}
+      PAPERLESS_TIME_ZONE: ${TZ}
+      PAPERLESS_OCR_LANGUAGE: eng
+      PAPERLESS_SECRET_KEY: ${PAPERLESS_SECRET_KEY}
+    networks:
+      - t3_proxy
+      - default
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.paperless.entrypoints=websecure"
+      - "traefik.http.routers.paperless.rule=Host(`paperless.${DOMAINNAME}`)"
+      - "traefik.http.routers.paperless.service=paperless"
+      - "traefik.http.services.paperless.loadbalancer.server.port=8000"
+      - "com.centurylinklabs.watchtower.enable=true"

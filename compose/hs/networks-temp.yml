@@ -1,0 +1,5 @@
+networks:
+  socket_proxy:
+    external: true
+  t3_proxy:
+    external: true

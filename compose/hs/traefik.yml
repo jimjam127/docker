@@ -2,7 +2,7 @@ services:
   # Traefik 3 - Reverse Proxy
   traefik:
     container_name: traefik
-    image: traefik:latest
+    image: traefik:v3.6
     security_opt:
       - no-new-privileges:true
     restart: always
@@ -62,6 +62,13 @@ services:
       - --certificatesResolvers.dns-cloudflare.acme.dnsChallenge.provider=cloudflare
       - --certificatesResolvers.dns-cloudflare.acme.dnsChallenge.resolvers=1.1.1.1:53,1.0.0.1:53
       - --certificatesResolvers.dns-cloudflare.acme.dnsChallenge.delayBeforeCheck=90 # To delay DNS check and reduce LE hitrate
+      # Timeouts
+      - --entryPoints.websecure.transport.respondingTimeouts.idleTimeout=0s
+      - --entryPoints.websecure.transport.respondingTimeouts.readTimeout=0s
+      - --entryPoints.websecure.transport.respondingTimeouts.writeTimeout=0s
+      - --serversTransport.forwardingTimeouts.dialTimeout=60s
+      - --serversTransport.forwardingTimeouts.responseHeaderTimeout=0s
+      - --serversTransport.forwardingTimeouts.idleConnTimeout=0s
       # - --metrics.prometheus=true
       # - --metrics.prometheus.buckets=0.1,0.3,1.2,5.0
       # - --metrics.prometheus.addEntryPointsLabels=true
