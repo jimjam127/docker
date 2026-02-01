@@ -1,0 +1,184 @@
+- id: 122d88330d284493b42802e5a5cad27f
+  alias: Run Morning Briefing at 7:30 AM (Only if James is Home)
+  description: ''
+  triggers:
+  - at: 07:30:00
+    trigger: time
+  conditions: []
+  actions:
+  - action: script.morning_briefing
+    data: {}
+- id: '1752340703541'
+  alias: New automation
+  description: ''
+  triggers: []
+  conditions: []
+  actions:
+  - action: tts.google_say
+    metadata: {}
+    data:
+      cache: false
+      message: '  Good morning! Currently it is {{ state_attr(''Met.no.forecast'',
+        ''temperature'') }} degrees and {{ states(''weather.openweathermap'') }}.
+        The high today will be {{state_attr(''weather.forecast'',''high'') }}'
+      entity_id: media_player.all_speakers_2
+  - action: media_player.play_media
+    target:
+      entity_id: media_player.all_speakers_2
+    data:
+      media_content_id: ''
+      media_content_type: ''
+    metadata: {}
+  mode: single
+- id: '1753568362597'
+  alias: Person Detected No Image
+  description: ''
+  triggers:
+  - type: occupied
+    device_id: 244afe6cd26c81ce9f8ca04437331213
+    entity_id: 1ee2d3a0ce07c933d3d7006c93ba00fd
+    domain: binary_sensor
+    trigger: device
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 1
+  conditions: []
+  actions:
+  - action: notify.pushover
+    metadata: {}
+    data:
+      message: 'A person has been detected on the property. '
+      data:
+        attachment: /config/www/reolink_person.jpg
+        url: https://frigate.shatteredcastle.com/review
+        url_title: Review Here
+      title: Front Door
+  mode: single
+- id: '1754174035245'
+  alias: Frigate Notification
+  description: ''
+  use_blueprint:
+    path: others/frigate_notification.yaml
+    input:
+      camera:
+      - camera.reolink_doorbell
+      notify_device: 891fa8b05c0558de10179f63ec5c08c9
+      attachment: '{{base_url}}/api/frigate{{client_id}}/notifications/{{id}}/thumbnail.jpg'
+      final_update: false
+      zones:
+      - OnProperty
+      zone_filter: true
+      labels: []
+      debug: true
+      base_url: https://haos.shatteredcastle.com
+      update_sub_label: false
+- id: '1754232227533'
+  alias: Update Price Entities
+  description: ''
+  triggers:
+  - trigger: time_pattern
+    minutes: /15
+  conditions: []
+  actions:
+  - action: homeassistant.update_entity
+    metadata: {}
+    data:
+      entity_id:
+      - sensor.longmont_current_electric_price
+      - sensor.longmont_current_water_price
+  mode: single
+- id: '1754364751320'
+  alias: Leaving Home
+  description: ''
+  triggers:
+  - device_id: e811ed63dafb72e77010ab4e3f443329
+    domain: device_tracker
+    entity_id: 2213eddbe44fdea9b161d5f3ba5f8e3d
+    type: leaves
+    trigger: device
+    zone: zone.home
+  conditions: []
+  actions:
+  - action: light.turn_off
+    metadata: {}
+    data: {}
+    target:
+      entity_id:
+      - light.living_room_3
+      - light.kitchen
+      - light.hall_2
+      - light.bedroom_2
+      - light.entryway_2
+      - light.living_room_2
+  - action: notify.pushover
+    metadata: {}
+    data:
+      message: 'Lights off '
+  mode: single
+- id: '1754768412576'
+  alias: Rachio Usage Update
+  description: ''
+  triggers:
+  - webhook_id: rachio-flow-65sad4f984c1egf89ab48s9sr7g4vbg98h7df9bv4
+    local_only: false
+    allowed_methods:
+    - POST
+    - PUT
+    - HEAD
+    - GET
+    trigger: webhook
+  conditions:
+  - condition: template
+    value_template: '{{ event == ''DEVICE_ZONE_RUN_COMPLETED_EVENT'' }}'
+  - condition: template
+    value_template: '{{ vol_gal > 0 }}'
+  actions:
+  - variables:
+      current: '{{ states(''input_number.irrigation_total_gal'') | float(0) }}'
+      new_total: '{{ (current + vol_gal) | round(3) }}'
+  - target:
+      entity_id: input_number.irrigation_total_gal
+    data:
+      value: '{{ new_total }}'
+    action: input_number.set_value
+  - data:
+      level: info
+      message: 'Rachio: +{{ vol_gal }} gal on {{ zone_name }} → total {{ new_total
+        }} gal'
+    action: system_log.write
+  variables:
+    event: '{{ trigger.json.eventType | default('''') }}'
+    p: '{{ trigger.json.payload if trigger.json.payload is defined else dict() }}'
+    vol_gal: '{% set g = p.get(''flowVolumeG'') %} {% set l = p.get(''flowVolumeL'')
+      %} {{ (g | float(0)) if g is not none else ((l | float(0)) * 0.264172 if l is
+      not none else 0) }}'
+    zone_name: '{{ p.get(''zoneName'', p.get(''zoneId'', ''unknown'')) }}'
+- id: '1755056573445'
+  alias: Arriving Home - Lights On
+  description: ''
+  triggers:
+  - device_id: e811ed63dafb72e77010ab4e3f443329
+    domain: device_tracker
+    entity_id: 2213eddbe44fdea9b161d5f3ba5f8e3d
+    type: enters
+    trigger: device
+    zone: zone.home
+  conditions: []
+  actions:
+  - action: light.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id:
+      - light.living_room_3
+      - light.kitchen
+      - light.hall_2
+      - light.bedroom_2
+      - light.entryway_2
+      - light.living_room_2
+  - action: notify.pushover
+    metadata: {}
+    data:
+      message: Lights on
+  mode: single

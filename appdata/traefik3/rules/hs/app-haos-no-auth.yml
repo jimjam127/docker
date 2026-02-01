@@ -1,0 +1,17 @@
+http:
+  routers:
+    haos-rtr:
+      rule: "Host(`haos.shatteredcastle.com`)" 
+      entryPoints:
+        - websecure
+      middlewares:
+        - chain-no-auth
+        - middlewares-websocket
+      service: haos-svc
+      tls:
+        certResolver: dns-cloudflare
+  services:
+    haos-svc:
+      loadBalancer:
+        servers:
+          - url: "http://host.docker.internal:8123"  # or whatever your external host's IP:port is 

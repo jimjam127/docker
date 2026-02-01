@@ -1,0 +1,10 @@
+name: hs-whitelist
+description: "Whitelist for home server public IP and local network"
+whitelist:
+  reason: "Home server public IP and local network"
+  ip:
+    - "127.0.0.1"
+  cidr:
+    - "192.168.0.0/24"
+    - "192.168.90.0/24"
+    - "192.168.91.0/24"

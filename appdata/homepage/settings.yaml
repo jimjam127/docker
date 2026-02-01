@@ -1,0 +1,68 @@
+---
+# For configuration options and examples, please see:
+# https://gethomepage.dev/latest/configs/settings
+  
+title: Shattered Castle 
+theme: dark # <----- add this line
+color: slate # <----- add this line
+#headerStyle: clean # underlined, boxed, clean, boxedWidgets
+
+background:
+  image: /images/Dall-E image.png
+  blur: sm # sm, "", md, xl... see https://tailwindcss.com/docs/backdrop-blur
+  saturate: 50 # 0, 50, 100... see https://tailwindcss.com/docs/backdrop-saturate
+  brightness: 75 # 0, 50, 75... see https://tailwindcss.com/docs/backdrop-brightness
+  opacity: 50 # 0-100  
+
+# useEqualHeights: true
+# showStats: false
+layout:
+  - Calendar:
+      tab: Home
+      header: false
+  - System:
+      tab: Home
+      header: true
+  - Smart Home:
+      tab: Home
+      style: row
+      columns: 4
+  - Media:
+      tab: Media
+      style: row
+      columns: 4
+  - Requests:
+      tab: Media
+      style: row
+  - Media Indexers:
+      tab: Media
+      style: row
+      columns: 3
+  - Downloaders:
+      tab: Media
+      style: row
+      columns: 2
+  - Finance:
+      tab: Money
+      style: row
+      columns: 2
+  - Productivity:
+      tab: Money
+      style: row
+      columns: 2
+  - Monitoring:
+      tab: Infra
+      style: row
+      columns: 2
+  - Docker & Management:
+      tab: Infra
+      style: row
+      columns: 2
+
+
+
+
+
+providers:
+    openweathermap: openweathermapapikey
+    weatherapi: weatherapiapikey

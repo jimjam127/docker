@@ -1,0 +1,34 @@
+http:
+  routers:
+    synology-rtr:
+      rule: "Host(`synology.{{env "DOMAINNAME"}}`)"
+      entryPoints:
+        - websecure
+      middlewares:
+        - chain-oauth
+      service: synology-svc
+      tls:
+        certResolver: dns-cloudflare
+        options: tls-opts@file
+  services:
+    synology-svc:
+      loadBalancer:
+        servers:
+          - url: "https://192.168.0.2:5001"
+# http:
+#   routers:
+#     adguard-rtr:
+#       rule: "Host(`ag.{{env "DOMAINNAME_HS"}}`)"
+#       entryPoints:
+#         - websecure
+#       middlewares:
+#         - chain-authelia
+#       service: adguard-svc
+#       tls:
+#         certResolver: dns-cloudflare
+#         options: tls-opts@file
+#   services:
+#     adguard-svc:
+#       loadBalancer:
+#         servers:
+#           - url: "http://192.168.1.225:80"

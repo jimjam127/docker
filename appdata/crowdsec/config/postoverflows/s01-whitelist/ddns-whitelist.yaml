@@ -1,0 +1,7 @@
+name: james/ddns-whitelist
+description: "Whitelist based on dynamic DNS hostnames"
+whitelist:
+  reason: "Dynamic DNS hostname"
+  expression:
+    - "evt.Overflow.APIAlerts[0].Source.IP in LookupHost('shatteredcastle.com')"
+    - "evt.Overflow.APIAlerts[0].Source.IP in LookupHost('shatteredcastles.com')"

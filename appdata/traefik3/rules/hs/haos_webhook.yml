@@ -1,0 +1,9 @@
+http:
+  routers:
+    haos-webhook:
+      rule: "Host(`haos.shatteredcastle.com`) && PathPrefix(`/api/webhook/`)"
+      entryPoints: [websecure]
+      service: haos-svc     # <-- existing service name; do not redefine it here
+      tls:
+        certResolver: dns-cloudflare
+      priority: 20000

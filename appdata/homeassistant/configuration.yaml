@@ -1,0 +1,60 @@
+
+# Loads default set of integrations. Do not remove.
+default_config:
+homeassistant:
+    external_url: "https://haos.shatteredcastle.com" # provide your subdomain and domain, with no port
+    internal_url: "http://192.168.0.56:8123" # local address with port
+
+http:
+  use_x_forwarded_for: true
+  ip_ban_enabled: false
+  trusted_proxies:
+    - 127.0.0.0/24
+    - ::1
+    - 192.168.90.0/24  # Adjust this to match your Docker subnet
+    - 192.168.91.0/24
+    - 192.168.0.0/24  # local LAN subnet
+    - 172.17.0.0/24
+    - 172.19.0.0/24
+
+
+# Load frontend themes from the themes folder
+frontend:
+  themes: !include_dir_merge_named themes
+
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+
+tts:
+  - platform: google_translate
+    service_name: google_say
+
+influxdb:
+  api_version: 2
+  host: 192.168.0.56
+  port: 8086
+  token: "Eibfdlzt_1EzqrhE1RlRdhiW99Tgqy02iCLYsoUIrieWSf_-J9YMYTSG9a-bSN6IH5VvAXyY5Jg_wGnty5kasg=="
+  organization: "ShatteredCastle"
+  bucket: "homeassistant"
+  ssl: false
+input_number:
+  irrigation_total_gal:
+    name: Irrigation Total (gal)
+    min: 0
+    max: 100000
+    step: 0.001
+    mode: box
+light:
+  - platform: decora_wifi
+    username: jeearle@gmail.com
+    password: 9pB7#Nb!@6F8m4nd
+template:
+  - sensor:
+      - name: "Irrigation Total"
+        unique_id: irrigation_total_sensor
+        state: "{{ states('input_number.irrigation_total_gal')|float(0) }}"
+        unit_of_measurement: "gal"
+        device_class: water
+        state_class: total_increasing
+

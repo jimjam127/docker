@@ -1,0 +1,41 @@
+- Calendar:
+    - " ":
+        widget:
+          type: calendar
+          firstDayInWeek: sunday
+          view: monthly
+          maxEvents: 10
+          showTime: true
+          timezone: America/Denver
+          integrations:
+            - type: sonarr
+              service_group: Media Indexers
+              service_name: Sonarr
+              color: teal
+            - type: radarr
+              service_group: Media Indexers
+              service_name: Radarr
+              color: teal
+            - type: ical
+              url: https://calendar.google.com/calendar/ical/jeearle%40gmail.com/private-b8b8a770c8ef9aa064fb552e6d61b376/basic.ics
+              name: My Events
+              color: zinc
+              params:
+                showName: true
+
+- System:
+    - CPU Usage:
+        widget:
+          type: glances
+          url: http://glances:61208
+          metric: cpu
+          version: 4
+    - Network Usage:
+        widget:
+          type: glances
+          url: http://glances:61208
+          metric: network:eth1
+          version: 4
+
+# You can add non-Docker services or manual overrides here if needed.
+

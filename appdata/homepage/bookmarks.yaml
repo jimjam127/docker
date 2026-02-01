@@ -1,0 +1,27 @@
+---
+# For configuration options and examples, please see:
+# https://gethomepage.dev/latest/configs/bookmarks
+
+- "":
+    - gmail:
+        - icon: gmail.png
+          href: https://mail.google.com/mail/u/0/#inbox
+    - synology:
+        - icon: synology.png
+          # href: https://192.168.0.2:5001
+          href: https://jeearle.quickconnect.to
+
+
+- "  ":
+    - Notion:
+        - icon: notion.png
+          href: https://www.notion.so/shatteredcastle/65faa920782740278d50a9b7492f1520
+    - VS Code:
+        - icon: vscode.png
+          href: https://code.shatteredcastle.com/?folder=/data/docker
+
+# - Entertainment:
+#     - YouTube:
+#         - icon: youtube.png
+#           href: https://youtube.com/
+
