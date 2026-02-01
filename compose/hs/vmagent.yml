@@ -25,5 +25,7 @@ services:
       # - '-geoipDB=/geoip/GeoLite2-City.mmdb'
       # - '-geoipASNDB=/geoip/GeoLite2-ASN.mmdb'
       - '-enableTCP6'
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     depends_on:
       - victoriametrics

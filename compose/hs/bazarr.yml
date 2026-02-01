@@ -42,11 +42,11 @@ services:
       - "com.centurylinklabs.watchtower.enable=true"
 
       # Homepage Setup
-      - homepage.group=Media Indexers
+      - homepage.group=Media Stack
       - homepage.name=Bazarr
       - homepage.icon=bazarr.png
       - homepage.href=http://bazarr.$DOMAINNAME
-      - homepage.weight=10
+      - homepage.weight=5
       # Homepage Widget Setup
       - homepage.widget.type=bazarr
       - homepage.widget.url=http://bazarr:6767

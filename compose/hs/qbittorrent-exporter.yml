@@ -1,0 +1,18 @@
+services:
+  # qBittorrent Exporter - qBittorrent metrics for Prometheus
+  # Dashboard: https://grafana.com/grafana/dashboards/21307
+  qbittorrent-exporter:
+    image: martabal/qbittorrent-exporter:latest
+    container_name: qbittorrent-exporter
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
+    networks:
+      - t3_proxy
+    environment:
+      - QBITTORRENT_BASE_URL=http://gluetun:8080
+      - QBITTORRENT_USER=admin
+      - QBITTORRENT_PASS=adminadmin
+      # If you changed your qbit credentials, please update these!
+    ports:
+      - 8090:8090

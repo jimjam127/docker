@@ -21,6 +21,12 @@ services:
       TZ: $TZ
       PUID: $PUID
       PGID: $PGID
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:7878/api/v3/health?apiKey=$RADARR_API_KEY || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
     labels:
       - "traefik.enable=true"
       # HTTP Routers Auth Bypass
@@ -42,7 +48,7 @@ services:
       # UPDATE IMAGE
       - "com.centurylinklabs.watchtower.enable=true"
       # Homepage Setup
-      - homepage.group=Media Indexers
+      - homepage.group=Media Stack
       - homepage.name=Radarr
       - homepage.icon=radarr.png
       - homepage.href=http://radarr.$DOMAINNAME

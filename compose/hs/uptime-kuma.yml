@@ -12,6 +12,12 @@ services:
       - default
     volumes:
       - $DOCKERDIR/appdata/uptime-kuma:/app/data
+    healthcheck:
+      test: ["CMD-SHELL", "node extra/healthcheck.js || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
     labels:
       - "traefik.enable=true"
       # HTTP Routers
@@ -31,4 +37,5 @@ services:
       - homepage.href=https://kuma.$DOMAINNAME_HS
       - homepage.widget.type=uptimekuma
       - homepage.widget.url=http://uptime-kuma:3001
-      - homepage.widget.slug=default
+      - homepage.widget.slug=homepage
+      - homepage.widget.key=$UPTIMEKUMA_API_KEY

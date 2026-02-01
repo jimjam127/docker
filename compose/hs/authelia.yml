@@ -29,6 +29,12 @@ services:
       - authelia_jwt_secret
       - authelia_storage_encryption_key
       - authelia_session_secret
+    healthcheck:
+      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:9091/api/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
     labels:
       - "traefik.enable=true"
       # HTTP Routers

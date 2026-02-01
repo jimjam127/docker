@@ -42,7 +42,7 @@ services:
       # UPDATE IMAGE
       - "com.centurylinklabs.watchtower.enable=true"
       # Homepage Setup
-      - homepage.group=Media Indexers
+      - homepage.group=Media Stack
       - homepage.name=eBooks
       - homepage.icon=readarr.png
       - homepage.href=http://readarr2.$DOMAINNAME

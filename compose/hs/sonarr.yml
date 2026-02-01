@@ -22,6 +22,12 @@ services:
       TZ: $TZ
       PUID: $PUID
       PGID: $PGID
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8989/api/v3/health?apiKey=$SONARR_API_KEY || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
     labels:
       - "traefik.enable=true"
       # HTTP Routers Auth Bypass
@@ -43,7 +49,7 @@ services:
       # UPDATE IMAGE
       - "com.centurylinklabs.watchtower.enable=true"
       # Homepage Setup
-      - homepage.group=Media Indexers
+      - homepage.group=Media Stack
       - homepage.name=Sonarr
       - homepage.icon=sonarr.png
       - homepage.href=http://sonarr.$DOMAINNAME

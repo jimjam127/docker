@@ -20,9 +20,6 @@ layout:
   - Calendar:
       tab: Home
       header: false
-  - System:
-      tab: Home
-      header: true
   - Smart Home:
       tab: Home
       style: row
@@ -34,14 +31,10 @@ layout:
   - Requests:
       tab: Media
       style: row
-  - Media Indexers:
+  - Media Stack:
       tab: Media
       style: row
-      columns: 3
-  - Downloaders:
-      tab: Media
-      style: row
-      columns: 2
+      columns: 4
   - Finance:
       tab: Money
       style: row
@@ -55,6 +48,10 @@ layout:
       style: row
       columns: 2
   - Docker & Management:
+      tab: Infra
+      style: row
+      columns: 2
+  - Home Server:
       tab: Infra
       style: row
       columns: 2

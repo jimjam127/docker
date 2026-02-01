@@ -5,11 +5,31 @@
 - resources:
     cpu: true
     memory: true
-    disk: /
+    # provider: glances
+    # url: http://glances:61208
+    # version: 4
 
 - resources:
-    label: Storage
-    disk: /host/
+    label: System Disk
+    disk: /app/config
+
+- resources:
+    label: NAS Media
+    disk: 192.168.0.2:/volume3/Media
+    cpu: false
+    memory: false
+
+- resources:
+    label: NAS Downloads
+    disk: 192.168.0.2:/volume2/Downloads
+    cpu: false
+    memory: false
+
+- resources:
+    label: NAS Data
+    disk: 192.168.0.2:/volume1/Data
+    cpu: false
+    memory: false
 
 - search:
     provider: duckduckgo

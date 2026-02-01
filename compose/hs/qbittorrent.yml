@@ -30,11 +30,11 @@ services:
       # UPDATE IMAGE
       - "com.centurylinklabs.watchtower.enable=true"
       # Homepage Setup
-      - homepage.group=Downloaders
+      - homepage.group=Media Stack
       - homepage.name=qBittorrent
       - homepage.icon=qbittorrent.png
       - homepage.href=http://qbit.shatteredcastle.com/
-      - homepage.weight = 1
+      - homepage.weight= 1
       # Homepage Widget Conf
       - homepage.widget.type=qbittorrent
       - homepage.widget.url=http://gluetun:8080

@@ -31,11 +31,11 @@ services:
       # UPDATE IMAGE
       - "com.centurylinklabs.watchtower.enable=true"
       # Homepage Setup
-      - homepage.group=Media Indexers
+      - homepage.group=Media Stack
       - homepage.name=Jellyseerr
       - homepage.icon=jellyseerr.png
       - homepage.href=http://jellyseerr.$DOMAINNAME
-      - homepage.weight=0
+      - homepage.weight=1
       # - homepage.description=Media server
       - homepage.widget.type=jellyseerr
       - homepage.widget.url=http://jellyseerr:5055

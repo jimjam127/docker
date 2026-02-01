@@ -1,0 +1,15 @@
+services:
+  # Jellyseerr Exporter - Jellyseerr metrics for Prometheus
+  jellyseerr-exporter:
+    image: ghcr.io/opspotes/jellyseerr-exporter:latest
+    container_name: jellyseerr-exporter
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
+    networks:
+      - t3_proxy
+    ports:
+      - 9850:9850
+    command:
+      - '--jellyseerr.address=http://jellyseerr:5055'
+      - '--jellyseerr.apiKey=$JELLYSEERR_API_KEY'

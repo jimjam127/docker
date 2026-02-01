@@ -95,7 +95,7 @@ include:
   - compose/$HOSTNAME/oauth.yml
   - compose/$HOSTNAME/authelia.yml
   - compose/$HOSTNAME/portainer.yml
-  - compose/$HOSTNAME/yacht.yml
+  # - compose/$HOSTNAME/yacht.yml
   # SECURITY
   - compose/$HOSTNAME/crowdsec.yml
   - compose/$HOSTNAME/traefik-bouncer.yml
@@ -115,6 +115,7 @@ include:
   # PVRS
   - compose/$HOSTNAME/sonarr.yml
   - compose/$HOSTNAME/jellyseerr.yml
+  - compose/$HOSTNAME/jellyseerr-exporter.yml
   - compose/$HOSTNAME/radarr.yml
   - compose/$HOSTNAME/audiobookshelf.yml
   # COMPLEMENTARY APPS
@@ -130,11 +131,12 @@ include:
   - compose/$HOSTNAME/uptime-kuma.yml
   - compose/$HOSTNAME/dozzle.yml
   # - compose/$HOSTNAME/scrutiny.yml
-  # - compose/$HOSTNAME/radarr-exporter.yml
-  # - compose/$HOSTNAME/sonarr-exporter.yml
-  # - compose/$HOSTNAME/prowlarr-exporter.yml
-  # - compose/$HOSTNAME/sabnzbd-exporter.yml
-  # - compose/$HOSTNAME/node-exporter.yml
+  - compose/$HOSTNAME/radarr-exporter.yml
+  - compose/$HOSTNAME/sonarr-exporter.yml
+  - compose/$HOSTNAME/prowlarr-exporter.yml
+  - compose/$HOSTNAME/sabnzbd-exporter.yml
+  - compose/$HOSTNAME/qbittorrent-exporter.yml
+  - compose/$HOSTNAME/node-exporter.yml
   # MEDIA SERVERS
   - compose/$HOSTNAME/jellyfin.yml
   - compose/$HOSTNAME/immich.yml

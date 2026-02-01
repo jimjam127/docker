@@ -2,15 +2,17 @@ services:
   # Node Exporter - Metrics to Prometheus
   node-exporter:
     container_name: node-exporter
+    hostname: ${HOSTNAME}
     image: prom/node-exporter:latest
     security_opt:
       - no-new-privileges:true
     restart: unless-stopped
     # profiles: ["monitoring", "all"]
+
     networks:
       - t3_proxy
     ports:
-      - $node-exporter_port:9100
+      - ${node_exporter_port}:9100
     volumes:
       - /proc:/host/proc:ro
       - /sys:/host/sys:ro

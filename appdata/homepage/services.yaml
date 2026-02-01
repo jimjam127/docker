@@ -9,11 +9,11 @@
           timezone: America/Denver
           integrations:
             - type: sonarr
-              service_group: Media Indexers
+              service_group: Media Stack
               service_name: Sonarr
               color: teal
             - type: radarr
-              service_group: Media Indexers
+              service_group: Media Stack
               service_name: Radarr
               color: teal
             - type: ical
@@ -22,20 +22,4 @@
               color: zinc
               params:
                 showName: true
-
-- System:
-    - CPU Usage:
-        widget:
-          type: glances
-          url: http://glances:61208
-          metric: cpu
-          version: 4
-    - Network Usage:
-        widget:
-          type: glances
-          url: http://glances:61208
-          metric: network:eth1
-          version: 4
-
-# You can add non-Docker services or manual overrides here if needed.
 
