@@ -64,6 +64,11 @@ appdata/*
 appdata/picard/*
 !appdata/picard/*.example
 
+!appdata/homeassistant
+appdata/homeassistant/*
+!appdata/homeassistant/*.yaml
+appdata/homeassistant/secrets.yaml
+
 !appdata/traefik2
 appdata/traefik2/*
 !appdata/traefik2/*.example
@@ -116,9 +121,8 @@ appdata/traefik3/rules/ds918/*
 !appdata/traefik3/rules/hs
 appdata/traefik3/rules/hs/*
 !appdata/traefik3/rules/hs/*.example
-!appdata/traefik3/rules/hs/tls-opts.yml
-!appdata/traefik3/rules/hs/middlewares-*.yml
-!appdata/traefik3/rules/hs/chain-*.yml
+!appdata/traefik3/rules/hs/*.yml
+!appdata/traefik3/rules/hs/*.example
 !appdata/traefik3/rules/ws
 appdata/traefik3/rules/ws/*
 !appdata/traefik3/rules/ws/*.example
@@ -128,6 +132,7 @@ appdata/traefik3/rules/ws/*
 
 !appdata/authelia
 appdata/authelia/*
+!appdata/authelia/*.yml
 !appdata/authelia/*.example
 
 !appdata/rclone
@@ -155,3 +160,27 @@ appdata/nginx/sites/*
 !appdata/nginx/common
 appdata/nginx/common/*
 !appdata/nginx/common/*.example
+
+!appdata/crowdsec
+appdata/crowdsec/*
+!appdata/crowdsec/config
+appdata/crowdsec/config/*
+!appdata/crowdsec/config/*.yaml
+appdata/crowdsec/config/local_api_credentials.yaml
+appdata/crowdsec/config/online_api_credentials.yaml
+!appdata/crowdsec/config/parsers
+appdata/crowdsec/config/parsers/*
+!appdata/crowdsec/config/parsers/s02-enrich
+appdata/crowdsec/config/parsers/s02-enrich/*
+!appdata/crowdsec/config/parsers/s02-enrich/whitelist.yaml
+!appdata/crowdsec/config/postoverflows
+appdata/crowdsec/config/postoverflows/*
+!appdata/crowdsec/config/postoverflows/s01-whitelist
+appdata/crowdsec/config/postoverflows/s01-whitelist/*
+!appdata/crowdsec/config/postoverflows/s01-whitelist/ddns-whitelist.yaml
+
+!appdata/homepage
+appdata/homepage/*
+!appdata/homepage/*.yaml
+!appdata/homepage/*.css
+!appdata/homepage/*.js

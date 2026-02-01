@@ -43,3 +43,10 @@ services:
       - "traefik.http.services.frigate-svc.loadbalancer.server.port=5000"
       # UPDATE IMAGE
       - "com.centurylinklabs.watchtower.enable=true"
+      # Homepage Setup
+      - homepage.group=Smart Home
+      - homepage.name=Frigate
+      - homepage.icon=frigate.png
+      - homepage.href=https://frigate.$DOMAINNAME
+      - homepage.widget.type=frigate
+      - homepage.widget.url=http://frigate:5000

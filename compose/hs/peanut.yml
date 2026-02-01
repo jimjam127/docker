@@ -55,10 +55,9 @@ services:
       # UPDATE IMAGE
       - "com.centurylinklabs.watchtower.enable=true"
       # Homepage Setup
-      - homepage.group=Home Server
-      - homepage.name=PeaNUT
+      - homepage.group=Smart Home
+      - homepage.name=UPS Status
       - homepage.icon=peanut.png
       - homepage.href=http://peanut.$DOMAINNAME
-      # - homepage.description=Media server
       - homepage.widget.type=peanut
       - homepage.widget.url=http://peanut:8080

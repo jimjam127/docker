@@ -39,12 +39,3 @@ services:
 
       # UPDATE IMAGE
       - "com.centurylinklabs.watchtower.enable=true"
-
-      # Homepage Setup
-      - homepage.group=Home Server
-      - homepage.name=Yacht
-      - homepage.icon=yacht.png
-      - homepage.href=https://yacht.$DOMAINNAME/
-      # Homepage Widget Setup (basic link tile; Yacht has no API key requirement)
-      - homepage.widget.type=yacht
-      - homepage.widget.url=http://yacht:8000
