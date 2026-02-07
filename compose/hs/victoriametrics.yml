@@ -33,6 +33,6 @@ services:
     command:
       # Instruct VM to store its data under /storage, not /victoria-metrics-data
       - '-storageDataPath=/storage'
-      - '-retentionPeriod=1'  # keep 1-day retention as before
+      - '-retentionPeriod=2y'  # keep 2-year retention
       # - '-geoipDB=/geoip/GeoLite2-City.mmdb'
       # - '-geoipASNDB=/geoip/GeoLite2-ASN.mmdb'

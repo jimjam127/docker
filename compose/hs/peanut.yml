@@ -61,3 +61,4 @@ services:
       - homepage.href=http://peanut.$DOMAINNAME
       - homepage.widget.type=peanut
       - homepage.widget.url=http://peanut:8080
+      - homepage.widget.key=ups

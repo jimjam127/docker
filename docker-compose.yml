@@ -167,6 +167,7 @@ include:
 
   # NETWORK
   - compose/$HOSTNAME/gluetun.yml
+  - compose/$HOSTNAME/adguard.yml
   # MAINTENANCE
   - compose/$HOSTNAME/docker-gc.yml
   - compose/$HOSTNAME/deunhealth.yml

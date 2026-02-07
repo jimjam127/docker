@@ -1,0 +1,36 @@
+services:
+  adguardhome:
+    container_name: adguardhome
+    image: adguard/adguardhome
+    restart: unless-stopped
+    # profiles: ["core", "all"]
+    networks:
+      - t3_proxy
+    ports:
+      - 53:53/tcp
+      - 53:53/udp
+      # - 67:67/udp # DHCP
+      # - 68:68/udp # DHCP
+      - 853:853/tcp # DNS-over-TLS
+      # - 80:80/tcp # Web UI (Internal)
+      # - 443:443/tcp # Web UI (Internal)
+    volumes:
+      - $DOCKERDIR/appdata/adguard/work:/opt/adguardhome/work
+      - $DOCKERDIR/appdata/adguard/conf:/opt/adguardhome/conf
+    environment:
+      - TZ=$TZ
+    labels:
+      - "traefik.enable=true"
+      # WEB UI
+      - "traefik.http.routers.adguard-rtr.entrypoints=websecure"
+      - "traefik.http.routers.adguard-rtr.rule=Host(`adguard.$DOMAINNAME`)"
+      - "traefik.http.routers.adguard-rtr.service=adguard-svc"
+      - "traefik.http.services.adguard-svc.loadbalancer.server.port=80" # Default internal port after setup
+      - "traefik.http.routers.adguard-rtr.middlewares=chain-oauth@file"
+      # Homepage
+      - "homepage.group=Monitoring"
+      - "homepage.name=AdGuard Home"
+      - "homepage.icon=adguard-home.png"
+      - "homepage.href=https://adguard.$DOMAINNAME"
+      - "homepage.widget.type=adguard"
+      - "homepage.widget.url=http://adguardhome:80"
