@@ -11,7 +11,7 @@
 
 - resources:
     label: System Disk
-    disk: /app/config
+    disk: /app/data
 
 - resources:
     label: NAS Media

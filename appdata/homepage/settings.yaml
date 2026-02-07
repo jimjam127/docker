@@ -23,38 +23,38 @@ layout:
   - Smart Home:
       tab: Home
       style: row
-      columns: 4
+      columns: 3
   - Media:
       tab: Media
       style: row
-      columns: 4
+      columns: 3
   - Requests:
       tab: Media
       style: row
   - Media Stack:
       tab: Media
       style: row
-      columns: 4
+      columns: 3
   - Finance:
       tab: Money
       style: row
-      columns: 2
+      columns: 3
   - Productivity:
       tab: Money
       style: row
-      columns: 2
+      columns: 3
   - Monitoring:
       tab: Infra
       style: row
-      columns: 2
+      columns: 3
   - Docker & Management:
       tab: Infra
       style: row
-      columns: 2
+      columns: 3
   - Home Server:
       tab: Infra
       style: row
-      columns: 2
+      columns: 3
 
 
 

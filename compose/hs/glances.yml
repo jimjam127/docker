@@ -56,15 +56,15 @@ services:
       # Homepage Setup - if this should be included on Homepage
       - homepage.group=Monitoring # set group name to whatever works
       - homepage.name=Glances
-      # - homepage.icon=glances.png
-      # - homepage.href=http://glances.$DOMAINNAME
-      # - homepage.weight=0
-      # # Homepage Widget Setup
-      # - homepage.widget.type=glances
-      # - homepage.widget.url=http://glances:61208 # again, internal port for the container
-      # - homepage.widget.version=4
-      # - homepage.widget.metric=cpu
-      # - homepage.widget.diskUnits=bytes
-      # - homepage.widget.refreshInterval=5000
-      # - homepage.widget.pointsLimit=15
-      # # - homepage.widget.key=$glances_api_key   
+      - homepage.icon=glances.png
+      - homepage.href=http://glances.$DOMAINNAME
+      - homepage.weight=0
+      # Homepage Widget Setup
+      - homepage.widget.type=glances
+      - homepage.widget.url=http://glances:61208 # again, internal port for the container
+      - homepage.widget.version=4
+      - homepage.widget.metric=cpu
+      - homepage.widget.diskUnits=bytes
+      - homepage.widget.refreshInterval=5000
+      - homepage.widget.pointsLimit=15
+      # - homepage.widget.key=$glances_api_key   
