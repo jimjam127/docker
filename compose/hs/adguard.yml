@@ -34,3 +34,5 @@ services:
       - "homepage.href=https://adguard.$DOMAINNAME"
       - "homepage.widget.type=adguard"
       - "homepage.widget.url=http://adguardhome:80"
+      - "homepage.widget.username=$ADGUARD_USERNAME"
+      - "homepage.widget.password=$ADGUARD_PASSWORD"

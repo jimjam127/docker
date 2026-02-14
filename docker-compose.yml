@@ -104,6 +104,7 @@ include:
   - compose/$HOSTNAME/phpmyadmin.yml
   - compose/$HOSTNAME/ghost.yml
   - compose/$HOSTNAME/whoami.yml
+  - compose/$HOSTNAME/firefox.yml
   # BACKEND
   # - compose/$HOSTNAME/fileflows.yml
   # DATABASES
@@ -162,7 +163,7 @@ include:
   
 
   # FILE MANAGEMENT
-  # - compose/$HOSTNAME/vscode.yml
+  - compose/$HOSTNAME/vscode.yml
   - compose/$HOSTNAME/paperless.yml
 
   # NETWORK

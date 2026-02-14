@@ -16,10 +16,12 @@ services:
       - $USERDIR:/data
       - $DATADIR:/data/data
       - $DOCKERDIR/appdata/vscode:/config
+      - /var/run/docker.sock:/var/run/docker.sock
     environment:
       TZ: $TZ
       PUID: $PUID
       PGID: $PGID
+      DOCKER_MODS: linuxserver/mods:universal-docker
       # DOCKER_HOST: tcp://socket-proxy:2375
       # PASSWORD: $VSCODE_PASSWORD
       # HASHED_PASSWORD: #optional
