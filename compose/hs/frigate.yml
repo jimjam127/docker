@@ -9,6 +9,7 @@ services:
       - t3_proxy
       - default
     devices:
+      - /dev/dri:/dev/dri
       - /dev/bus/usb:/dev/bus/usb  # Optional: Coral USB
     ports:
       - "5000:5000"
