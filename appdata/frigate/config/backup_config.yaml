@@ -74,9 +74,7 @@ cameras:
       alerts:
         required_zones: OnProperty
       detections:
-        required_zones:
-          - OnProperty
-          - Street
+        required_zones: OnProperty
     motion:
       mask: 0.019,0.625,0.156,0.586,0.995,0.585,0.997,0.002,0,0.004,0.003,0.642
 detectors:
@@ -91,4 +89,6 @@ model:
   input_pixel_format: bgr
   path: /openvino-model/ssdlite_mobilenet_v2.xml
   labelmap_path: /openvino-model/coco_91cl_bkgr.txt
-version: 0.15-1
+version: 0.16-0
+detect:
+  enabled: true

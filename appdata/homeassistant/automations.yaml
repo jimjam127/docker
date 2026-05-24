@@ -6,8 +6,20 @@
     trigger: time
   conditions: []
   actions:
+  - action: media_player.browse_media
+    metadata: {}
+    target:
+      entity_id: media_player.living_room_2
+    data:
+      media_content_id: https://npr-ice.streamguys1.com/live.mp3
+  - action: media_player.media_play
+    metadata: {}
+    target:
+      entity_id: media_player.living_room_2
+    data: {}
   - action: script.morning_briefing
     data: {}
+    enabled: false
 - id: '1752340703541'
   alias: New automation
   description: ''
@@ -181,4 +193,25 @@
     metadata: {}
     data:
       message: Lights on
+  mode: single
+- id: '1775535438722'
+  alias: Lights fade off
+  description: ''
+  triggers:
+  - trigger: time
+    at: '23:00:00'
+    weekday:
+    - mon
+    - tue
+    - wed
+    - thu
+    - fri
+  conditions: []
+  actions:
+  - action: light.turn_off
+    metadata: {}
+    target:
+      entity_id: light.all_lights
+    data:
+      transition: 51
   mode: single

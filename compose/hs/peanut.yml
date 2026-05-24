@@ -26,6 +26,7 @@ services:
       - NUT_HOST=nut-server
       - NUT_PORT=3493
       - WEB_PORT=8080
+      - AUTH_DISABLED=true
       - TZ=$TZ
       - PUID=$PUID
       - PGID=$PGID

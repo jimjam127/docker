@@ -1,17 +1,183 @@
 morning_briefing:
-  alias: Morning Briefing
+  alias: Morning Briefing - Simple
+  description: Basic morning briefing with TTS and NPR stream
   sequence:
-    - service: tts.google_say
-      data:
-        entity_id: media_player.all_speakers_2  # Update to your speaker
-        message: >
-          Good morning, James. The forecast today is
-          {{ state_attr('weather.home_forecast', 'forecast')[0].condition }},
-          with a high of {{ state_attr('weather.home_forecast', 'forecast')[0].temperature }} degrees.
-    - delay: "00:00:10"
-    - service: media_player.play_media
-      target:
-        entity_id: media_player.living_room_speaker  # Same or different speaker
-      data:
-        media_content_id: https://npr-ice.streamguys1.com/live.mp3  # Example: NPR
-        media_content_type: music
+  - alias: Set volume
+    action: media_player.volume_set
+    target:
+      entity_id: media_player.living_room_2
+    data:
+      volume_level: 0.35
+  - alias: Greet and announce weather
+    action: tts.google_say
+    target:
+      entity_id: media_player.living_room_2
+    data:
+      message: Good morning, James! {{ now().strftime('%A, %B %d') }}
+  - alias: Wait after greeting
+    delay: 00:00:05
+  - alias: Play NPR Live Stream
+    action: media_player.play_media
+    target:
+      entity_id: media_player.living_room_2
+    data:
+      media_content_id: https://npr-ice.streamguys1.com/live.mp3
+      media_content_type: audio/mpeg
+  mode: single
+morning_briefing_full:
+  alias: Morning Briefing - Extended
+  description: Extended morning briefing with weather and NPR news stream
+  sequence:
+  - alias: Set briefing volume
+    action: media_player.volume_set
+    target:
+      entity_id: media_player.living_room_2
+    data:
+      volume_level: 0.35
+  - alias: Announce weather and greeting
+    action: tts.google_say
+    target:
+      entity_id: media_player.living_room_2
+    data:
+      message: >
+        Good morning! Today is {{ now().strftime('%A, %B %d, %Y') }}.
+        {% if states('weather.openweathermap', 'unknown') != 'unknown' %}
+        The forecast calls for {{ states('weather.openweathermap') | replace('_', ' ') | title }}.
+        {% endif %}
+    enabled: false
+  - alias: Wait for TTS to finish
+    delay:
+      seconds: 8
+    enabled: false
+  - alias: Play NPR News Stream (Extended)
+    action: media_player.play_media
+    target:
+      entity_id: media_player.living_room_2
+    data:
+      media_content_id: https://npr-ice.streamguys1.com/live.mp3
+      media_content_type: audio/mpeg
+      extra:
+        enqueue: replace
+  - alias: Log completion
+    action: logbook.log
+    data:
+      name: Morning Briefing
+      message: Morning briefing sequence completed.
+      entity_id: media_player.living_room_2
+  mode: single
+  max_exceeded: silent
+stop_briefing:
+  alias: Stop Morning Briefing
+  description: Stops the current media playback
+  sequence:
+  - action: media_player.media_stop
+    target:
+      entity_id: media_player.living_room_2
+    data: {}
+  mode: single
+quick_briefing:
+  alias: Quick Briefing - Weather & News
+  description: Quick version with just weather announcement and NPR stream (5 min)
+  sequence:
+  - alias: Set volume
+    action: media_player.volume_set
+    target:
+      entity_id: media_player.living_room_2
+    data:
+      volume_level: 0.4
+  - alias: Morning greeting
+    action: tts.google_say
+    target:
+      entity_id: media_player.living_room_2
+    data:
+      message: >
+        Good morning! {{ now().strftime('%A') }}.
+        {% if states('weather.openweathermap', 'unknown') != 'unknown' %}
+        Expect {{ states('weather.openweathermap') | replace('_', ' ') | title }}.
+        {% endif %}
+        Here's the news.
+  - alias: Wait for TTS
+    delay:
+      seconds: 5
+  - alias: Play NPR
+    action: media_player.play_media
+    target:
+      entity_id: media_player.living_room_2
+    data:
+      media_content_id: https://npr-ice.streamguys1.com/live.mp3
+      media_content_type: audio/mpeg
+  mode: single
+morning_briefing_test:
+  sequence:
+  - alias: Set briefing volume
+    action: media_player.volume_set
+    target:
+      entity_id: media_player.living_room_2
+    data:
+      volume_level: 0.35
+  - alias: Announce weather
+    action: tts.google_say
+    target:
+      entity_id: media_player.living_room_2
+    data:
+      cache: false
+      message: >
+        Good morning! Here is your weather briefing for Longmont. Today expect
+        {{ states('sensor.longmont_weather_condition') | default('partly sunny') }}
+        with a high of {{ states('sensor.longmont_temperature_high') | default('77') }}
+        degrees.
+        {% set precip = states('sensor.longmont_precipitation_chance') | int(25) %}
+        {% if precip >= 50 %}
+        There is a {{ precip }} percent chance of precipitation today — don't forget an umbrella.
+        {% elif precip >= 25 %}
+        There is a slight {{ precip }} percent chance of rain, so keep that in mind if you're heading out.
+        {% else %}
+        Skies look mostly clear with only a {{ precip }} percent chance of rain.
+        {% endif %}
+        Coming up: your morning news briefings.
+  - alias: Wait for TTS
+    delay:
+      seconds: 2
+  - alias: Play NPR Morning Briefing
+    action: media_player.play_media
+    target:
+      entity_id: media_player.living_room_2
+    data:
+      media_content_id: https://feeds.npr.org/500005/podcast.xml
+      media_content_type: music
+      extra:
+        enqueue: replace
+  - alias: Wait for NPR
+    wait_template: '{{ states(''media_player.living_room_2'') == ''idle'' }}'
+    timeout:
+      minutes: 15
+    continue_on_timeout: true
+  - alias: Play CNBC Tech Check
+    action: media_player.play_media
+    target:
+      entity_id: media_player.living_room_2
+    data:
+      media_content_id: https://feeds.megaphone.fm/CNBC9460649024
+      media_content_type: music
+      extra:
+        enqueue: replace
+  - alias: Wait for CNBC Tech Check
+    wait_template: '{{ states(''media_player.living_room_2'') == ''idle'' }}'
+    timeout:
+      minutes: 40
+    continue_on_timeout: true
+  - alias: Play Marketplace Morning Report
+    action: media_player.play_media
+    target:
+      entity_id: media_player.living_room_2
+    data:
+      media_content_id: https://www.marketplace.org/feed/podcast/marketplace-morning-report/
+      media_content_type: music
+      extra:
+        enqueue: replace
+  - alias: Log completion
+    action: logbook.log
+    data:
+      name: Morning Briefing
+      message: Morning briefing sequence completed.
+      entity_id: media_player.living_room_2
