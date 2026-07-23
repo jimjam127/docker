@@ -29,6 +29,7 @@ services:
       # SUDO_PASSWORD_HASH: #optional
       # PROXY_DOMAIN: code-server.my.domain #optional
       DEFAULT_WORKSPACE: /data/docker #optional
+      HOSTNAME: $HOSTNAME
     labels:
       - "traefik.enable=true"
       # HTTP Routers

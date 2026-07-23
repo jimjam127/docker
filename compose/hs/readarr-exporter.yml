@@ -17,3 +17,4 @@ services:
       APIKEY: $READARR_API_KEY
       ENABLE_ADDITIONAL_METRICS: TRUE
     command: ["readarr"]
+  

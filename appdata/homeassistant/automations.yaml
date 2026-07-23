@@ -123,6 +123,7 @@
       - light.bedroom_2
       - light.entryway_2
       - light.living_room_2
+      - light.all_lights
   - action: notify.pushover
     metadata: {}
     data:

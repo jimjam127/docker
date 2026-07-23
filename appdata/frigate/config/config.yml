@@ -50,9 +50,11 @@ cameras:
         pre_capture: 5
         post_capture: 5
       continuous:
-        days: 0
+        days: 2
       motion:
         days: 3
+      export:
+        timelapse_args: -vf setpts=0.04*PTS -r 30
     snapshots:
       enabled: true
       timestamp: true
@@ -64,6 +66,7 @@ cameras:
         - person
         - package
         - car
+      mask: 0.083,0.586,0.09,0.661,0.129,0.653,0.132,0.58
     zones:
       onproperty:
         coordinates: 
@@ -107,9 +110,11 @@ cameras:
         pre_capture: 5
         post_capture: 5
       continuous:
-        days: 0
+        days: 2
       motion:
         days: 3
+      export:
+        timelapse_args: -vf setpts=0.04*PTS -r 30
     snapshots:
       enabled: true
       timestamp: true
