@@ -1,0 +1,4 @@
+http:
+  serversTransports:
+    nextcloud-transport:
+      insecureSkipVerify: true

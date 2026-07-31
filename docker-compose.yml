@@ -165,6 +165,10 @@ include:
   # FILE MANAGEMENT
   - compose/$HOSTNAME/vscode.yml
   - compose/$HOSTNAME/paperless.yml
+  - compose/$HOSTNAME/nextcloud.yml
+
+  # REMOTE ACCESS
+  - compose/$HOSTNAME/rustdesk.yml
 
   # NETWORK
   - compose/$HOSTNAME/gluetun.yml
